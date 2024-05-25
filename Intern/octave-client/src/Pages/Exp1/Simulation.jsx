@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import LMS from './LMS';
 import RMS from './RMS';
-import App from '../../../App';
 
 const Simulation = () => {
   const [activeSection, setActiveSection] = useState('NULL'); // State to track the active section
