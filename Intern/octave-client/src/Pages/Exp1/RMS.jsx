@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import image from '../../image.png';
+import Quiz from './Pretest';
 
 const RMS = () => {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -103,17 +104,15 @@ end
       console.error('There was an error!', error);
     });
 };
-
-
   return (
     <div className='flex flex-col space-y-10'>
       <div className="flex flex-row gap-5 space-x-5">
-        <div className='flex flex-col pr-10'>
+        <div className='flex flex-col'>
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
             width="600"
-            height="260"
+            height="262"
           ></iframe>
           <div className='flex justify-between text-sm'>
             <button onClick={handleDownloadCode} className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-10">
@@ -186,7 +185,7 @@ end
         </div>
         <div>
           {imageUrls.slice(4, 5).map((url, index) => (
-            <iframe key={index} src={url} title={`Embedded Content ${index}`} width="500" height="250"></iframe>
+            <iframe key={index} src={url} title={`Embedded Content ${index}`} width="400" height="250"></iframe>
           ))}
         </div>
       </div>
