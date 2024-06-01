@@ -1,37 +1,49 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const fileUpload = require('express-fileupload');
+const path = require('path');
 const { exec } = require('child_process');
-const fs = require('fs');
 
 const app = express();
-app.use(bodyParser.json());
-app.use(cors());
+const PORT = 5000;
 
-app.post('/run-octave', (req, res) => {
-    const { frequency, duration } = req.body;
+app.use(fileUpload());
+app.use(express.static('public'));
 
-    // Command to run the Octave script with parameters
-    const command = `octave --silent --eval "script(${frequency}, ${duration})"`;
+app.post('/process', (req, res) => {
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
 
-    exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error}`);
-            return res.status(500).send({ error: stderr });
-        }
+  const inputFile = req.files.file;
+  const lambda = req.body.lambda;
+  const M = req.body.M;
+  const uploadPath = path.join(__dirname, 'uploads', inputFile.name);
 
-        // Read the generated CSV file and send it back to the frontend
-        fs.readFile('waveform.csv', 'utf8', (err, data) => {
-            if (err) {
-                console.error(`read file error: ${err}`);
-                return res.status(500).send({ error: 'Error reading waveform data' });
-            }
-            res.send({ data });
-        });
+  // Save the uploaded file
+  inputFile.mv(uploadPath, (err) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+
+    // Process the file with the RLS script
+    const outputDir = path.join(__dirname, 'public', 'outputs');
+    const command = `octave --eval "rls_denoise(${lambda}, '${uploadPath}', ${M}, '${outputDir}')"`;
+
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+
+      // Send the URLs of the generated images
+      const imageUrls = [
+        '/outputs/rls_output_signal.png',
+        '/outputs/rls_error_signal.png'
+      ];
+      res.json({ images: imageUrls });
     });
+  });
 });
 
-const port = 5000;
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

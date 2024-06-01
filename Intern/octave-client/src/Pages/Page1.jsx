@@ -29,7 +29,7 @@ const Page1 = ({ activeTab }) => {
   };
 
   return (
-    <div className='flex flex-col flex-1 gap-7 font-serif py-9 '>
+    <div className='flex flex-col flex-1 gap-7 font-serif  '>
       <div>
         <p className='font-bold text-xl text-center text-blue underline hover:text-green'>
           <a href='https://www.vlab.co.in/broad-area-biotechnology-and-biomedical-engineering'>Adaptive Signal Processing</a>
