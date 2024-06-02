@@ -31,11 +31,11 @@ const Page1 = ({ activeTab }) => {
   return (
     <div className='flex flex-col flex-1 gap-7 font-serif  '>
       <div>
-        <p className='font-bold text-xl text-center text-blue underline hover:text-green'>
+        <p className='font-bold text-xl text-center text-blue underline hover:text-green pt-2'>
           <a href='https://www.vlab.co.in/broad-area-biotechnology-and-biomedical-engineering'>Adaptive Signal Processing</a>
         </p>
       </div>
-      <div className='pl-16 pr-6'>
+      <div className='pl-16 pr-10'>
       {renderContent()}
 
       </div>

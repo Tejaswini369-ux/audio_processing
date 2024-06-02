@@ -72,25 +72,21 @@ function lms_denoise(mu, inputFile, order, uniqueIdentifier)
     % Save the noisy signal plot
     figure;
     plot(A);
-    title('Signal Corrupted with Noise');
     saveas(gcf, sprintf('Outputs/noisy_signal_%s.png', uniqueIdentifier));
 
     % Save the LMS output signal plot
     figure;
     plot(estimated_output_signal);
     legend('LMS Output');
-    title('Adaptive Filter Outputs');
     saveas(gcf, sprintf('Outputs/lms_output_signal_%s.png', uniqueIdentifier));
 
     % Save the error signal plot
     figure;
     plot(e_LMS);
-    title('LMS Error Signal');
     saveas(gcf, sprintf('Outputs/lms_error_signal_%s.png', uniqueIdentifier));
 
     % Save the MSD plot
     figure;
     plot(10 * log10(MSD_LMS_main));
-    title('MSD (dB)');
     saveas(gcf, sprintf('Outputs/msd_%s.png', uniqueIdentifier));
 end

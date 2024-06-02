@@ -12,6 +12,8 @@ const RMS = () => {
   const [code, setCode] = useState('');
   const [codeHtml, setCodeHtml] = useState('');
   const [imageUrls, setImageUrls] = useState(new Array(5).fill(image));
+  const [loading, setLoading] = useState(false);
+  const [showImages, setShowImages] = useState(false);
 
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -90,7 +92,15 @@ end
     element.click();
   };
 
-  const handleSubmitAndRun = async() => {
+  const handleSubmitAndRun = async () => {
+  if (!selectedFile) {
+    alert("Please select a file.");
+    return;
+  }
+
+  setLoading(true);  // Start loading
+  setShowImages(false);  // Hide images until new ones are loaded
+  
   const formData = new FormData();
   formData.append('file', selectedFile);
   formData.append('lambda', inputs.find(input => input.id === 'lambda').value);
@@ -99,14 +109,21 @@ end
   try {
     const response = await axios.post('http://localhost:5000/rls-process', formData, {
       headers: {
-          'Content-Type': 'multipart/form-data'
-      }});
-    console.log(response)
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    
     setImageUrls(response.data.images.map(img => `http://localhost:5000${img}`));
+    setShowImages(true);  // Show images after loading
   } catch (error) {
     console.error('Error running the script:', error);
+  } finally {
+    setLoading(false);  // Stop loading
   }
 };
+
+
+
   return (
     <div className='flex flex-col space-y-10'>
       <div className="flex flex-row gap-5 space-x-5">
@@ -175,19 +192,24 @@ end
           </div>
         </div>
       </div>
-      <div className='flex flex-col gap-2 items-center'>
-        <div className='grid grid-cols-2  space-x-5'>
-          {imageUrls.slice(0, 2).map((url, index) => (
-            <img key={index} src={url} title={`Embedded Content ${index}`} />
-          ))}
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+            <span className="visually-hidden">.</span>
+          </div>
         </div>
-        <div className='grid grid-cols-2 space-x-5'>
-          {imageUrls.slice(2, 4).map((url, index) => (
-            <img key={index} src={url} title={`Embedded Content ${index}`} />
-          ))}
-        </div>
-        
-      </div>
+      ) : (
+    showImages && (
+      <>
+       <div className='grid grid-cols-1 space-y-5'>
+      {imageUrls.map((url, index) => (
+        <img key={index} src={url} alt={`Image ${index + 1}`} className="h-50 object-cover " />
+      ))}
+    </div>
+      </>
+    )
+  )
+      }
     </div>
   );
 };

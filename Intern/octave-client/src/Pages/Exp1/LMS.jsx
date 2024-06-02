@@ -12,9 +12,11 @@ const LMS = () => {
   const [code, setCode] = useState('');
   const [codeHtml, setCodeHtml] = useState('');
   const [imageUrls, setImageUrls] = useState(new Array(5).fill(image));
+  const [loading, setLoading] = useState(false);
+  const [showImages, setShowImages] = useState(false);
 
-  const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+  const handleFileChange = (file) => {
+    setSelectedFile(file);
   };
 
   const handleInputChange = (id, value) => {
@@ -22,6 +24,11 @@ const LMS = () => {
     const newValue = Math.min(Math.max(value, input.min), input.max);
     setInputs(inputs.map(input => input.id === id ? { ...input, value: newValue } : input));
   };
+
+   const fileOptions = [
+    { name: 'File 1', file: 'simulated.csv' },
+    { name: 'File 2', file: 'x.csv' }
+  ];
 
   const handleGenerateCode = () => {
     const generatedCode = `
@@ -113,28 +120,41 @@ end
   };
 
   const handleRun = async () => {
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('mu', inputs.find(input => input.id === 'step-size').value);
-    formData.append('order', inputs.find(input => input.id === 'order').value);
+  if (!selectedFile) {
+    alert("Please select a file.");
+    return;
+  }
 
-    try {
-      const response = await axios.post('http://localhost:5000/lms-process', formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }});
-      console.log(response)
-      setImageUrls(response.data.images.map(img => `http://localhost:5000${img}`));
-    } catch (error) {
-      console.error('Error running the script:', error);
-    }
-  };
+  setLoading(true);  // Start loading
+  setShowImages(false);  // Hide images until new ones are loaded
+  
+  const formData = new FormData();
+  formData.append('file', selectedFile); // Append the selected file to the FormData
 
+  formData.append('mu', inputs.find(input => input.id === 'step-size').value);
+  formData.append('order', inputs.find(input => input.id === 'order').value);
+
+  try {
+    const response = await axios.post('http://localhost:5000/lms-process', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    
+    setImageUrls(response.data.images.map(img => `http://localhost:5000${img}`));
+    setShowImages(true);  // Show images after loading
+  } catch (error) {
+    console.error('Error running the script:', error);
+  } finally {
+    setLoading(false);  // Stop loading
+  }
+};
+  
   const handleDownload = () => {
     const element = document.createElement("a");
     const file = new Blob([code], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
-    element.download = "lms_denoise.m";
+    element.download = "rls_denoise.m";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
   };
@@ -167,11 +187,14 @@ end
         <div className="text-sm">
           <div className="flex flex-col">
             <p className="mb-2 ml-12 ">Select CSV file of Input</p>
-            <input
-              type="file"
-              onChange={handleFileChange}
+             <select
+              onChange={(e) => handleFileChange(e.target.value)}
               className="bg-white border border-gray-300 rounded-lg px-3 py-1 focus:outline-none focus:border-blue-500"
-            />
+            >
+              {fileOptions.map((option, index) => (
+                <option key={index} value={option.file}>{option.name}</option>
+              ))}
+            </select>
           </div>
           <div className='flex flex-col mt-8 items-center'>
             Select the input Parameters
@@ -215,37 +238,24 @@ end
           </div>
         </div>
       </div>
-      <div className='flex flex-col gap-2 items-center'>
-        <div className='grid grid-cols-2 space-x-5'>
-          <img
-            src={imageUrls[0]}
-            title="Output Image 1"
-            // width="400"
-            // height="250"
-          />
-          <img
-            src={imageUrls[1]}
-            title="Output Image 2"
-            // width="400"
-            // height="250"
-          />
+      {loading ? (
+        <div className="flex justify-center items-center">
+          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+            <span className="visually-hidden">.</span>
+          </div>
         </div>
-        <div className='grid grid-cols-2 space-x-5'>
-          <img
-            src={imageUrls[2]}
-            title="Output Image 3"
-            // width="400"
-            // height="250"
-          />
-          <img
-            src={imageUrls[3]}
-            title="Output Image 4"
-            // width="400"
-            // height="250"
-          />
-        </div>
-        
-      </div>
+      ) : (
+    showImages && (
+      <>
+      <div className='grid grid-cols-1'>
+  {imageUrls.map((url, index) => (
+    <img key={index} src={url} alt={`Image ${index + 1}`} className="h-1/3 w-full" />
+  ))}
+</div>
+      </>
+    )
+  )
+      }
     </div>
   );
 };

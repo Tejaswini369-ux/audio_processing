@@ -5,7 +5,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 const Navbar = ({setToggleClick}) => {
   
   return (
-    <div className='border-bottom font-serif'>
+    <div className='border-bottom font-serif fixed left-0 right-0 bg-white'>
       <nav className="p-1 flex flex-row items-center justify-between border-2 border-b-4 border-grey border-b-orange">
         <div className="flex items-center md:space-x-4 ">
           <button className="px-5 border-r-2" onClick={()=>setToggleClick(prev=>!prev)} >
