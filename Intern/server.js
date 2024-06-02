@@ -1,47 +1,91 @@
 const express = require('express');
-const fileUpload = require('express-fileupload');
 const path = require('path');
+const multer = require("multer");
 const { exec } = require('child_process');
+const cors = require('cors');
+const { v4: uuidv4 } = require('uuid'); 
 
 const app = express();
 const PORT = 5000;
+app.use(cors());
+app.use(express.static(path.join(__dirname, 'Outputs')));
+var upload = multer({ dest: "./Inputs" });
 
-app.use(fileUpload());
-app.use(express.static('public'));
-
-app.post('/process', (req, res) => {
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send('No files were uploaded.');
-  }
-
-  const inputFile = req.files.file;
-  const lambda = req.body.lambda;
-  const M = req.body.M;
-  const uploadPath = path.join(__dirname, 'uploads', inputFile.name);
-
-  // Save the uploaded file
-  inputFile.mv(uploadPath, (err) => {
-    if (err) {
-      return res.status(500).send(err);
+app.post('/rls-process', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).send('No files were uploaded.');
     }
 
-    // Process the file with the RLS script
-    const outputDir = path.join(__dirname, 'public', 'outputs');
-    const command = `octave --eval "rls_denoise(${lambda}, '${uploadPath}', ${M}, '${outputDir}')"`;
+    const inputFile = req.file;
+    const lambda = req.body.lambda;
+    const M = req.body.M;
+    const uploadPath = path.join('./Inputs', inputFile.filename);
+    console.log("path is :", uploadPath);
+
+    const uniqueIdentifier = uuidv4();
+
+    const command = `octave --eval "addpath('${__dirname}'); rls_denoise(${lambda}, '${uploadPath}', ${M}, '${uniqueIdentifier}')"`;
 
     exec(command, (err, stdout, stderr) => {
       if (err) {
+        console.error('Error executing Octave script:', err);
+        console.error('stderr:', stderr);
         return res.status(500).send(err);
       }
 
-      // Send the URLs of the generated images
+      // console.log('Octave script output:', stdout);
       const imageUrls = [
-        '/outputs/rls_output_signal.png',
-        '/outputs/rls_error_signal.png'
+        `/rls_output_signal_${uniqueIdentifier}.png`,
+        `/rls_error_signal_${uniqueIdentifier}.png`,
+        `/noisy_signal_${uniqueIdentifier}.png`,
+        `/desired_signal_${uniqueIdentifier}.png`
       ];
-      res.json({ images: imageUrls });
+      res.status(200).json({ images: imageUrls });
     });
-  });
+  } catch (err) {
+    console.error('Error handling the upload:', err);
+    res.status(500).send(err);
+  }
+});
+
+app.post('/lms-process', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).send('No files were uploaded.');
+    }
+
+    const inputFile = req.file;
+    const mu = req.body.mu;
+    const order = req.body.order;
+    const uploadPath = path.join('./Inputs', inputFile.filename);
+    console.log("path is :", uploadPath);
+
+    const uniqueIdentifier = uuidv4();
+
+    const command = `octave --eval "addpath('${__dirname}'); lms_denoise(${mu}, '${uploadPath}', ${order}, '${uniqueIdentifier}')"`;
+
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        console.error('Error executing Octave script:', err);
+        console.error('stderr:', stderr);
+        return res.status(500).send(err);
+      }
+
+      // console.log('Octave script output:', stdout);
+      const imageUrls = [
+        `/lms_output_signal_${uniqueIdentifier}.png`,
+        `/lms_error_signal_${uniqueIdentifier}.png`,
+        `/noisy_signal_${uniqueIdentifier}.png`,
+        `/desired_signal_${uniqueIdentifier}.png`,
+        `/msd_${uniqueIdentifier}.png`
+      ];
+      res.status(200).json({ images: imageUrls });
+    });
+  } catch (err) {
+    console.error('Error handling the upload:', err);
+    res.status(500).send(err);
+  }
 });
 
 app.listen(PORT, () => {

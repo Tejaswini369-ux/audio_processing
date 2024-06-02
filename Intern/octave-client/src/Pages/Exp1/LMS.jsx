@@ -116,12 +116,16 @@ end
   const handleRun = async () => {
     const formData = new FormData();
     formData.append('file', selectedFile);
-    formData.append('lambda', inputs.find(input => input.id === 'step-size').value);
-    formData.append('M', inputs.find(input => input.id === 'order').value);
+    formData.append('mu', inputs.find(input => input.id === 'step-size').value);
+    formData.append('order', inputs.find(input => input.id === 'order').value);
 
     try {
-      const response = await axios.post('http://localhost:5000/process', formData);
-      setImageUrls(response.data.images.map(img => `http://localhost:5000/${img}`));
+      const response = await axios.post('http://localhost:5000/lms-process', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }});
+      console.log(response)
+      setImageUrls(response.data.images.map(img => `http://localhost:5000${img}`));
     } catch (error) {
       console.error('Error running the script:', error);
     }
@@ -213,42 +217,35 @@ end
         </div>
       </div>
       <div className='flex flex-col gap-2 items-center'>
-        <div className='flex flex-row space-x-5'>
-          <iframe
+        <div className='grid grid-cols-2 space-x-5'>
+          <img
             src={imageUrls[0]}
             title="Output Image 1"
-            width="400"
-            height="250"
-          ></iframe>
-          <iframe
+            // width="400"
+            // height="250"
+          />
+          <img
             src={imageUrls[1]}
             title="Output Image 2"
-            width="400"
-            height="250"
-          ></iframe>
+            // width="400"
+            // height="250"
+          />
         </div>
-        <div className='flex flex-row space-x-5'>
-          <iframe
+        <div className='grid grid-cols-2 space-x-5'>
+          <img
             src={imageUrls[2]}
             title="Output Image 3"
-            width="400"
-            height="250"
-          ></iframe>
-          <iframe
+            // width="400"
+            // height="250"
+          />
+          <img
             src={imageUrls[3]}
             title="Output Image 4"
-            width="400"
-            height="250"
-          ></iframe>
+            // width="400"
+            // height="250"
+          />
         </div>
-        <div>
-          <iframe
-            src={imageUrls[4]}
-            title="Output Image 5"
-            width="500"
-            height="250"
-          ></iframe>
-        </div>
+        
       </div>
     </div>
   );

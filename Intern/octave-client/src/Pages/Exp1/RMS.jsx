@@ -89,19 +89,22 @@ end
     element.click();
   };
 
-  const handleSubmitAndRun = () => {
+  const handleSubmitAndRun = async() => {
   const formData = new FormData();
   formData.append('file', selectedFile);
   formData.append('lambda', inputs.find(input => input.id === 'lambda').value);
   formData.append('M', inputs.find(input => input.id === 'M').value);
 
-  axios.post('http://localhost:5000/process', formData)
-    .then(response => {
-      setImageUrls(response.data.images.map(imageUrl => URL.createObjectURL(imageUrl)));
-    })
-    .catch(error => {
-      console.error('There was an error!', error);
-    });
+  try {
+    const response = await axios.post('http://localhost:5000/rls-process', formData, {
+      headers: {
+          'Content-Type': 'multipart/form-data'
+      }});
+    console.log(response)
+    setImageUrls(response.data.images.map(img => `http://localhost:5000${img}`));
+  } catch (error) {
+    console.error('Error running the script:', error);
+  }
 };
 
 
@@ -174,21 +177,17 @@ end
         </div>
       </div>
       <div className='flex flex-col gap-2 items-center'>
-        <div className='flex flex-row space-x-8'>
+        <div className='grid grid-cols-2  space-x-5'>
           {imageUrls.slice(0, 2).map((url, index) => (
-            <iframe key={index} src={url} title={`Embedded Content ${index}`} width="400" height="250"></iframe>
+            <img key={index} src={url} title={`Embedded Content ${index}`} />
           ))}
         </div>
-        <div className='flex flex-row space-x-5'>
+        <div className='grid grid-cols-2 space-x-5'>
           {imageUrls.slice(2, 4).map((url, index) => (
-            <iframe key={index} src={url} title={`Embedded Content ${index}`} width="400" height="250"></iframe>
+            <img key={index} src={url} title={`Embedded Content ${index}`} />
           ))}
         </div>
-        <div>
-          {imageUrls.slice(4, 5).map((url, index) => (
-            <iframe key={index} src={url} title={`Embedded Content ${index}`} width="500" height="250"></iframe>
-          ))}
-        </div>
+        
       </div>
     </div>
   );

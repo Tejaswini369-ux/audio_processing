@@ -33,7 +33,7 @@ const Simulation = () => {
           }`}
           onClick={() => setActiveSection('RMS')}
         >
-          RMS
+          RLS
         </button>
       </div>
       <div className='mt-5'>
