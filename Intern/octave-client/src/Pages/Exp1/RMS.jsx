@@ -4,7 +4,7 @@ import image from '../../image.png';
 import Quiz from './Pretest';
 
 const RMS = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState('simulated1.csv');
   const [inputs, setInputs] = useState([
     { id: 'lambda', label: 'Forgetting factor', min: 0, max: 1, step: 0.001, value: 0.5 },
     { id: 'M', label: 'Filter length', min: 2, max: 50, step: 1, value: 5 }
@@ -15,8 +15,14 @@ const RMS = () => {
   const [loading, setLoading] = useState(false);
   const [showImages, setShowImages] = useState(false);
 
-  const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+  const fileOptions = [
+    { name: 'simulated.csv', file: 'simulated1.csv' },
+    { name: 'x.csv', file: 'x.csv' }
+  ];
+
+  const handleFileChange = (file) => {
+    setSelectedFile(file);
+    console.log(file);
   };
 
   const handleInputChange = (id, value) => {
@@ -101,15 +107,16 @@ end
   setLoading(true);  // Start loading
   setShowImages(false);  // Hide images until new ones are loaded
   
-  const formData = new FormData();
-  formData.append('file', selectedFile);
-  formData.append('lambda', inputs.find(input => input.id === 'lambda').value);
-  formData.append('M', inputs.find(input => input.id === 'M').value);
-
+  const formData = {
+    file: selectedFile,
+    lambda: inputs.find(input => input.id === 'lambda').value,
+    M: inputs.find(input => input.id === 'M').value
+  };
+  console.log(formData)
   try {
     const response = await axios.post('http://localhost:5000/rls-process', formData, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        // 'Content-Type': 'multipart/form-data'
       }
     });
     
@@ -146,9 +153,14 @@ end
         <div className="text-sm">
           <div className="flex flex-col">
             <p className="mb-2 ml-12">Select CSV file of Input</p>
-            <input type="file" onChange={handleFileChange}
+           <select
+              onChange={(e) => handleFileChange(e.target.value)}
               className="bg-white border border-gray-300 rounded-lg px-3 py-1 focus:outline-none focus:border-blue-500"
-            />
+            >
+              {fileOptions.map((option, index) => (
+                <option key={index} value={option.file} >{option.name}</option>
+              ))}
+            </select>
           </div>
           <div className='flex flex-col mt-8 items-center'>
             Select the input Parameters

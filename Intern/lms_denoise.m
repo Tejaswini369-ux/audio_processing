@@ -20,8 +20,7 @@ function lms_denoise(mu, inputFile, order, uniqueIdentifier)
     iteration = length(x);
 
     % Initialize optimal weight vector
-    w_opt = [0.1, 0.4, 0.4, 0.1]'; % Adjust size according to \`order\`
-    w_opt = w_opt(1:order); % Ensure w_opt matches the filter order
+    w_opt = 0.1 * ones(order, 1); % Initialize w_opt according to 'order'
 
     % Initialize vectors to store the weights and the mean square deviation (MSD)
     MSD_LMS_main = zeros(iteration, 1); % Mean square deviation (MSD)
@@ -57,6 +56,7 @@ function lms_denoise(mu, inputFile, order, uniqueIdentifier)
 
     % Estimate the output signal
     estimated_output_signal = zeros(iteration, 1);
+    e_LMS = zeros(iteration, 1); % Initialize error signal
     for n = 1:iteration
         An = [A(n); An(1:end-1)]; % Input regressor vector
         estimated_output_signal(n) = An' * w_LMS_main;
@@ -68,25 +68,30 @@ function lms_denoise(mu, inputFile, order, uniqueIdentifier)
     plot(x);
     title('Desired Signal');
     saveas(gcf, sprintf('Outputs/desired_signal_%s.png', uniqueIdentifier));
+    close(gcf); % Close the figure to free up memory
 
     % Save the noisy signal plot
     figure;
     plot(A);
     saveas(gcf, sprintf('Outputs/noisy_signal_%s.png', uniqueIdentifier));
+    close(gcf); % Close the figure to free up memory
 
     % Save the LMS output signal plot
     figure;
     plot(estimated_output_signal);
     legend('LMS Output');
     saveas(gcf, sprintf('Outputs/lms_output_signal_%s.png', uniqueIdentifier));
+    close(gcf); % Close the figure to free up memory
 
     % Save the error signal plot
     figure;
     plot(e_LMS);
     saveas(gcf, sprintf('Outputs/lms_error_signal_%s.png', uniqueIdentifier));
+    close(gcf); % Close the figure to free up memory
 
     % Save the MSD plot
     figure;
     plot(10 * log10(MSD_LMS_main));
     saveas(gcf, sprintf('Outputs/msd_%s.png', uniqueIdentifier));
+    close(gcf); % Close the figure to free up memory
 end

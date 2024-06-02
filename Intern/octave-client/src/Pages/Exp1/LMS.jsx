@@ -3,7 +3,7 @@ import axios from 'axios';
 import image from '../../image.png';
 
 const LMS = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState('simulated1.csv');
   const [inputs, setInputs] = useState([
     { id: 'step-size', label: 'Step-size', min: 0, max: 1, step: 0.001, value: 0.5 },
     { id: 'order', label: 'Order of Filter (M)', min: 2, max: 100, step: 1, value: 50 }
@@ -17,6 +17,7 @@ const LMS = () => {
 
   const handleFileChange = (file) => {
     setSelectedFile(file);
+    console.log(file);
   };
 
   const handleInputChange = (id, value) => {
@@ -26,8 +27,8 @@ const LMS = () => {
   };
 
    const fileOptions = [
-    { name: 'File 1', file: 'simulated.csv' },
-    { name: 'File 2', file: 'x.csv' }
+    { name: 'simulated.csv', file: 'simulated1.csv' },
+    { name: 'x.csv', file: 'x.csv' }
   ];
 
   const handleGenerateCode = () => {
@@ -128,16 +129,16 @@ end
   setLoading(true);  // Start loading
   setShowImages(false);  // Hide images until new ones are loaded
   
-  const formData = new FormData();
-  formData.append('file', selectedFile); // Append the selected file to the FormData
-
-  formData.append('mu', inputs.find(input => input.id === 'step-size').value);
-  formData.append('order', inputs.find(input => input.id === 'order').value);
+  const data = {
+    file: selectedFile,
+    mu: inputs.find(input => input.id === 'step-size').value,
+    order: inputs.find(input => input.id === 'order').value
+  };
 
   try {
-    const response = await axios.post('http://localhost:5000/lms-process', formData, {
+    const response = await axios.post('http://localhost:5000/lms-process', data, {
       headers: {
-        'Content-Type': 'multipart/form-data'
+        // 'Content-Type': 'multipart/form-data'
       }
     });
     
@@ -192,7 +193,7 @@ end
               className="bg-white border border-gray-300 rounded-lg px-3 py-1 focus:outline-none focus:border-blue-500"
             >
               {fileOptions.map((option, index) => (
-                <option key={index} value={option.file}>{option.name}</option>
+                <option key={index} value={option.file} >{option.name}</option>
               ))}
             </select>
           </div>

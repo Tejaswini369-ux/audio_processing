@@ -7,20 +7,21 @@ const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const PORT = 5000;
+app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'Outputs')));
-var upload = multer({ dest: "./Inputs" });
+// var upload = multer({ dest: "./Inputs" });
 
-app.post('/rls-process', upload.single('file'), async (req, res) => {
+app.post('/rls-process', async(req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).send('No files were uploaded.');
-    }
-
-    const inputFile = req.file;
+    // if (!req.file) {
+    //   return res.status(400).send('No files were uploaded.');
+    // }
+    console.log(req.body)
+    const inputFile = req.body.file;
     const lambda = req.body.lambda;
     const M = req.body.M;
-    const uploadPath = path.join('./Inputs', inputFile.filename);
+    const uploadPath = path.join('./Inputs', inputFile);
     console.log("path is :", uploadPath);
 
     const uniqueIdentifier = uuidv4();
@@ -49,16 +50,16 @@ app.post('/rls-process', upload.single('file'), async (req, res) => {
   }
 });
 
-app.post('/lms-process', upload.single('file'), async (req, res) => {
+app.post('/lms-process', async(req, res) => {
   try {
-    if (!req.file) {
-      return res.status(400).send('No files were uploaded.');
-    }
-
-    const inputFile = req.file;
+    // if (!req.file) {
+    //   return res.status(400).send('No files were uploaded.');
+    // }
+    console.log(req.body)
+    const inputFile = req.body.file;
     const mu = req.body.mu;
     const order = req.body.order;
-    const uploadPath = path.join('./Inputs', inputFile.filename);
+    const uploadPath = path.join('./Inputs', inputFile);
     console.log("path is :", uploadPath);
 
     const uniqueIdentifier = uuidv4();
