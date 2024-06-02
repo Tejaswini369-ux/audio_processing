@@ -23,7 +23,6 @@ const LMS = () => {
     setInputs(inputs.map(input => input.id === id ? { ...input, value: newValue } : input));
   };
 
-
   const handleGenerateCode = () => {
     const generatedCode = `
 function lms_denoise(mu, inputFile, order)
@@ -135,7 +134,7 @@ end
     const element = document.createElement("a");
     const file = new Blob([code], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
-    element.download = "rls_denoise.m";
+    element.download = "lms_denoise.m";
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
   };
@@ -143,12 +142,12 @@ end
   return (
     <div className='flex flex-col space-y-10'>
       <div className="flex flex-row gap-5 space-x-5"> 
-        <div className='flex flex-col pr-10'>
+        <div className='flex flex-col'>
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
             width="600"
-            height="260"
+            height="262"
           ></iframe>
           <div className='flex justify-between text-sm'>
             <button 

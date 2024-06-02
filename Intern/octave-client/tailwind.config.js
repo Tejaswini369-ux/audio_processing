@@ -11,7 +11,8 @@ module.exports = {
         'greyy': '#F0ECEC',
         'orange': '#ff6600',
         'green': '#689F38',
-        'blue-button':'#A9CBE6',
+        'blue-button': '#A9CBE6',
+        'green-norm':'#03C988',
       },
       keyframes: {
         slideIn : {
