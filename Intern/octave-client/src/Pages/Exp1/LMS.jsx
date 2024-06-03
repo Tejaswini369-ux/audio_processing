@@ -5,8 +5,9 @@ import image from '../../image.png';
 const LMS = () => {
   const [selectedFile, setSelectedFile] = useState('simulated1.csv');
   const [inputs, setInputs] = useState([
-    { id: 'step-size', label: 'Step-size', min: 0, max: 1, step: 0.001, value: 0.5 },
-    { id: 'order', label: 'Order of Filter (M)', min: 2, max: 100, step: 1, value: 50 }
+    { id: 'step-size', label: 'Step-size', min: 0, max: 1, step: 0.0001, value: 0.5 },
+    { id: 'order', label: 'Order of Filter (M)', min: 2, max: 100, step: 1, value: 50 },
+    { id: 'experiment', label: 'No.of iterations', min: 10, max: 1000, step: 1, value: 50 }
   ]);
 
   const [code, setCode] = useState('');
@@ -132,7 +133,8 @@ end
   const data = {
     file: selectedFile,
     mu: inputs.find(input => input.id === 'step-size').value,
-    order: inputs.find(input => input.id === 'order').value
+    order: inputs.find(input => input.id === 'order').value,
+    experiment:inputs.find(input=>input.id === 'experiment').value
   };
 
   try {
@@ -159,6 +161,19 @@ end
     document.body.appendChild(element); // Required for this to work in FireFox
     element.click();
   };
+
+  const SphereLoading = () => (
+  <div className="flex felx-col fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 ">
+    <div className="w-20 h-10">
+      <div className="relative w-full h-full overflow-hidden p-2 pl-3">
+        <p className='font-sans text-sm'>Loading...</p>
+        <div className="absolute inset-0 bg-blue-button rounded-lg animate-pulse opacity-0 text-black">
+        </div>
+        
+      </div>
+    </div>
+  </div>  
+);
 
   return (
     <div className='flex flex-col space-y-10'>
@@ -240,24 +255,14 @@ end
           </div>
         </div>
       </div>
-      {loading ? (
-        <div className="flex justify-center items-center">
-          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
-            <span className="visually-hidden">.</span>
-          </div>
+      {loading && <SphereLoading/>}
+      {!loading && showImages && (
+        <div className='grid grid-cols-1'>
+          {imageUrls.map((url, index) => (
+            <img key={index} src={url} alt={`Output ${index + 1}`} />
+          ))}
         </div>
-      ) : (
-    showImages && (
-      <>
-      <div className='grid grid-cols-1'>
-  {imageUrls.map((url, index) => (
-    <img key={index} src={url} alt={`Output ${index + 1}`} className="h-3/5 w-full" />
-  ))}
-</div>
-      </>
-    )
-  )
-      }
+      )}
     </div>
   );
 };

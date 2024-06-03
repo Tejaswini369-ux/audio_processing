@@ -98,35 +98,48 @@ end
   };
 
   const handleSubmitAndRun = async () => {
-  if (!selectedFile) {
-    alert("Please select a file.");
-    return;
-  }
+    if (!selectedFile) {
+      alert("Please select a file.");
+      return;
+    }
 
-  setLoading(true);  // Start loading
-  setShowImages(false);  // Hide images until new ones are loaded
-  
-  const formData = {
-    file: selectedFile,
-    lambda: inputs.find(input => input.id === 'lambda').value,
-    M: inputs.find(input => input.id === 'M').value
+    setLoading(true);  // Start loading
+    setShowImages(false);  // Hide images until new ones are loaded
+
+    const formData = {
+      file: selectedFile,
+      lambda: inputs.find(input => input.id === 'lambda').value,
+      M: inputs.find(input => input.id === 'M').value
+    };
+    console.log(formData)
+    try {
+      const response = await axios.post('http://localhost:5000/rls-process', formData, {
+        headers: {
+          // 'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      setImageUrls(response.data.images.map(img => `http://localhost:5000${img}`));
+      setShowImages(true);  // Show images after loading
+    } catch (error) {
+      console.error('Error running the script:', error);
+    } finally {
+      setLoading(false);  // Stop loading
+    }
   };
-  console.log(formData)
-  try {
-    const response = await axios.post('http://localhost:5000/rls-process', formData, {
-      headers: {
-        // 'Content-Type': 'multipart/form-data'
-      }
-    });
-    
-    setImageUrls(response.data.images.map(img => `http://localhost:5000${img}`));
-    setShowImages(true);  // Show images after loading
-  } catch (error) {
-    console.error('Error running the script:', error);
-  } finally {
-    setLoading(false);  // Stop loading
-  }
-};
+
+const SphereLoading = () => (
+  <div className="flex felx-col fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 ">
+    <div className="w-20 h-10">
+      <div className="relative w-full h-full overflow-hidden p-2 pl-3">
+        <p className='font-sans text-sm'>Loading...</p>
+        <div className="absolute inset-0 bg-blue-button rounded-lg animate-pulse opacity-0 text-black">
+        </div>
+        
+      </div>
+    </div>
+  </div>  
+);
 
 
 
@@ -204,24 +217,14 @@ end
           </div>
         </div>
       </div>
-      {loading ? (
-        <div className="flex justify-center items-center">
-          <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
-            <span className="visually-hidden">.</span>
-          </div>
+      {loading && <SphereLoading/>}
+      {!loading && showImages && (
+        <div className='grid grid-cols-1'>
+          {imageUrls.map((url, index) => (
+            <img key={index} src={url} alt={`Output ${index + 1}`} />
+          ))}
         </div>
-      ) : (
-    showImages && (
-      <>
-       <div className='grid grid-cols-1'>
-      {imageUrls.map((url, index) => (
-        <img key={index} src={url} alt={`Output ${index + 1}`} className="h-3/5 w-full" />
-      ))}
-    </div>
-      </>
-    )
-  )
-      }
+      )}
     </div>
   );
 };

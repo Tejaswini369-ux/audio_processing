@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 
 const Feedback = () => {
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission
-    console.log({ name, email, message });
+    console.log({ name, message });
     setSubmitted(true);
   };
 
