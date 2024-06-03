@@ -61,6 +61,14 @@ function rls_denoise(lambda, inputFile, M, uniqueIdentifier)
         B_rls(i) = w_rls' * A_i;
     end
 
+    % Save the noisy signal plot
+    figure;
+    plot(t, A);
+    title('Noisy Signal');
+    xlabel('Time (s)');
+    ylabel('Amplitude');
+    saveas(gcf, ['Outputs/noisy_signal_', uniqueIdentifier, '.png']);
+
     % Save the desired signal plot
     figure;
     plot(t, D);
@@ -69,13 +77,7 @@ function rls_denoise(lambda, inputFile, M, uniqueIdentifier)
     ylabel('Amplitude');
     saveas(gcf, ['Outputs/desired_signal_', uniqueIdentifier, '.png']);
 
-    % Save the noisy signal plot
-    figure;
-    plot(t, A);
-    title('Signal Corrupted with Noise');
-    xlabel('Time (s)');
-    ylabel('Amplitude');
-    saveas(gcf, ['Outputs/noisy_signal_', uniqueIdentifier, '.png']);
+    
 
     % Save the RLS output signal plot
     figure;

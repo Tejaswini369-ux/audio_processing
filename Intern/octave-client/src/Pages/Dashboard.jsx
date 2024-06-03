@@ -60,7 +60,7 @@ const tabs1 = [
   return (
     <div className='min-h-screen flex flex-col'>
        <Navbar setToggleClick={setToggleClick} />
-       <div className='p-4 flex flex-row flex-1 mt-12'>
+       <div className='p-4 flex flex-row flex-1'>
          <div className={`hidden md:block min-w-fit border-r-4 duration-1000 ${toggleClick ? ' md:hidden' : ''}`}>
             <ul className="px-5">
               {

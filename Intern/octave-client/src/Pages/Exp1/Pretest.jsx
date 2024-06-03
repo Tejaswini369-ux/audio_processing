@@ -86,7 +86,7 @@ const Quiz = () => {
           </li>
         ))}
       </ol>
-      <button onClick={handleSubmit} className='bg-blue-button hover:bg-blue-hover rounded-lg px-2 py-1 '>Submit</button>
+        <button onClick={handleSubmit} className=' mt-5 bg-blue-button hover:bg-blue-hover rounded-lg px-2 py-1 w-1/5'>Submit</button>
       {showExplanations && (
         <div className='mt-2'>
           <p className='font-bold'>Your Score: {score}/{questions.length}</p>

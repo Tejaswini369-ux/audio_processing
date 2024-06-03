@@ -37,10 +37,11 @@ app.post('/rls-process', async(req, res) => {
 
       // console.log('Octave script output:', stdout);
       const imageUrls = [
-        `/rls_output_signal_${uniqueIdentifier}.png`,
-        `/rls_error_signal_${uniqueIdentifier}.png`,
         `/noisy_signal_${uniqueIdentifier}.png`,
-        `/desired_signal_${uniqueIdentifier}.png`
+        `/desired_signal_${uniqueIdentifier}.png`,
+        `/rls_output_signal_${uniqueIdentifier}.png`,
+        `/rls_error_signal_${uniqueIdentifier}.png`
+        
       ];
       res.status(200).json({ images: imageUrls });
     });
@@ -75,10 +76,10 @@ app.post('/lms-process', async(req, res) => {
 
       // console.log('Octave script output:', stdout);
       const imageUrls = [
-        `/lms_output_signal_${uniqueIdentifier}.png`,
-        `/lms_error_signal_${uniqueIdentifier}.png`,
         `/noisy_signal_${uniqueIdentifier}.png`,
         `/desired_signal_${uniqueIdentifier}.png`,
+        `/lms_output_signal_${uniqueIdentifier}.png`,
+        `/lms_error_signal_${uniqueIdentifier}.png`,
         `/msd_${uniqueIdentifier}.png`
       ];
       res.status(200).json({ images: imageUrls });

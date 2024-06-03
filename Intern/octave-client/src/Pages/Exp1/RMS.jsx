@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import image from '../../image.png';
-import Quiz from './Pretest';
 
 const RMS = () => {
   const [selectedFile, setSelectedFile] = useState('simulated1.csv');
@@ -10,14 +9,14 @@ const RMS = () => {
     { id: 'M', label: 'Filter length', min: 2, max: 50, step: 1, value: 5 }
   ]);
   const [code, setCode] = useState('');
-  const [codeHtml, setCodeHtml] = useState('');
+  const [codeHtml, setCodeHtml] = useState('Code will be generated here.!');
   const [imageUrls, setImageUrls] = useState(new Array(5).fill(image));
   const [loading, setLoading] = useState(false);
   const [showImages, setShowImages] = useState(false);
 
   const fileOptions = [
     { name: 'simulated.csv', file: 'simulated1.csv' },
-    { name: 'x.csv', file: 'x.csv' }
+    { name: 'real.csv', file: 'real.csv' }
   ];
 
   const handleFileChange = (file) => {
@@ -138,14 +137,15 @@ end
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
-            width="600"
+            width="650"
             height="262"
+            className='outline border-4 p-2 rounded-sm border-blue-hover'
           ></iframe>
           <div className='flex justify-between text-sm'>
-            <button onClick={handleDownloadCode} className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-10">
+            <button onClick={handleDownloadCode} className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-8">
               Download
             </button>
-            <button onClick={handleSubmitAndRun} className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-10">
+            <button onClick={handleSubmitAndRun} className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-8">
               Submit & Run
             </button>
           </div>
@@ -155,7 +155,7 @@ end
             <p className="mb-2 ml-12">Select CSV file of Input</p>
            <select
               onChange={(e) => handleFileChange(e.target.value)}
-              className="bg-white border border-gray-300 rounded-lg px-3 py-1 focus:outline-none focus:border-blue-500"
+              className="bg-white border border-black rounded-lg px-3 py-1 focus:outline-none focus:border-blue-500"
             >
               {fileOptions.map((option, index) => (
                 <option key={index} value={option.file} >{option.name}</option>
@@ -213,9 +213,9 @@ end
       ) : (
     showImages && (
       <>
-       <div className='grid grid-cols-1 space-y-5'>
+       <div className='grid grid-cols-1'>
       {imageUrls.map((url, index) => (
-        <img key={index} src={url} alt={`Image ${index + 1}`} className="h-50 object-cover " />
+        <img key={index} src={url} alt={`Output ${index + 1}`} className="h-3/5 w-full" />
       ))}
     </div>
       </>

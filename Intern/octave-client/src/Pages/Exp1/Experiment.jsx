@@ -1,34 +1,38 @@
-import React, { useState } from 'react'
-// import '../../../index.css'
+import React from 'react'
 import Simulation from './Simulation';
+import Quiz from './Pretest';
+import Postquiz from './Posttsest';
+import Theory from './Theory';
+import Procedure from './Procedure';
+import Feedback from './Feedback';
 
 const Experiment = ({activeTab}) => {
 
   const renderContent = () => {
     switch (activeTab) {
       case '':
-        return <div>Aim</div>;
+        return <div>To simulate RLS and LMS algorithms on Simulated and real bio-signal data</div>;
       case 'theory':
-        return <div>Theory</div>;
+        return <Theory/>;
       case 'pretest':
-        return <div>Pretest</div>;
+        return <Quiz/>;
       case 'procedure':
-        return <div>Procedure</div>;
+        return <Procedure/>;
       case 'simulation':
         return <Simulation />;
       case 'post-test':
-        return <div>Post-test</div>;
+        return <Postquiz/>;
       case 'references':
-        return <div>References</div>;
+        return <div >Adaptive filters, by Simon Haykin</div>;
       case 'feedback':
-        return <div>Feedback</div>;
+        return <Feedback/>;
       default:
         return <div></div>;
     }
   };
 
   return (
-          <div className="flex flex-col flex-1 gap-7 font-serif py-9 ">
+          <div className="flex flex-col flex-1 gap-7 font-serif py-2 ">
             <div>
               <p className="font-bold text-lg text-center text-blue underline hover:text-green">
                 <a href="https://www.vlab.co.in/broad-area-biotechnology-and-biomedical-engineering">

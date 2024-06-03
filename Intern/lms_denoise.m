@@ -63,6 +63,13 @@ function lms_denoise(mu, inputFile, order, uniqueIdentifier)
         e_LMS(n) = x(n) - An' * w_LMS_main;
     end
 
+     % Save the noisy signal plot
+    figure;
+    plot(A);
+    title('Noisy Signal')
+    saveas(gcf, sprintf('Outputs/noisy_signal_%s.png', uniqueIdentifier));
+    close(gcf); % Close the figure to free up memory
+
     % Save the desired signal plot
     figure;
     plot(x);
@@ -70,28 +77,26 @@ function lms_denoise(mu, inputFile, order, uniqueIdentifier)
     saveas(gcf, sprintf('Outputs/desired_signal_%s.png', uniqueIdentifier));
     close(gcf); % Close the figure to free up memory
 
-    % Save the noisy signal plot
-    figure;
-    plot(A);
-    saveas(gcf, sprintf('Outputs/noisy_signal_%s.png', uniqueIdentifier));
-    close(gcf); % Close the figure to free up memory
 
     % Save the LMS output signal plot
     figure;
     plot(estimated_output_signal);
     legend('LMS Output');
+    title('LMS Output Signal')
     saveas(gcf, sprintf('Outputs/lms_output_signal_%s.png', uniqueIdentifier));
     close(gcf); % Close the figure to free up memory
 
     % Save the error signal plot
     figure;
     plot(e_LMS);
+    title('Error Signal')
     saveas(gcf, sprintf('Outputs/lms_error_signal_%s.png', uniqueIdentifier));
     close(gcf); % Close the figure to free up memory
 
     % Save the MSD plot
     figure;
     plot(10 * log10(MSD_LMS_main));
+    title('MSD')
     saveas(gcf, sprintf('Outputs/msd_%s.png', uniqueIdentifier));
     close(gcf); % Close the figure to free up memory
 end
