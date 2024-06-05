@@ -24,11 +24,15 @@ const RMS = () => {
     console.log(file);
   };
 
-  const handleInputChange = (id, value) => {
-    const input = inputs.find(input => input.id === id);
-    const newValue = Math.min(Math.max(value, input.min), input.max);
-    setInputs(inputs.map(input => input.id === id ? { ...input, value: newValue } : input));
-  };
+ const handleInputChange = (id, value) => {
+  const input = inputs.find(input => input.id === id);
+  let newValue = Math.min(Math.max(value, input.min), input.max);
+  if (id === 'lambda' && newValue === 0) {
+    newValue = 0.001;
+  }
+  setInputs(inputs.map(input => input.id === id ? { ...input, value: newValue } : input));
+};
+
 
   const handleGenerateCode = () => {
     const generatedCode = `
@@ -132,7 +136,7 @@ const SphereLoading = () => (
   <div className="flex felx-col fixed inset-0 flex items-center justify-center bg-white bg-opacity-50 ">
     <div className="w-20 h-10">
       <div className="relative w-full h-full overflow-hidden p-2 pl-3">
-        <p className='font-sans text-sm'>Loading...</p>
+        <p className='font-sans text-sm font-bold'>Loading...</p>
         <div className="absolute inset-0 bg-blue-button rounded-lg animate-pulse opacity-0 text-black">
         </div>
         

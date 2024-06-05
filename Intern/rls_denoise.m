@@ -1,10 +1,11 @@
-function rls_denoise(lambda, inputFile, M,uniqueIdentifier)
+function rls_denoise(lambda, inputFile, M, uniqueIdentifier)
     % Function to apply RLS denoising to an EEG signal
     %
     % Parameters:
     %   lambda: Forgetting factor for RLS
     %   inputFile: Name of the input .csv file containing the EEG signal
     %   M: Length of the RLS filter
+    %   uniqueIdentifier: Unique identifier for saving the image
     % Default values for delta and fs
     delta = 1e-3;  % Small positive constant to initialize P(0)
     fs = 100;      % Sampling frequency in Hz
@@ -44,37 +45,28 @@ function rls_denoise(lambda, inputFile, M,uniqueIdentifier)
         B_rls(i) = w_rls' * A_i;
     end
     % Display the signals
-    figure;
-    plot(t, D);
+    figure('Position', [100, 100, 800, 800]); % Increase figure height
+    subplot(4,1,1), plot(t, D);
     title('Desired Signal');
     xlabel('Time (s)');
     ylabel('Amplitude');
-    saveas(gcf, ['Outputs/desired_signal_', uniqueIdentifier, '.png']);
-    close(gcf);
-
-    figure;
-    plot(t, A); 
+    subplot(4,1,2), plot(t, A);
     title('Signal Corrupted with Noise');
     xlabel('Time (s)');
     ylabel('Amplitude');
-    saveas(gcf, ['Outputs/noisy_signal_', uniqueIdentifier, '.png']);
-    close(gcf);
-
-    figure;
-    plot(t, B_rls);
+    subplot(4,1,3), plot(t, B_rls);
     title('RLS Output Signal');
     xlabel('Time (s)');
     ylabel('Amplitude');
     legend('RLS Output');
-    saveas(gcf, ['Outputs/rls_output_signal_', uniqueIdentifier, '.png']);
-    close(gcf);
-   
-    % Display the error signal
-    figure;
-    plot(t, Err_rls);
+    subplot(4,1,4), plot(t, Err_rls);
     title('RLS Error Signal');
     xlabel('Time (s)');
     ylabel('Error');
-    saveas(gcf, ['Outputs/rls_error_signal_', uniqueIdentifier, '.png']);
+    % Adjust position to increase space between plots
+    set(gcf, 'Units', 'Normalized', 'OuterPosition', [0, 0, 1, 1]);  % Maximize figure window
+    set(gcf, 'PaperPositionMode', 'auto');  % Set figure size to be the same on printed paper
+    % Save figure with unique identifier
+    saveas(gcf, sprintf('Outputs/rls_denoise_%s.png', uniqueIdentifier));
     close(gcf);
 end

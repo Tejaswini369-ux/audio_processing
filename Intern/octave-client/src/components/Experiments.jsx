@@ -16,9 +16,9 @@ const Experiments = () => {
     {
       title: 'Experiment-1',
       details: [
-        { text: 'Simulation and comparative analysis of LMS and RLS algorithms using simulated as well real time bio signals. Observe the effect of various adaptation factors like step size, forgetting factor.', link: '/exps/lms-rms/' },
-        { text: 'Simulate an Autoregressive stochastic process', link: '#' },
-        { text: 'Detect non-stationarity in stochastic processes with LMS and RLS', link: '#' }
+        { text: 'Simulation and comparative analysis of LMS and RLS algorithms using simulated as well real time bio signals. Observe the effect of various adaptation factors like step size, forgetting factor.', link: '/exps/1a/' },
+        { text: 'Simulate an Autoregressive stochastic process', link: '/exps/1b/' },
+        { text: 'Detect non-stationarity in stochastic processes with LMS and RLS', link: '/exps/1c/' }
       ]
     },
     {

@@ -37,7 +37,6 @@ const Page1 = ({ activeTab }) => {
       </div>
       <div className='pl-16 pr-10'>
       {renderContent()}
-
       </div>
     </div>
   );
