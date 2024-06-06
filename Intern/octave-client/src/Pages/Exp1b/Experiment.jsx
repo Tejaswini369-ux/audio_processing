@@ -3,7 +3,7 @@ import Quiz from './Pretest';
 import Postquiz from './Posttest';
 import Theory from './Theory';
 import Procedure from './Procedure';
-import Feedback from './Feedback';
+import Feedback from '../Exp1/Feedback';
 import AR from './AR';
 
 const Experiment = ({activeTab}) => {
