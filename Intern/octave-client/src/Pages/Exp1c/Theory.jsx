@@ -3,7 +3,7 @@ import randomprocesses from './randomprocesses.png'
 
 const Theory = () => {
   return (
-    <div className='leading-loose text-sm'>
+    <div className='leading-loose '>
       <p className='font-bold text-xl text-green underline'>Stochastic Process Definition </p>
       <ul className='list-disc'>
         <li>A stochastic process is a mathematical model that describes a sequence of random variables. The individual random variables in the sequence usually called “events.” </li>

@@ -8,11 +8,9 @@ import r4 from './r4.png'
 import r5 from './r5.png'
 import img from './img.png'
 
-
-
 const Theory = () => {
   return (
-    <div className='leading-loose text-sm'>
+    <div className='leading-loose '>
       <p className='font-bold text-xl text-green underline'>Least Mean Square (LMS) Adaptive Filter Concepts</p>
       <p >
         An adaptive filter is a computational device that iteratively models the relationship between the input and output signals of a filter. An adaptive filter self-adjusts the filter coefficients according to an adaptive algorithm. Least mean squares (LMS) algorithms are a class of adaptive filter used to mimic a desired filter by finding the filter coefficients that relate to producing the least mean square of the error signal (difference between the desired and the actual signal). It is a stochastic gradient descent method in that the filter is only adapted based on the error at the current time.

@@ -6,12 +6,24 @@ const Postquiz = () => {
       question: "Which of the following algorithm are good for tracking the nonstationary input?",
       options: ["LMS algorithm", "RLS algorithm", "Both LMS and RLS", "None of these"],
       answer: 3,
-      explanation: "Correct answer is Option :- 3 i.e., None of these"
+      explanation: "Correct answer is Option :- 4 i.e., None of these"
     },
     {
       question: "After performing the experiments, by comparing the result of LMS and RLS, which one gives better result to another one in nonstationary environment",
       options: ["RLS","LMS"],
-      answer: 1,
+      answer: 0,
+      explanation: "For a forgetting factor 𝜆 close to 1, the RLS algorithm ensures that the desired signal closely matches the output signal."
+    },
+    {
+      question: "From the experiment result, if the norm of weight is decreasing, what does it signifies? ",
+      options: ["Algorithm is trying to reach its optimal weight vector or track the input value.","It will not follow the track of input signal. "],
+      answer: 0,
+      explanation: "For a forgetting factor 𝜆 close to 1, the RLS algorithm ensures that the desired signal closely matches the output signal."
+    },
+    {
+      question: "What will be effect of increasing the order of filter in RLS and LMS in nonstationary enviroment",
+      options: [" It will improve the performance. ","It will deteriorate the performance. "],
+      answer: 0,
       explanation: "For a forgetting factor 𝜆 close to 1, the RLS algorithm ensures that the desired signal closely matches the output signal."
     }
   ];
@@ -39,7 +51,7 @@ const Postquiz = () => {
   }, 0);
 
   return (
-    <div className="postquiz font-sans text-sm">
+    <div className="postquiz font-sans">
       <ol>
         {questions.map((question, index) => (
           <li key={index} className="py-4">

@@ -5,6 +5,7 @@ import Postquiz from './Posttsest';
 import Theory from './Theory';
 import Procedure from './Procedure';
 import Feedback from './Feedback';
+import Contact from './Contact';
 
 const Experiment = ({activeTab}) => {
 
@@ -25,7 +26,9 @@ const Experiment = ({activeTab}) => {
       case 'references':
         return <div >Adaptive filters, by Simon Haykin</div>;
       case 'feedback':
-        return <Feedback/>;
+        return <Feedback />;
+      case 'contact':
+        return <Contact/>;
       default:
         return <div></div>;
     }

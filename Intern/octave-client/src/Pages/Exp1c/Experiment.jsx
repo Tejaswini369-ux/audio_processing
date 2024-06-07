@@ -5,13 +5,14 @@ import Theory from './Theory';
 import Procedure from './Procedure';
 import Feedback from '../Exp1/Feedback';
 import Simulation from './Simulation';
+import Contact from '../Exp1/Contact';
 
 const Experiment = ({activeTab}) => {
 
   const renderContent = () => {
     switch (activeTab) {
       case '':
-        return <div>To simulate RLS and LMS algorithms on Simulated and real bio-signal data</div>;
+        return <div>To detect and analyze non-stationarity in stochastic processes by using LMS (Least Mean Squares) and RLS (Recursive Least Squares) adaptive filtering algorithms.</div>;
       case 'theory':
         return <Theory/>;
       case 'pretest':
@@ -23,9 +24,16 @@ const Experiment = ({activeTab}) => {
       case 'post-test':
         return <Postquiz/>;
       case 'references':
-        return <div >Adaptive filters, by Simon Haykin</div>;
+      return( <div >
+          <ul className='display-disc'>
+            <li>Adaptive filters, by Simon Haykin</li>
+            <li>Sayed, Ali H. Fundamentals of adaptive filtering. John Wiley & Sons, 2003.</li>
+          </ul>
+        </div>);
       case 'feedback':
-        return <Feedback/>;
+        return <Feedback />;
+      case 'contact':
+        return <Contact/>
       default:
         return <div></div>;
     }

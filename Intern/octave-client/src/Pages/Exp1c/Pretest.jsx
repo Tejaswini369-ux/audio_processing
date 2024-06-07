@@ -6,8 +6,8 @@ const Quiz = () => {
     {
       question: "What is the standard form of WSSRP?",
       options: ["Wide Sense Stationary Random Points ", "Wide Sense Stationary Random Particles", "Wide Sense Stationary Random Process", "None of the above"],
-      answer: 1,
-      explanation: "Correct answer is Option :- 2 i.e., Wide Sense Stationary Random Particles"
+      answer: 2,
+      explanation: "Correct answer is Option :- 3 i.e., Wide Sense Stationary Random Process"
     },
     {
       question: "Gaussian process is a",
@@ -59,7 +59,7 @@ const Quiz = () => {
   }, 0);
 
   return (
-    <div className="postquiz font-sans text-sm">
+    <div className="postquiz font-sans ">
       <ol>
         {questions.map((question, index) => (
           <li key={index} className="py-4">

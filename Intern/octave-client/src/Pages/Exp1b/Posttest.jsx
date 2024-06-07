@@ -55,7 +55,7 @@ const Postquiz = () => {
   }, 0);
 
   return (
-    <div className="postquiz font-sans text-sm">
+    <div className="postquiz font-sans ">
       <ol>
         {questions.map((question, index) => (
           <li key={index} className="py-4">

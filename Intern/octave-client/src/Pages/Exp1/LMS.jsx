@@ -5,9 +5,8 @@ import image from '../../image.png';
 const LMS = () => {
   const [selectedFile, setSelectedFile] = useState('simulated1.csv');
   const [inputs, setInputs] = useState([
-    { id: 'step-size', label: 'Step-size', min: 0, max: 1, step: 0.0001, value: 0.5 },
-    { id: 'order', label: 'Order of Filter (M)', min: 2, max: 100, step: 1, value: 50 },
-    { id: 'experiment', label: 'No.of iterations', min: 10, max: 1000, step: 1, value: 50 }
+    { id: 'step-size', label: 'Step-size', min: 0.001, max: 0.5, step: 0.0001, value: 0.2 },
+    { id: 'order', label: 'Order of Filter (M)', min: 2, max: 100, step: 1, value: 50 }
   ]);
 
   const [code, setCode] = useState('');
@@ -116,8 +115,7 @@ end `;
   const data = {
     file: selectedFile,
     mu: inputs.find(input => input.id === 'step-size').value,
-    order: inputs.find(input => input.id === 'order').value,
-    experiment:inputs.find(input=>input.id === 'experiment').value
+    order: inputs.find(input => input.id === 'order').value
   };
 
   try {

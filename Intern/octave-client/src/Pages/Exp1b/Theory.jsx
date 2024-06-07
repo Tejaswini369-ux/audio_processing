@@ -3,7 +3,7 @@ import autoregressive from './autoregressive.png'
 
 const Theory = () => {
   return (
-    <div className='leading-loose text-sm'>
+    <div className='leading-loose'>
       <p className='font-bold text-xl text-green underline'>Autoregressive Model </p>
       <p >
       A statistical model is autoregressive if it predicts future values based on past values. For example, an autoregressive model might seek to predict a stock's future prices based on its past performance. 

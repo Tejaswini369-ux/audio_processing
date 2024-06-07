@@ -48,13 +48,12 @@ app.post('/lms-process', async(req, res) => {
     const inputFile = req.body.file;
     const mu = req.body.mu;
     const order = req.body.order;
-    const experiment = req.body.experiment;
     const uploadPath = path.join('./Inputs', inputFile);
     console.log("path is :", uploadPath);
 
     const uniqueIdentifier = uuidv4();
 
-    const command = `octave --eval "addpath('${__dirname}'); lms_denoise(${mu},${experiment} ,'${uploadPath}', ${order}, '${uniqueIdentifier}')"`;
+    const command = `octave --eval "addpath('${__dirname}'); lms_denoise(${mu},'${uploadPath}', ${order}, '${uniqueIdentifier}')"`;
 
     exec(command, (err, stdout, stderr) => {
       if (err) {

@@ -34,8 +34,6 @@ const AR = () => {
   };
 
   const handleGenerateCode = () => {
-    const order = inputs.find(input => input.id === 'p').value;
-    const coefficientArray = `phi = [${coefficients.slice(0, order).join(', ')}];`;
 
     const generatedCode = `
 function AR_process(n_steps, p, phi, sigma, uniqueIdentifier)
