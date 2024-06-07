@@ -1,82 +1,96 @@
-function lms_denoise(mu, inputFile, M, uniqueIdentifier)
+function lms_denoise(mu, inputFile, order,uniqueIdentifier)
     % Function to apply LMS denoising to an EEG signal
     %
     % Parameters:
-    %   mu: Step size for LMS
+    %   mu: Learning rate for LMS
     %   inputFile: Name of the input .csv file containing the EEG signal
-    %   M: Length of the LMS filter
-    %   uniqueIdentifier: Unique identifier for saving the image
+    %   order: Order of the LMS filter
 
-    % Default values for fs
-    fs = 100;  % Sampling frequency in Hz
+    % Default values for delta and fs
+    experiment = 100;  % Number of experiments for averaging
 
+    % Clear and close all previous states
     clc;
     close all;
 
     % Load the EEG signal from the input file
-    x = csvread(inputFile);
-
+    x = csvread(inputFile)';
+    
     % Check the length of the signal
-    n = length(x);
+    iteration = length(x);
 
-    % Initialize LMS weight vector
-    w_lms = zeros(M, 1); % Initialize LMS weight vector
+    % Initialize optimal weight vector
+    %w_opt = [0.1, 0.4, 0.4, 0.1]'; % Adjust size according to `order`
+
+    % Initialize vectors to store the weights and the mean square deviation (MSD)
+    %MSD_LMS_main = zeros(iteration, 1); % Mean square deviation (MSD)
+    w_LMS_main = zeros(order, 1);
 
     % Generate the signal corrupted with noise
-    D = x;
-    A = D + 0.5 * randn(size(D)); % Simulated noisy signal
-
-    % Initialization for LMS algorithm
-    B_lms = zeros(1, n); % LMS output signal
-    Err_lms = zeros(1, n); % LMS error signal
-    weights_lms = zeros(M, n); % Array to store LMS weights
-
-    % Adding padding to the signal for multi-tap processing
-    A_padded = [zeros(M-1, 1); A]; % Transpose the zeros matrix to make it compatible with A
-    t = (0:n-1) / fs;
-
-    % Apply the LMS algorithm
-    for i = M:n
-        % Extract the current segment of the signal for multi-tap processing
-        A_i = A_padded(i:-1:i-M+1);
-        
-        y_lms = w_lms' * A_i;
-        Err_lms(i) = D(i) - y_lms;
-        w_lms = w_lms + mu * A_i * Err_lms(i);
-        weights_lms(:, i) = w_lms;
-        B_lms(i) = w_lms' * A_i;
+    A = x + 0.5 * randn(1, iteration); % Simulated noisy signal
+    for i=1:experiment
+    % generate noise
+   % noise=0.1*randn(iteration,1);
+    % intialize adaptive filter coff zeros and input vector
+    w_LMS=zeros(order,1);
+    An=zeros(order,1);
+   % MSD_LMS=zeros(iteration);
     end
 
-    % Display the signals
-    figure('Position', [100, 100, 800, 800]); % Increase figure height
-    plot(t, D);
-    title('Desired Signal');
-    xlabel('Time (s)');
-    ylabel('Amplitude');
+    % Apply the LMS algorithm
+    for n=1:iteration
+        An = [A(n); An(1:end-1)]; % input regressor vector
+
+
+        % Update the filter coefficients
+        e_LMS=x(n)-An'*w_LMS;
+        w_LMS=w_LMS+mu*e_LMS*An;
+
+        % Store the MSD
+       % MSD_LMS(n)=norm(w_LMS-w_opt,2)^2;
+
     
-    saveas(gcf, sprintf('Outputs/lms_denoise_desired_%s.png', uniqueIdentifier));
-    close(gcf);
-    figure;
-    plot(t, A);
-    title('Signal Corrupted with Noise');
-    xlabel('Time (s)');
-    ylabel('Amplitude');
+   % MSD_LMS_main=MSD_LMS_main+MSD_LMS;
+    w_LMS_main=w_LMS_main+w_LMS;
+
     
-    saveas(gcf, sprintf('Outputs/lms_denoise_noise_%s.png', uniqueIdentifier));
-    close(gcf);
-    figure;
-    plot(t, B_lms);
-    title('LMS Output Signal');
-    xlabel('Time (s)');
-    ylabel('Amplitude');
-    legend('LMS Output');
-    saveas(gcf, sprintf('Outputs/lms_denoise_output_%s.png', uniqueIdentifier));
-    close(gcf);
-    figure;
-    plot(t, Err_lms);
-    title('LMS Error Signal');
-    xlabel('Time (s)');
-    ylabel('Error');
-    saveas(gcf, sprintf('Outputs/lms_denoise_error_%s.png', uniqueIdentifier));
-    close(gcf);
+%MSD_LMS_main=MSD_LMS_main/experiment;
+w_LMS_main=w_LMS_main/experiment;
+    
+estimated_output_signal = zeros(iteration, 1);
+    end
+for n = 1:iteration
+   An = [A(n); An(1:end-1)]; % input regressor vector
+
+    estimated_output_signal(n) = An' * w_LMS_main;
+    e_LMS(n)=x(n)-An'*w_LMS_main;
+
+end
+
+% Display of signals
+figure;
+plot (x);
+title('Desired Signal');
+saveas(gcf, sprintf('Outputs/lms_denoise_desired_%s.png', uniqueIdentifier));
+close(gcf);
+
+figure;
+plot(A);
+title('Signal Corrupted with Noise');
+saveas(gcf, sprintf('Outputs/lms_denoise_noise_%s.png', uniqueIdentifier));
+close(gcf);
+
+figure;
+plot(estimated_output_signal);
+legend('LMS Output');
+title('Adaptive Filter Outputs');
+saveas(gcf, sprintf('Outputs/lms_denoise_output_%s.png', uniqueIdentifier));
+close(gcf);
+
+figure;
+plot(e_LMS);
+title('LMS Error Signal');
+saveas(gcf, sprintf('Outputs/lms_denoise_error_%s.png', uniqueIdentifier));
+close(gcf);
+
 end

@@ -42,30 +42,21 @@ app.post('/rls-process', async(req, res) => {
   }
 });
 
-app.post('/lms-process', async(req, res) => {
+app.post('/lms-process', async (req, res) => {
   try {
-    console.log(req.body)
     const inputFile = req.body.file;
     const mu = req.body.mu;
     const order = req.body.order;
     const uploadPath = path.join('./Inputs', inputFile);
-    console.log("path is :", uploadPath);
 
     const uniqueIdentifier = uuidv4();
-
     const command = `octave --eval "addpath('${__dirname}'); lms_denoise(${mu},'${uploadPath}', ${order}, '${uniqueIdentifier}')"`;
 
-     exec(command, (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error}`);
-            if (!res.headersSent) {
-                return res.status(500).json({ error: 'Internal server error' });
-            }
-        }
-        
-        if (!res.headersSent) {
-            res.json({ stdout, stderr });
-        }
+    exec(command, (error, stdout, stderr) => {
+      if (error) {
+        console.error('Error executing Octave script:', error);
+        return res.status(500).json({ error: 'Internal server error' });
+      }
 
       const imageUrls = [
         `/lms_denoise_desired_${uniqueIdentifier}.png`,
@@ -73,11 +64,12 @@ app.post('/lms-process', async(req, res) => {
         `/lms_denoise_output_${uniqueIdentifier}.png`,
         `/lms_denoise_error_${uniqueIdentifier}.png`
       ];
+
       res.status(200).json({ images: imageUrls });
     });
   } catch (err) {
-    console.error('Error handling the upload:', err);
-    res.status(500).send(err);
+    console.error('Error handling the request:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
