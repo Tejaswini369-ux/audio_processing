@@ -168,7 +168,7 @@ end
 
   return (
     <div className='flex flex-col space-y-10'>
-      <div className="flex flex-row gap-5 space-x-5"> 
+      <div className="flex flex-row gap-5 justify-between space-x-5"> 
           <div className='flex flex-col'>
           <iframe
             srcDoc={codeHtml}
@@ -241,7 +241,7 @@ end
             </div>
           </div>
           <div className="flex flex-col">
-            <button onClick={handleGenerateCode} className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-10">
+            <button onClick={handleGenerateCode} className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-10 text-base">
               Generate Code
             </button>
           </div>

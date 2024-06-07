@@ -124,12 +124,12 @@ end
 
   return (
     <div className='flex flex-col space-y-10'>
-      <div className="flex flex-row gap-5 space-x-5"> 
+      <div className="flex flex-row gap-5 space-x-5 jusify-between"> 
         <div className='flex flex-col'>
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
-            width="800"
+            width="650"
             height="232"
             className='outline border-4 p-2 rounded-sm border-blue-hover'
           ></iframe>

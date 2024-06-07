@@ -158,7 +158,7 @@ const SphereLoading = () => (
             height="262"
             className='outline border-4 p-2 rounded-sm border-blue-hover'
           ></iframe>
-          <div className='flex justify-between text-sm'>
+          <div className='flex justify-between '>
             <button onClick={handleDownloadCode} className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-8">
               Download
             </button>
@@ -215,7 +215,7 @@ const SphereLoading = () => (
             </div>
           </div>
           <div className="flex flex-col">
-            <button onClick={handleGenerateCode} className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-10">
+            <button onClick={handleGenerateCode} className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-10 text-base">
               Generate Code
             </button>
           </div>
