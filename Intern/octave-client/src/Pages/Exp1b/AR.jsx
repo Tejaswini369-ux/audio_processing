@@ -144,8 +144,8 @@ end
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
-            width="670"
-            height="262"
+            width="850"
+            height="300"
             className='outline border-4 p-2 rounded-sm border-blue-hover'
           ></iframe>
           <div className='flex justify-between text-sm'>
@@ -243,7 +243,7 @@ end
       </div>
        {loading && <SphereLoading />}
       {!loading && showImages && (
-        <div className='grid grid-cols-1'>
+        <div className='grid grid-cols-1 '>
           {imageUrls.map((url, index) => (
             <img key={index} src={url} alt={`Output ${index + 1}`} />
           ))}

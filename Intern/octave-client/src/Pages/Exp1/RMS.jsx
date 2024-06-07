@@ -169,7 +169,7 @@ const SphereLoading = () => (
         </div>
         <div className="text-sm">
           <div className="flex flex-col">
-            <p className="mb-2 ml-12">Select CSV file of Input</p>
+            <p className="mb-2 ml-12 font-bold">Select CSV file of Input</p>
            <select
               onChange={(e) => handleFileChange(e.target.value)}
               className="bg-white border border-black rounded-lg px-3 py-1 focus:outline-none focus:border-blue-500"
@@ -180,7 +180,7 @@ const SphereLoading = () => (
             </select>
           </div>
           <div className='flex flex-col mt-8 items-center'>
-            Select the input Parameters
+            <p className='font-bold'>Select the input Parameters</p>
             <div className='bg-blue-hover px-5 py-3 mt-2 rounded-xl'>
               {inputs.map(input => (
                 <div key={input.id} className="flex flex-col items-center">

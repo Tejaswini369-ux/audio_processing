@@ -71,11 +71,7 @@ function AR_process(n_steps, p, phi, sigma,uniqueIdentifier)
     xlabel('Time'); 
 
     ylabel('Value'); 
-
  
-
-    % Plot the noise 
-
     subplot(2, 1, 2); 
 
     plot(1:n_steps, epsilon, 'r'); 

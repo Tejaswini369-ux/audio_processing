@@ -129,8 +129,8 @@ end
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
-            width="650"
-            height="262"
+            width="800"
+            height="232"
             className='outline border-4 p-2 rounded-sm border-blue-hover'
           ></iframe>
           <div className='flex justify-between text-sm'>

@@ -5,7 +5,7 @@ import image from '../../image.png';
 const LMS = () => {
   const [selectedFile, setSelectedFile] = useState('simulated1.csv');
   const [inputs, setInputs] = useState([
-    { id: 'step-size', label: 'Step-size', min: 0.001, max: 0.5, step: 0.0001, value: 0.2 },
+    { id: 'step-size', label: 'Step-size', min: 0.001, max: 0.1, step: 0.0001, value: 0.2 },
     { id: 'order', label: 'Order of Filter (M)', min: 2, max: 100, step: 1, value: 50 }
   ]);
 
@@ -33,72 +33,82 @@ const LMS = () => {
 
   const handleGenerateCode = () => {
     const generatedCode = `
-function lms_denoise(mu,experiment, inputFile, order)
+function lms_denoise(mu, inputFile, M, uniqueIdentifier)
     % Function to apply LMS denoising to an EEG signal
     %
     % Parameters:
-    %   mu: Learning rate for LMS
+    %   mu: Step size for LMS
     %   inputFile: Name of the input .csv file containing the EEG signal
-    %   order: Order of the LMS filter
-    % Default values for delta and fs
-    %experiment = 100;  % Number of experiments for averaging
-    % Clear and close all previous states
+    %   M: Length of the LMS filter
+    %   uniqueIdentifier: Unique identifier for saving the image
+
+    % Default values for fs
+    fs = 100;  % Sampling frequency in Hz
+
     clc;
     close all;
+
     % Load the EEG signal from the input file
-    x = csvread(inputFile)';
-    
+    x = csvread(inputFile);
+
     % Check the length of the signal
-    iteration = length(x);
-    % Initialize optimal weight vector
-    %w_opt = [0.1, 0.4, 0.4, 0.1]'; 
-    % Initialize vectors to store the weights and the mean square deviation (MSD)
-    %MSD_LMS_main = zeros(iteration, 1); % Mean square deviation (MSD)
-    w_LMS_main = zeros(order, 1);
+    n = length(x);
+
+    % Initialize LMS weight vector
+    w_lms = zeros(M, 1); % Initialize LMS weight vector
+
     % Generate the signal corrupted with noise
-    A = x + 0.5 * randn(1, iteration); % Simulated noisy signal
-    for i=1:experiment
-    % generate noise
-   % noise=0.1*randn(iteration,1);
-    % intialize adaptive filter coff zeros and input vector
-    w_LMS=zeros(order,1);
-    An=zeros(order,1);
-   % MSD_LMS=zeros(iteration);
-    end
+    D = x;
+    A = D + 0.5 * randn(size(D)); % Simulated noisy signal
+
+    % Initialization for LMS algorithm
+    B_lms = zeros(1, n); % LMS output signal
+    Err_lms = zeros(1, n); % LMS error signal
+    weights_lms = zeros(M, n); % Array to store LMS weights
+
+    % Adding padding to the signal for multi-tap processing
+    A_padded = [zeros(M-1, 1); A]; % Transpose the zeros matrix to make it compatible with A
+    t = (0:n-1) / fs;
+
     % Apply the LMS algorithm
-    for n=1:iteration
-        An = [A(n); An(1:end-1)]; % input regressor vector
-        % Update the filter coefficients
-        e_LMS=x(n)-An'*w_LMS;
-        w_LMS=w_LMS+mu*e_LMS*An;
-        % Store the MSD
-       % MSD_LMS(n)=norm(w_LMS-w_opt,2)^2;
-    
-   % MSD_LMS_main=MSD_LMS_main+MSD_LMS;
-    w_LMS_main=w_LMS_main+w_LMS;
-    
-%MSD_LMS_main=MSD_LMS_main/experiment;
-w_LMS_main=w_LMS_main/experiment;
-    
-estimated_output_signal = zeros(iteration, 1);
+    for i = M:n
+        % Extract the current segment of the signal for multi-tap processing
+        A_i = A_padded(i:-1:i-M+1);
+        
+        y_lms = w_lms' * A_i;
+        Err_lms(i) = D(i) - y_lms;
+        w_lms = w_lms + mu * A_i * Err_lms(i);
+        weights_lms(:, i) = w_lms;
+        B_lms(i) = w_lms' * A_i;
     end
-for n = 1:iteration
-   An = [A(n); An(1:end-1)]; % input regressor vector
-    estimated_output_signal(n) = An' * w_LMS_main;
-    e_LMS(n)=x(n)-An'*w_LMS_main;
+
+    % Display the signals
+    figure('Position', [100, 100, 800, 800]); % Increase figure height
+    subplot(4,1,1), plot(t, D);
+    title('Desired Signal');
+    xlabel('Time (s)');
+    ylabel('Amplitude');
+    subplot(4,1,2), plot(t, A);
+    title('Signal Corrupted with Noise');
+    xlabel('Time (s)');
+    ylabel('Amplitude');
+    subplot(4,1,3), plot(t, B_lms);
+    title('LMS Output Signal');
+    xlabel('Time (s)');
+    ylabel('Amplitude');
+    legend('LMS Output');
+    subplot(4,1,4), plot(t, Err_lms);
+    title('LMS Error Signal');
+    xlabel('Time (s)');
+    ylabel('Error');
+    % Adjust position to increase space between plots
+    set(gcf, 'Units', 'Normalized', 'OuterPosition', [0, 0, 1, 1]);  % Maximize figure window
+    set(gcf, 'PaperPositionMode', 'auto');  % Set figure size to be the same on printed paper
+    % Save figure with unique identifier
+    saveas(gcf, sprintf('Outputs/lms_denoise_%s.png', uniqueIdentifier));
+    close(gcf);
 end
-% Display of signals
-figure;
-subplot(5,1,1), plot (x);
-title('Desired Signal');
-subplot(5,1,2), plot(A);
-title('Signal Corrupted with Noise');
-subplot(5,1,3), plot(estimated_output_signal);
-legend('LMS Output');
-title('Adaptive Filter Outputs');
-subplot(5,1,4), plot(e_LMS);
-title('LMS Error Signal');
-end `;
+`;
     setCode(generatedCode);
     setCodeHtml(`<pre>${generatedCode}</pre>`);
   };
@@ -167,7 +177,7 @@ end `;
             height="262"
             className='outline border-4 p-2 rounded-sm border-blue-hover'
           ></iframe>
-          <div className='flex justify-between text-sm'>
+          <div className='flex justify-between '>
             <button 
               className="bg-blue-button rounded-lg px-3 py-1 hover:bg-blue-hover mt-8"
               onClick={handleDownload}
@@ -185,7 +195,7 @@ end `;
         
         <div className="text-sm">
           <div className="flex flex-col">
-            <p className="mb-2 ml-12 ">Select CSV file of Input</p>
+            <p className="mb-2 ml-12 font-bold">Select CSV file of Input</p>
              <select
               onChange={(e) => handleFileChange(e.target.value)}
               className="bg-white border border-black rounded-lg px-3 py-1 focus:outline-none "
@@ -195,8 +205,8 @@ end `;
               ))}
             </select>
           </div>
-          <div className='flex flex-col mt-8 items-center'>
-            Select the input Parameters
+          <div className='flex flex-col mt-8 items-center '>
+            <p className='font-bold'> Select the input Parameters</p>
             <div className='bg-blue-hover px-5 py-3 mt-2 rounded-xl'>
               {inputs.map(input => (
                 <div key={input.id} className="flex flex-col items-center">

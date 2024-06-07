@@ -55,16 +55,23 @@ app.post('/lms-process', async(req, res) => {
 
     const command = `octave --eval "addpath('${__dirname}'); lms_denoise(${mu},'${uploadPath}', ${order}, '${uniqueIdentifier}')"`;
 
-    exec(command, (err, stdout, stderr) => {
-      if (err) {
-        console.error('Error executing Octave script:', err);
-        res.send(err);
-        console.error('stderr:', stderr);
-        return res.status(500).send(err);
-      }
+     exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`exec error: ${error}`);
+            if (!res.headersSent) {
+                return res.status(500).json({ error: 'Internal server error' });
+            }
+        }
+        
+        if (!res.headersSent) {
+            res.json({ stdout, stderr });
+        }
 
       const imageUrls = [
-        `/lms_denoise_${uniqueIdentifier}.png`
+        `/lms_denoise_desired_${uniqueIdentifier}.png`,
+        `/lms_denoise_noise_${uniqueIdentifier}.png`,
+        `/lms_denoise_output_${uniqueIdentifier}.png`,
+        `/lms_denoise_error_${uniqueIdentifier}.png`
       ];
       res.status(200).json({ images: imageUrls });
     });
@@ -112,7 +119,9 @@ app.post('/lms_nonstationary-process', async (req, res) => {
         return res.status(500).send(err);
       }
       const imageUrls = [
-        `/lms_nonstationary_${uniqueIdentifier}.png`
+        `/lms_nonstationary_output_${uniqueIdentifier}.png`,
+        `/lms_nonstationary_error_${uniqueIdentifier}.png`,
+        `/lms_nonstationary_weight_${uniqueIdentifier}.png`
       ];
       res.status(200).json({ images: imageUrls });
     });
