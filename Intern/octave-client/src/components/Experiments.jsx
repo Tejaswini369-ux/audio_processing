@@ -31,8 +31,8 @@ const Experiments = () => {
     {
       title: 'Simulation of adaptive noise cancellation, interference canceling, channel equalization using appropriate adaptive filters for various scenario and compare the performance for various other variants of these adaptive algorithms',
       details: [
-        { text: 'Implementation and analysis of Autoregressive Stochastic processes and Minimum Variance Distortionless Beamformer using LMS and Monte-Carlo Runs.', link: '#' },
-        { text: 'Simulate an adaptive prediction and equalization with LMS and RLS Algorithm.', link: '#' }
+        { text: 'Implementation and analysis of Autoregressive Stochastic processes and Minimum Variance Distortionless Beamformer using LMS and Monte-Carlo Runs.', link: '/exps/2a' },
+        { text: 'Simulate an adaptive prediction and equalization with LMS and RLS Algorithm.', link: '/exps/2b' }
       ]
     },
     {

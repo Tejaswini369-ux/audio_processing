@@ -5,6 +5,8 @@ import Page1 from './Page1';
 import Experiment1 from './Exp1/Experiment';
 import Experiment2 from './Exp1b/Experiment';
 import Experiment3 from './Exp1c/Experiment';
+import Experiment2a from './Exp2a/Experiment';
+import Experiment2b from './Exp2b/Experiment';
 import { useMediaQuery } from 'react-responsive';
 
 export default function Dashboard() {
@@ -41,7 +43,15 @@ export default function Dashboard() {
   }, [toggleClick]);
 
   useEffect(() => {
-    if (section.startsWith('exps/1a')) {
+    if (section.startsWith('exps/2a')) {
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(4);
+    } else if (section.startsWith('exps/2b')) {
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(5);
+     } else if (section.startsWith('exps/1a')) {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(1);
@@ -132,6 +142,8 @@ export default function Dashboard() {
          {page === 1 && <Experiment1 activeTab={activeTab} />}
         {page === 2 && <Experiment2 activeTab={activeTab} />}
         {page === 3 && <Experiment3 activeTab={activeTab} />}
+        {page === 4 && <Experiment2a activeTab={activeTab} />}
+        {page === 5 && <Experiment2b activeTab={activeTab} />}
        </div>
     </div>
   );

@@ -146,6 +146,156 @@ app.post('/rls_nonstationary-process', async (req, res) => {
   }
 });
 
+app.post('/ar_lms', async (req, res) => {
+  try {
+    console.log(req.body);
+    const { N, u_init, mu } = req.body;
+    const uniqueIdentifier = uuidv4();
+    const command = `octave --eval "addpath('${__dirname}'); lms_ar(${N}, [${u_init}], ${mu},'${uniqueIdentifier}')"`;
+
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        console.error('Error executing Octave script:', err);
+        console.error('stderr:', stderr);
+        return res.status(500).send(err);
+      }
+      const imageUrls = [
+        `/comparision_${uniqueIdentifier}.png`,
+        `/random_walk_of_w1_${uniqueIdentifier}.png`,
+        `/random_walk_of_w2_${uniqueIdentifier}.png`
+      ];
+      res.status(200).json({ images: imageUrls });
+    });
+  } catch (err) {
+    console.error('Error handling the upload:', err);
+    res.status(500).send(err);
+  }
+});
+
+app.post('/mvdr_beamformer', async (req, res) => {
+  try {
+    console.log(req.body);
+    const { N, theta_s, theta_i, ss, snr, num_runs } = req.body;
+    const uniqueIdentifier = uuidv4();
+    const command = `octave --eval "addpath('${__dirname}'); mvdr_beamformer_with_monte_carlo(${N}, ${theta_s}, ${theta_i},${ss},[${snr}],${num_runs},'${uniqueIdentifier}')"`;
+
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        console.error('Error executing Octave script:', err);
+        console.error('stderr:', stderr);
+        return res.status(500).send(err);
+      }
+      const imageUrls = [
+        `/monte_carlo_${uniqueIdentifier}.png`
+      ];
+      res.status(200).json({ images: imageUrls });
+    });
+  } catch (err) {
+    console.error('Error handling the upload:', err);
+    res.status(500).send(err);
+  }
+});
+
+app.post('/lms_equ', async (req, res) => {
+  try {
+    console.log(req.body);
+    const { N, signal_power, noise_power, mu } = req.body;
+    const uniqueIdentifier = uuidv4();
+    const command = `octave --eval "addpath('${__dirname}'); lms_equal(${N}, ${signal_power}, ${noise_power},${mu},'${uniqueIdentifier}')"`;
+
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        console.error('Error executing Octave script:', err);
+        console.error('stderr:', stderr);
+        return res.status(500).send(err);
+      }
+      const imageUrls = [
+        `/lms_eq_${uniqueIdentifier}.png`
+      ];
+      res.status(200).json({ images: imageUrls });
+    });
+  } catch (err) {
+    console.error('Error handling the upload:', err);
+    res.status(500).send(err);
+  }
+});
+
+app.post('/lms_predict', async (req, res) => {
+  try {
+    console.log(req.body);
+    const { n, mu, sigma_nu, a } = req.body;
+    const uniqueIdentifier = uuidv4();
+    const command = `octave --eval "addpath('${__dirname}'); adaptive_filter(${n},[${mu}], ${sigma_nu}, ${a},'${uniqueIdentifier}')"`;
+
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        console.error('Error executing Octave script:', err);
+        console.error('stderr:', stderr);
+        return res.status(500).send(err);
+      }
+      const imageUrls = [
+        `/desired_output_${uniqueIdentifier}.png`,
+        `/learning_curve_${uniqueIdentifier}.png`,
+        `/random_walk_${uniqueIdentifier}.png`
+      ];
+      res.status(200).json({ images: imageUrls });
+    });
+  } catch (err) {
+    console.error('Error handling the upload:', err);
+    res.status(500).send(err);
+  }
+});
+
+app.post('/rls_equ', async (req, res) => {
+  try {
+    console.log(req.body);
+    const { W, xi_R, N, SNR_dB,L,delay } = req.body;
+    const uniqueIdentifier = uuidv4();
+    const command = `octave --eval "addpath('${__dirname}'); eqrls(${W}, ${xi_R}, ${N},${SNR_dB},${L},${delay},'${uniqueIdentifier}')"`;
+
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        console.error('Error executing Octave script:', err);
+        console.error('stderr:', stderr);
+        return res.status(500).send(err);
+      }
+      const imageUrls = [
+        `/rls_eq_${uniqueIdentifier}.png`
+      ];
+      res.status(200).json({ images: imageUrls });
+    });
+  } catch (err) {
+    console.error('Error handling the upload:', err);
+    res.status(500).send(err);
+  }
+});
+
+app.post('/rls_predict', async (req, res) => {
+  try {
+    console.log(req.body);
+    const { n, sigma_nu, a, lambda } = req.body;
+    const uniqueIdentifier = uuidv4();
+    const command = `octave --eval "addpath('${__dirname}'); predictor_rls(${n}, ${sigma_nu}, ${a},${lambda},'${uniqueIdentifier}')"`;
+
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        console.error('Error executing Octave script:', err);
+        console.error('stderr:', stderr);
+        return res.status(500).send(err);
+      }
+      const imageUrls = [
+        `/desired_output_${uniqueIdentifier}.png`,
+        `/learning_curve_${uniqueIdentifier}.png`,
+        `/random_walk_${uniqueIdentifier}.png`,
+      ];
+      res.status(200).json({ images: imageUrls });
+    });
+  } catch (err) {
+    console.error('Error handling the upload:', err);
+    res.status(500).send(err);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
