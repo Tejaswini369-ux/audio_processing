@@ -1,36 +1,40 @@
 import React, { useState } from 'react';
+import question1 from './question1.png'
+import question2 from './question2.png'
 
 const Quiz = () => {
   const questions = [
     {
-      question: "LMS equalizer minimizes __________",
-      options: ["Computational complexity", "Cost", "Mean square error", "Power density of output signal"],
-      answer: 2,
-      explanation: "Correct answer is Option :- 3 i.e., Mean square error"
-    },
-    {
-      question: "Major application of adaptive filtering",
-      options: ["System Identification", "Prediction", "Channel equalization", "All of above"],
+      question: "In the given model, what is the nature of the process noise v(n) ?",
+      options: ["Zero-mean", "unit variance white noise", "measurement noise", "All the above"],
       answer: 3,
-      explanation: "Correct answer is Option :- 4 i.e., All of above"
+      explanation: "Correct answer is Option :- 4 i.e., All the above."
     },
     {
-      question: "For N symbol inputs, LMS algorithm requires ______ operations per iterations.",
-      options: ["2N", "N+1", "2N+1", "N2"],
+      question: "What is the role of the Kalman gain in the Kalman filter?",
+      options: ["It updates the state transition matrix.", "It determines the measurement noise.", "It adjusts the predicted state estimate based on the measurement residual.", "It computes the measurement matrix."],
       answer: 2,
-      explanation: "Correct answer is Option :- 3 i.e., 2N+1"
+      explanation: "Correct answer is Option :- 3 i.e., It adjusts the predicted state estimate based on the measurement residual."
     },
     {
-      question: "In the context of adaptive prediction, which matrix is updated recursively in the RLS algorithm?",
-      options: ["Identity matrix", "Correlation matrix", "Inverse correlation matrix", "Gain matrix"],
-      answer: 2,
-      explanation: "Correct answer is Option :- 3 i.e., Inverse correlation matrix"
+      question: "What does the parameter λ represent in the given model?",
+      options: ["Measurement noise variance", "State transition scalar", "Kalman gain scalar", "Error covariance scalar"],
+      answer: 1,
+      explanation: "Correct answer is Option :- 2 i.e., State transition scalar."
     },
     {
-      question: "Which of the following correctly describes the cost function minimized by the RLS algorithm?",
-      options: ["The sum of squared errors", "The product of squared errors", "The weighted sum of squared errors with an exponential weighting factor", "The absolute sum of errors"],
-      answer: 2,
-      explanation: "Correct answer is Option :- 3 i.e., The weighted sum of squared errors with an exponential weighting factor"
+      question: "",
+      images: [question1],
+      options: ["The state estimate after measurement update", "The state estimate before measurement update", "The initial state estimate", "The measurement noise"],
+      answer: 1,
+      explanation: "Correct answer is Option :- 2 i.e., The state estimate before measurement update."
+    },
+    {
+      question: "",
+      images: [question2],
+      options: ["The prediction of the next state", "The correction based on the measurement residual", "The measurement noise", "The Kalman gain"],
+      answer: 0,
+      explanation: "Correct answer is Option :- 1 i.e., The prediction of the next state."
     }
   ];
 

@@ -24,15 +24,15 @@ const Experiments = () => {
     {
       title: 'Study and implementation of Kalman filter',
       details: [
-        { text: 'Correspondence between the initial conditions of the Kalman variables and prediction performance', link: '#' },
-        { text: 'With an unforced dynamic model and noiseless state space model.', link: '#' }
+        { text: 'Correspondence between the initial conditions of the Kalman variables and prediction performance', link: '/exps/2a' },
+        { text: 'With an unforced dynamic model and noiseless state space model.', link: '/exps/2b' }
       ]
     },
     {
       title: 'Simulation of adaptive noise cancellation, interference canceling, channel equalization using appropriate adaptive filters for various scenario and compare the performance for various other variants of these adaptive algorithms',
       details: [
-        { text: 'Implementation and analysis of Autoregressive Stochastic processes and Minimum Variance Distortionless Beamformer using LMS and Monte-Carlo Runs.', link: '/exps/2a' },
-        { text: 'Simulate an adaptive prediction and equalization with LMS and RLS Algorithm.', link: '/exps/2b' }
+        { text: 'Implementation and analysis of Autoregressive Stochastic processes and Minimum Variance Distortionless Beamformer using LMS and Monte-Carlo Runs.', link: '/exps/3a' },
+        { text: 'Simulate an adaptive prediction and equalization with LMS and RLS Algorithm.', link: '/exps/3b' }
       ]
     },
     {

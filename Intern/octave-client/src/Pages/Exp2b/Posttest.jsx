@@ -1,40 +1,39 @@
 import React, { useState } from 'react';
-import learningcurveforrls from './learningcurveforrls.png';
-import randomwalkbehaviour from './randomwalkbehaviour.png';
+import question3 from './question3.png'
 
 const Quiz = () => {
   const questions = [
     {
-      question: " Which of the following statements best describes the behaviour of the Mean Squared Error (MSE) in the learning curve for the RLS algorithm (from the figure)?",
-      images: [learningcurveforrls],
-      options: ["The MSE increases over time.", "The MSE remains constant over time.", "The MSE decreases rapidly initially and then stabilizes.", "The MSE fluctuates randomly with no clear trend."],
+      question: "In the Kalman filter simulation, what is the initial state estimate represented by?",
+      options: ["A", "x0", "num_steps", "x0_est"],
+      answer: 3,
+      explanation: "Correct answer is Option :- 4 i.e., x0_est"
+    },
+    {
+      question: "In the absence of process noise, how does the Kalman filter primarily account for uncertainties in the state estimates?",
+      options: ["Through the state transition matrix.", "By adjusting the measurement noise variance.", "By updating the error covariance matrix using the Kalman gain.", "By modifying the initial state estimate."],
       answer: 2,
-      explanation: "Correct answer is Option :- 3 i.e., The MSE decreases rapidly initially and then stabilizes."
+      explanation: "Correct answer is Option :- 3 i.e., By updating the error covariance matrix using the Kalman gain."
     },
     {
-      question: "Convergence rate of LMS is fast.",
-      options: ["True", "False"],
+      question: "Can the initial state estimate (x0_est) be changed, and what effect does it have on the Kalman filter simulation?",
+      options: ["No, it must always be [0; 0].", "Yes, it can be changed, and it affects the initial convergence and accuracy of the filter.  ", "No, changing it will cause the filter to fail.", "Yes, it can be changed, but it has no effect on the simulation."],
       answer: 1,
-      explanation: "Correct answer is Option :- 2 i.e., False"
+      explanation: "Correct answer is Option :- 2 i.e., Yes, it can be changed, and it affects the initial convergence and accuracy of the filter."
     },
     {
-      question: "What is the limitation of the LMS algorithm?",
-      options: ["low convergence rate", "low signal to noise ratio", "Both of above", "None of above"],
-      answer: 2,
-      explanation: "Correct answer is Option :- 3 i.e., Both of above"
-    },
-    {
-      question: "What does the random walk behaviour plot indicate in the context of adaptive filtering (Hint: observe the figure given below)?",
-      images: [randomwalkbehaviour],
-      options: ["It shows the variation of the input signal over time.", "It compares the actual filter weights with the true value over iterations.", "It displays the desired output signal.", "It shows the fluctuation of the mean squared error over iterations."],
+      question: "What is the main observation about the estimated state (x0_est) compared to the true state (x0) for State 1 over time? (From the figure)",
+      images: [question3],
+      options: ["The estimated state diverges significantly from the true state.", "The estimated state closely follows the true state.", "The estimated state fluctuates widely around the true state.", "The estimated state remains constant while the true state changes."],
       answer: 1,
-      explanation: "Correct answer is Option :- 2 i.e., It compares the actual filter weights with the true value over iterations."
+      explanation: "Correct answer is Option :- 2 i.e., The estimated state closely follows the true state."
     },
     {
-      question: " After performing the experiments, by comparing the result of LMS and RLS, which one gives better result to another one",
-      options: ["RLS based equalizer", "LMS based equalizer"],
-      answer: 0,
-      explanation: "Correct answer is Option :- 1 i.e., RLS based equalizer"
+      question: "What can be inferred about the behaviour of State 2 from the simulation results?(From the Figure)",
+      images: [question3],
+      options: ["State 2 is decreasing over time.", "State 2 remains constant after an initial change.", "State 2 oscillates significantly.", "State 2 shows an exponential growth."],
+      answer: 1,
+      explanation: "Correct answer is Option :- 2 i.e., State 2 remains constant after an initial change."
     }
   ];
 

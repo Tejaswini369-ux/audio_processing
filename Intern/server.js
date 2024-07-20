@@ -296,6 +296,60 @@ app.post('/rls_predict', async (req, res) => {
   }
 });
 
+app.post('/Estimation', async (req, res) => {
+  try {
+    console.log(req.body);
+    const { N, dt, u, y0, v0, R } = req.body;
+    const uniqueIdentifier = uuidv4();
+    const command = `octave --eval "addpath('${__dirname}'); kalmanFilterEstimation(${N}, ${dt}, ${u},${y0},${v0},${R},'${uniqueIdentifier}')"`;
+
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        console.error('Error executing Octave script:', err);
+        console.error('stderr:', stderr);
+        return res.status(500).send(err);
+      }
+      const imageUrls = [
+        `/position_${uniqueIdentifier}.png`,
+        `/velocity_${uniqueIdentifier}.png`,
+        `/position_error_${uniqueIdentifier}.png`,
+        `/velocity_error_${uniqueIdentifier}.png`,
+      ];
+      res.status(200).json({ images: imageUrls });
+    });
+  } catch (err) {
+    console.error('Error handling the upload:', err);
+    res.status(500).send(err);
+  }
+});
+
+app.post('/Simulation', async (req, res) => {
+  try {
+    console.log(req.body);
+    const { A_octave, x0, num_steps, x0_est } = req.body;
+const uniqueIdentifier = uuidv4();
+const A = `[${A_octave.map(row => '[' + row.join(',') + ']').join(';')}]`;
+const command = `octave --eval "addpath('${__dirname}'); kalman_filter_simulation(${A}, [${x0}], ${num_steps}, [${x0_est}], '${uniqueIdentifier}')"`
+
+
+    exec(command, (err, stdout, stderr) => {
+      if (err) {
+        console.error('Error executing Octave script:', err);
+        console.error('stderr:', stderr);
+        return res.status(500).send(err);
+      }
+      const imageUrls = [
+        `/state_1_${uniqueIdentifier}.png`,
+        `/state_2_${uniqueIdentifier}.png`,
+      ];
+      res.status(200).json({ images: imageUrls });
+    });
+  } catch (err) {
+    console.error('Error handling the upload:', err);
+    res.status(500).send(err);
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

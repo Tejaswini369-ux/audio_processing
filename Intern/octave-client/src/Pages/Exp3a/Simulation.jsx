@@ -25,7 +25,7 @@ const Simulation = () => {
           }`}
           onClick={() => setActiveSection('LMS')}
         >
-          Autoregressive
+          LMS
         </button>
         <button
           className={`px-6 py-2 rounded-lg ${

@@ -1,88 +1,52 @@
 import React from 'react'
-import arprocessanalyser from './arprocessanalyser.png'
-import arprocessgenerator from './arprocessgenerator.png'
-import adaptivefilter from './adaptivefilter.png'
-import equation1 from './equation1.png'
-import equation2 from './equation2.png'
-import mvdr from './mvdr.png'
+import kalmanfilter from './kalmanfilter.png'
 
 const Theory = () => {
   return (
     <div className='leading-loose text-sm'>
-      <p className='font-bold text-xl text-green underline'>Minimum Variance Distortion less Beamformer Using LMS and Monte-Carlo Runs<br /><br />Introduction to Beamforming</p>
-      <p>Beamforming is a signal processing technique used in sensor arrays for directional signal transmission or reception. This technique involves combining signals from multiple sensors in such a way that signals from a particular direction are constructively combined while those from other directions are destructively interfered. Beamforming is widely used in applications such as radar, sonar, wireless communications, and audio signal processing.</p>
-      <p className='font-bold text-xl text-green underline'>Minimum Variance Distortion less Response (MVDR) Beamformer </p>
-      <p>The MVDR beamformer, also known as the Capon beamformer, is designed to minimize the output power of the beamformer subject to the constraint that the response in the direction of the desired signal remains unity. This can be mathematically expressed as:<br />
-          <i>min<sub>w</sub>w<sup>H</sup>HRw subject to w<sup>H</sup>a(θ) = 1</i><br />
-          where:
-          <ul className='list-disc'>  
-            <li> w is the beamforming weight vector,</li>
-            <li>R is the covariance matrix of the input data,</li>
-            <li>a(θ) is the steering vector in the direction θ</li>  
-          </ul>
-          The solution to this optimization problem is given by:<br />
-          <i>w<sub>MvDR</sub> =R<sup>-1</sup>a(θ)/a<sup>H</sup>R<sup>-1</sup>a(θ)</i><br />
-          This solution ensures that the desired signal is preserved while minimizing the power from interference and noise.
+      <p className='font-bold text-xl text-green underline'>Kalman Filter</p>
+      <p>The Kalman Filter algorithm is a powerful tool for estimating and predicting system states in the presence of uncertainty and is widely used as a fundamental component in applications such as target tracking, navigation, and control. The Kalman Filter predicts the future system state based on past estimations.<br /> </p>
+      <p>Kalman filter is an algorithm that combines information about the state of a system using predictions based on a physical model and noisy measurements. It is called a “filter” because it is filtering out measurement noise. Kalman filter has many applications in robotics. For example, it can be used for localization of coordinates and velocity of a robot based on measurements of distance to certain landmarks. It’s widely used for filtering information from GPS sensors and radars. Kalman filters are often used to optimally estimate the internal states of a system in the presence of uncertain and indirect measurements.</p>
+      <img src={kalmanfilter} alt='kalman filter'/>
+      <p>Kalman Filter performs on two main operations. They are,
+        <ol className='list-decimal'>
+          <li>Estimating the next state of the machine</li>
+          <li>Correcting the estimated state with actual measurements</li>
+        </ol>
       </p>
-      <p className='font-bold text-xl text-green underline'>Least Mean Squares (LMS) Algorithm </p>
-      <p>The Least Mean Squares (LMS) algorithm is an adaptive filter used to find the filter coefficients that minimize the mean square error between the desired signal and the actual output of the filter. In the context of beamforming, the LMS algorithm can be used to iteratively adjust the beamforming weights to minimize the output power. The update rule for the weights is given by:<br />
-      <i>w(n + 1) = w(n) - μx(n)ⅇ*(n)</i></p>
-      <p>where:
-      <ul className='list-disc'>
-      <li>μ is the step size parameter,</li>
-      <li>x(n) is the input signal vector at time n,</li>
-      <li>e(n) is the error signal, defined as the difference between the desired signal and the actual output.</li>
-      </ul>
-      The LMS algorithm is simple to implement and computationally efficient, making it suitable for real-time applications.
-      </p><br /><br />
-      <img src ={mvdr} alt='mvdr'/><br />
-      <p className='font-bold text-xl text-green underline'>Monte Carlo Simulations </p>
-      <p>Monte Carlo simulations are a statistical technique used to model and analyse the behaviour of complex systems through random sampling. In the context of beamforming, Monte Carlo simulations can be used to evaluate the performance of the MVDR beamformer under various scenarios, such as different signal-to-noise ratios, array geometries, and interference conditions.<br />
-      The combination of MVDR beamforming with the LMS algorithm and Monte Carlo simulations provides a robust framework for adaptive beamforming. The LMS algorithm adapts the beamforming weights in real-time, ensuring that the MVDR criterion is satisfied even in changing environments. Monte Carlo simulations can be used to evaluate the performance of this adaptive approach under different scenarios and validate its effectiveness.</p>
-      <p className='font-bold text-xl text-green underline'>Advantages </p>
-      <p>
-        <ul className='list-disc'>
-        <li><b>Real-Time Adaptation:</b> The LMS algorithm allows for real-time adjustment of the beamforming weights, making the system adaptable to changing conditions.<br /></li>
-        <li><b>Performance Evaluation:</b> Monte Carlo simulations provide a comprehensive evaluation of the system's performance under various scenarios, ensuring robustness.</li>
-        </ul>
+      <p>Kalman filters combine two sources of information, the predicted states and noisy measurements, to produce optimal, unbiased state estimates. The essential part of the Kalman filter is to construct initial ensemble. The initial ensemble contains information about the initial states, parameters and their uncertainties.<br /></p>
+      <p>The Kalman filter is a set of mathematical equations that provides an efficient computational means to estimate the state of a process in a way that minimizes the mean squared error. As an optimal recursive data processing algorithm, the Kalman filter combines all available measurement data plus prior knowledge about the system and measuring devices to produce an estimate of the desired variables in such a manner that error is minimized statistically. It processes all available measurements regardless of their precision to estimate the current value of the variables of interest. In addition, it does not require all previous data to be stored and reprocessed every time a new measurement is taken.<br /></p>
+      <p className='font-bold text-xl text-green underline'>Kalman Filter equations</p>
+      <p>Kalman Filter maintains the estimates of the state and the error covariance matrix of the state estimation.</p>
+      <p><b>Notations:</b><br />
+      X(t|t) — Estimate of x(t) given measurements z(t) and z (t-1), …<br />
+      X(t+1|t) — Estimate of x(t+1) given measurements z(t) and z (t-1), …<br />
+      P(t|t) — Covariance of X(t) given z(t), z(t-1), …<br />
+      P(t+1|t) — Covariance of X(t+1) given z(t), z(t-1), …<br />
+      H(t) — transformation matrix<br />
+      G(t)=Kalman gain<br />
       </p>
-      <p className='font-bold text-xl text-green underline'>Disadvantages </p>
-      <p>
-        <ul className='list-disc'>
-          <li><b>Computational Complexity:</b> While the LMS algorithm is computationally efficient, the overall complexity can increase with the size of the sensor array and the number of Monte Carlo runs.<br /></li>
-          <li><b>Convergence:</b> Ensuring the convergence of the LMS algorithm to the optimal solution requires careful selection of the step size parameter μ.</li>
-        </ul>
+      <p><b>State Estimation</b><br />We have known are x(t|t), u (t), P(t|t) and the new measurement <i>z</i>(t+1).</p>
+      <p><b>Time Update</b><br />
+        <ol className='list-decimal'>
+          <li>State Prediction <b>x</b>(t +1|t) = <b>F</b>(<i>t</i>)<b>x</b>(t|t) + <b>G</b>(<i>t</i>)u(<i>t</i>)</li>
+          <li>Measurement Prediction: <b>z</b>(<i>t</i>+1|<i>t</i>) = <b>H</b>(<i>t</i>)<b>x</b>(<i>t</i>+1|<i>t</i>)</li>
+        </ol>
       </p>
-      <p className='font-bold text-xl text-green underline'><br />AR process with LMS and monte-carlo runs </p>
-      <p>Autoregressive models operate under the premise that past values have an effect on current values, which makes the statistical technique popular for analysing nature, economics, and other processes that vary over time. Multiple regression models forecast a variable using a linear combination of predictors, whereas autoregressive models use a combination of past values of the variable. </p>
-      <img src={arprocessanalyser} alt='ar process analyser'/>
-      <p>We consider the example of M order AR process that is real valued. 
-        The above figure shows the block diagram of model used to generate this process. 
-        Its time domain description is governed by the M order difference equation<br /></p>
-      <p align='center'>u(n)+a<sub>1</sub>u(n-1)+a<sub>2</sub>u(n-2)+...........+a<sub>3</sub>u(n-M)=v(n)<br /></p>
-      <p>where v(n) is drawn from a white noise process of zero mean and variance σ<sup>2</sup>.</p>
-      <img src={arprocessgenerator} alt='ar process generator'/>
-      <p className='font-bold text-xl text-green underline'>The Adaptive filter </p>
-      <img src={adaptivefilter} alt='adaptive filter'/>
-      <p>We use the error e(n) between the desired response d(n) and the output of the filter y(n) to tune the weights of the filter. The Least Mean Squares (LMS) algorithm is the most popular adaptive algorithm due to its simplicity and robustness.<br />
-        The LMS algorithm performs the following operations to update the coefficients of an adaptive FIR filter:
+      <p><b>Measurement Update</b><br />
+        <ol className='list-decimal'>
+          <li>Measurement Residual: <b>w</b>(<i>t</i>+1) = <b>z</b>(<i>t</i>+1) — <b>z</b>(<i>t</i>+1|<i>t</i>)</li>
+          <li>Updated State Estimate: <b>x</b>(<i>t</i>+1|<i>t</i>+1) = <b>x</b>(<i>t</i>+1|<i>t</i>) + <b>W</b>(<i>t</i>+1)<b>w</b>(<i>t</i>+1)</li>
+        </ol>
+        where W(t+1) is called Kalman Gain in state covariance estimation.
       </p>
-      <ol className='list-decimal'>
-        <li>Calculates the output signal y(n) from the FIR filter. <br />
-        <img src={equation1} alt='equation1' /><br />
-        where u(i)is the tap-input vector at time i, defined by <i>u(i)=[u(i),u(i-1),…,u(i-M+1)]T,</i><br />
-                  and w(n) is the tap-weight vector at time n, defined by <i>n=[w<sub>0</sub>(n),w<sub>1</sub>(n),…,w<sub>M-1</sub>(n)]T</i>
-        </li>
-        <li>Calculates the error signal e(n) by using the following equation: e(n) = d(n)–y(n) </li>
-        <li>Updates the filter coefficients by using the following equation:<br />
-          <img src={equation2} alt='equation2' /><br />
-          where,    μ is the step size of the adaptive filter<br />
-            w(n) is the filter coefficients vector<br />
-            u(n) is the filter input vector.
-        </li>
-      </ol><br />
-      <p>A Monte Carlo simulation is used to model the probability of different outcomes in a process that cannot easily be predicted due to the intervention of random variable. It is a technique used to understand the impact of risk and uncertainty. A Monte Carlo simulation is used to tackle a range of problems in many fields, including investing, business, physics, and engineering. It is also referred to as a multiple probability simulation.<br />
-        The Monte Carlo simulation is a mathematical technique that predicts possible outcomes of an uncertain event. Monte Carlo Simulation is a type of computational algorithm that uses repeated random sampling to obtain the likelihood of a range of results of occurring.
+      <p><b>State covariance Estimation</b><br />
+        <ol className='list-decimal'>
+          <li>State prediction covariance: <b>P</b> (<i>t</i> +1|<i>t</i>) = <b>F</b>(<i>t</i>)<b>P</b>(<i>t</i>|<i>t</i>) <i>F</i> (<i>t</i>)’+<b>Q</b> (<i>t</i>)</li>
+          <li>Measurement prediction covariance: <b>S</b> (<i>t</i> +1) = <b>H</b> (<i>t</i> +1) <b>P</b> (<i>t</i> +1|<i>t</i>) <b>H</b> (<i>t</i> +1)’+<b>R</b> (<i>t</i> +1)</li>
+          <li>Filter Gain: <b>W</b> (<i>t</i> +1) = <b>P</b> (<i>t</i> +1|<i>t</i>) <i>H</i> (<i>t</i> +1)’ <b>S</b> (<i>t</i> +1)<b>-1</b></li>
+          <li>Updated state covariance: <b>P</b> (<i>t</i> +1|<i>t</i> +1) = <b>P</b> (<i>t</i> +1|<i>t</i>) — <b>W</b> (<i>t</i> +1) <b>S</b> (<i>t</i> +1) <b>W</b> (<i>t</i> +1)’</li>
+        </ol>
       </p>
       </div>
   )

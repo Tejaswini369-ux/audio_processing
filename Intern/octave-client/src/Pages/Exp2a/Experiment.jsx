@@ -4,7 +4,7 @@ import Postquiz from './Posttest';
 import Theory from './Theory';
 import Procedure from './Procedure';
 import Feedback from '../Exp1/Feedback';
-import Simulation from './Simulation';
+import Estimation from './Estimation';
 import Contact from '../Exp1/Contact';
 
 const Experiment = ({activeTab}) => {
@@ -12,7 +12,7 @@ const Experiment = ({activeTab}) => {
   const renderContent = () => {
     switch (activeTab) {
       case '':
-        return <div>Implement and analyze the performance of Autoregressive Stochastic processes and the Minimum Variance Distortion-less Response (MVDR) Beamformer using the Least Mean Squares (LMS) algorithm and Monte-Carlo simulation techniques.</div>;
+        return <div>Implementation of correspondence  between the initial conditions of the Kalman filter variables, such as the initial state estimate and error covariance, and the filter's prediction performance.</div>;
       case 'theory':
         return <Theory/>;
       case 'pretest':
@@ -20,7 +20,7 @@ const Experiment = ({activeTab}) => {
       case 'procedure':
         return <Procedure/>;
       case 'simulation':
-        return <Simulation />;
+        return <Estimation/>;
       case 'post-test':
         return <Postquiz/>;
       case 'references':

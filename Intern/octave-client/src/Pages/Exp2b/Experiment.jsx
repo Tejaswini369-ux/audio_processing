@@ -12,7 +12,7 @@ const Experiment = ({activeTab}) => {
   const renderContent = () => {
     switch (activeTab) {
       case '':
-        return <div>To simulate and compare the performance of adaptive prediction and equalization using Least Mean Squares (LMS) and Recursive Least Squares (RLS) algorithms.</div>;
+        return <div>To implement the Kalman filter's performance in an unforced dynamic model with a noiseless state-space.</div>;
       case 'theory':
         return <Theory/>;
       case 'pretest':

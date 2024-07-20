@@ -3,34 +3,28 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What is the primary objective of the Minimum Variance Distortionless Response (MVDR) beamformer?",
-      options: ["Maximize the output power of the beamformer. ", "Minimize the output power of the beamformer while maintaining unity response in the desired direction.", "Equalize the output power in all directions.", "Enhance signals from all directions equally."],
+      question: "The Kalman gain is used to:",
+      options: ["Predict future states", "Update the measurement noise", "Combine predictions and measurements", "Eliminate process noise"],
+      answer: 2,
+      explanation: "Correct answer is Option :- 3 i.e., Combine predictions and measurements."
+    },
+    {
+      question: "Which of the following represents the process noise covariance matrix in the Kalman filter?",
+      options: ["R", "Q", "P", "H"],
       answer: 1,
-      explanation: "Correct answer is Option :- 2 i.e., Minimize the output power of the beamformer while maintaining unity response in the desired direction."
+      explanation: "Correct answer is Option :- 2 i.e., Q"
     },
     {
-      question: "What is application of Autoregressive process?",
-      options: ["Texture modelling of visual content", "Speech processing", "Models for future sample predictions", "All of above"],
-      answer: 3,
-      explanation: "Correct answer is Option :- 4 i.e., All of above"
+      question: "What are the two main steps in the Kalman filter algorithm?",
+      options: ["Initialization and execution", "Prediction and update", "Training and testing", "Sorting and merging"],
+      answer: 1,
+      explanation: "Correct answer is Option :- 2 i.e., Prediction and update."
     },
     {
-      question: "What is the purpose of the Least Mean Squares (LMS) algorithm in the context of beamforming?",
-      options: ["To adaptively adjust the beamforming weights to minimize the mean square error.", "To maximize the signal-to-noise ratio (SNR).", "To calculate the covariance matrix of the input data.", "To ensure equal signal power from all directions."],
-      answer: 0,
-      explanation: "Correct answer is Option :- 1 i.e., To adaptively adjust the beamforming weights to minimize the mean square error."
-    },
-    {
-      question: "The steering vector a(θ) in beamforming is used to:",
-      options: ["Minimize the output power.", "Adjust the step size parameter ", "Measure the error signal.", "Define the desired signal direction."],
-      answer: 3,
-      explanation: "Correct answer is Option :- 4 i.e., Define the desired signal direction."
-    },
-    {
-      question: "AR process with low an order",
-      options: ["We will obtain a smoothed spectrum.", "There is a risk of introducing spurious low-level peaks in spectrum.", "Both of above", "None of above"],
-      answer: 0,
-      explanation: "Correct answer is Option :- 1 i.e., We will obtain a smoothed spectrum."
+      question: "Why is the choice of initial state estimate important in the Kalman filter?",
+      options: ["It does not affect the filter’s performance", "It determines the convergence rate and accuracy of the estimates ", "It only affects the first prediction step", "It ensures the noise is minimized"],
+      answer: 1,
+      explanation: "Correct answer is Option :- 2 i.e., It determines the convergence rate and accuracy of the estimates."
     }
   ];
 
