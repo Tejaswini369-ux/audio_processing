@@ -28,7 +28,7 @@ Follow the steps in this article: [How to Install WSL 2 Ubuntu 20.04 LTS on Wind
 2. Navigate to the `intern` folder:  
    ```bash
    cd path/to/intern
-
+### 3. After that run the following commands:
  npm install <br/>
  npm run dev <br/>
 on linux terminal you should see "backend is running on host"<br/>
