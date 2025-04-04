@@ -9,6 +9,15 @@ import Experiment3a from './Exp3a/Experiment';
 import Experiment3b from './Exp3b/Experiment';
 import Experiment2a from './Exp2a/Experiment';
 import Experiment2b from './Exp2b/Experiment';
+import Experiment4a from './Exp4a/Experiment';
+import Experiment4b from './Exp4b/Experiment';
+import Experiment4c from './Exp4c/Experiment';
+import Experiment4d from './Exp4d/Experiment';
+import Experiment4e from './Exp4e/Experiment';
+import Experiment4f from './Exp4f/Experiment';
+import Experiment4g from './Exp4g/Experiment';
+import Experiment4h from './Exp4h/Experiment';
+
 import { useMediaQuery } from 'react-responsive';
 
 export default function Dashboard() {
@@ -73,6 +82,38 @@ export default function Dashboard() {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(3);
+    } else if (section.startsWith('exps/4a')) {
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(8);
+    } else if (section.startsWith('exps/4b')) {
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(9);
+    } else if (section.startsWith('exps/4c')){
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(10);
+    } else if (section.startsWith('exps/4d')) {
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(11);
+    } else if (section.startsWith('exps/4e')) {
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(12);
+    } else if (section.startsWith('exps/4f')) {
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(13);
+    } else if (section.startsWith('exps/4g')){
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(14);
+    } else if (section.startsWith('exps/4h')) {
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(15);
     } else {
       setPage(0);
       setActiveTab(section);
@@ -156,6 +197,14 @@ export default function Dashboard() {
         {page === 5 && <Experiment2b activeTab={activeTab} />}
         {page === 6 && <Experiment3a activeTab={activeTab} />}
         {page === 7 && <Experiment3b activeTab={activeTab} />}
+        {page === 8 && <Experiment4a activeTab={activeTab} />}
+        {page === 9 && <Experiment4b activeTab={activeTab} />}
+        {page === 10 && <Experiment4c activeTab={activeTab} />}
+        {page === 11 && <Experiment4d activeTab={activeTab} />}
+        {page === 12 && <Experiment4e activeTab={activeTab} />}
+        {page === 13 && <Experiment4f activeTab={activeTab} />}
+        {page === 14 && <Experiment4g activeTab={activeTab} />}
+        {page === 15 && <Experiment4h activeTab={activeTab} />}
        </div>
     </div>
   );
