@@ -31,6 +31,7 @@ Follow the steps in this article: [How to Install WSL 2 Ubuntu 20.04 LTS on Wind
 ### 3. After that run the following commands:
  npm install <br/>
  npm install nodemon <br/>
+ sudo apt update && sudo apt install octave<br/>
  npm run dev <br/>
 on linux terminal you should see "backend is running on host"<br/>
 Frontend can be run on powershell/cmd prompt<br/>
