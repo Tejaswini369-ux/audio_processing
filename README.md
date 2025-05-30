@@ -48,4 +48,4 @@ Frontend can be run on powershell/cmd prompt<br/>
 Run <br/>
  npm install<br/>
  npm start <br/>
-it will directly opens the website<br/>
+it directly opens the website<br/>
