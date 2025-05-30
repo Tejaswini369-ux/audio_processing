@@ -45,7 +45,6 @@ on linux terminal you should see "backend is running on host"<br/>
 
 ## frontend ##
 Frontend can be run on powershell/cmd prompt<br/>
-Run <br/>
  npm install<br/>
  npm start <br/>
 it directly opens the website<br/>
