@@ -21,7 +21,8 @@ Follow the steps in this article: [How to Install WSL 2 Ubuntu 20.04 LTS on Wind
 
 **Important:**  
 - Skip the "Update the Windows Subsystem for Linux (WSL) to WSL 2" section.  
-- Continue directly to "Configuring Git and GitHub on WSL2".  
+- Continue directly to "Installing Node.js on WSL2".
+- ignore everything from "Configuring Git and GitHub on WSL2"
 
 ### 2. Install Dependencies  
 1. Open the Linux terminal.  
