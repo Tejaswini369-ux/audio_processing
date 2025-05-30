@@ -7,8 +7,6 @@ This guide provides step-by-step instructions to set up and run the backend and 
 ## Prerequisites  
 Ensure you have the following installed on your system:  
 - Node.js (v16 or higher)  
-- npm (v8 or higher)  
-- Windows Subsystem for Linux (WSL) with Ubuntu 20.04 LTS  
 
 ---
 
