@@ -38,14 +38,7 @@ const Experiments = () => {
     {
       title: 'Audio synthesis using the Differential DSP library',
       details: [
-        { text: 'Extracting the amplitude envelope of the different audio files.', link: '/exps/4a' },
-        { text: 'Extraction of RMS Energy and Zero Crossing Rate features of different audio files.', link: '/exps/4b' },
-        { text: 'Determination of the Amplitude and Phase Spectrum of different audio files.', link: '/exps/4c' },
-        { text: 'Extraction of various spectrograms from different audio files.', link: '/exps/4d' },
-        { text: 'Extraction of MEL Spectrograms from different audio files.', link: '/exps/4e' },
-        { text: 'Extracting Mel-Frequency Cepstral Coefficients from different audio files.', link: '/exps/4f' },
-        { text: 'Computation of Band Energy Ratio from different audio files.', link: '/exps/4g' },
-        { text: 'Extracting Spectral Centroid and Bandwidth from different audio files.', link: '/exps/4h' }
+        { text: 'Extracting the amplitude envelope of the different audio files.', link: '/exps/4a' }
       ]
     }
   ];
