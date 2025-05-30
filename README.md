@@ -38,7 +38,6 @@ sudo apt install python3-venv<br/>
 python3 -m venv env<br/>
 source env/bin/activate<br/>
 pip install numpy pandas ipython librosa matplotlib<br/>
- sudo apt install python3-pip <br/>
  npm run dev <br/>
 on linux terminal you should see "backend is running on host"<br/>
 Frontend can be run on powershell/cmd prompt<br/>
