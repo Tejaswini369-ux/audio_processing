@@ -140,7 +140,7 @@ if __name__ == "__main__":
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
-            width="750"
+            width="780"
             height="300"
             className='outline border-4 p-2 rounded-sm border-blue-hover'
           ></iframe>

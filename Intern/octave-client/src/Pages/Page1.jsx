@@ -32,7 +32,7 @@ const Page1 = ({ activeTab }) => {
     <div className='flex flex-col flex-1 gap-7 font-serif py-2'>
       <div>
         <p className='font-bold text-xl text-center text-blue underline hover:text-green'>
-          <a href='https://www.vlab.co.in/broad-area-biotechnology-and-biomedical-engineering'>Adaptive Signal Processing</a>
+          <a href='https://www.vlab.co.in/broad-area-biotechnology-and-biomedical-engineering'>Audio Signal Processing</a>
         </p>
       </div>
       <div className='pl-16 pr-10'>

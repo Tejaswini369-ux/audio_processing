@@ -14,31 +14,16 @@ const Experiments = () => {
 
   const experimentsData = [
     {
-      title: 'Experiment-1',
-      details: [
-        { text: 'Simulation and comparative analysis of LMS and RLS algorithms using simulated as well real time bio signals. Observe the effect of various adaptation factors like step size, forgetting factor.', link: '/exps/1a/' },
-        { text: 'Simulate an Autoregressive stochastic process.', link: '/exps/1b/' },
-        { text: 'Detect non-stationarity in stochastic processes with LMS and RLS.', link: '/exps/1c/' }
-      ]
-    },
-    {
-      title: 'Study and implementation of Kalman filter',
-      details: [
-        { text: 'Correspondence between the initial conditions of the Kalman variables and prediction performance.', link: '/exps/2a' },
-        { text: 'With an unforced dynamic model and noiseless state space model.', link: '/exps/2b' }
-      ]
-    },
-    {
-      title: 'Simulation of adaptive noise cancellation, interference canceling, channel equalization using appropriate adaptive filters for various scenario and compare the performance for various other variants of these adaptive algorithms',
-      details: [
-        { text: 'Implementation and analysis of Autoregressive Stochastic processes and Minimum Variance Distortionless Beamformer using LMS and Monte-Carlo Runs.', link: '/exps/3a' },
-        { text: 'Simulate an adaptive prediction and equalization with LMS and RLS Algorithm.', link: '/exps/3b' }
-      ]
-    },
-    {
       title: 'Audio synthesis using the Differential DSP library',
       details: [
-        { text: 'Extracting the amplitude envelope of the different audio files.', link: '/exps/4a' }
+        { text: 'Extracting the amplitude envelope of the different audio files.', link: '/exps/4a' },
+        { text: 'Extraction of RMS Energy and Zero Crossing Rate features of different audio files.', link: '/exps/4b' },
+        { text: 'Determination of the Amplitude and Phase Spectrum of different audio files.', link: '/exps/4c' },
+        { text: 'Extraction of various spectrograms from different audio files.', link: '/exps/4d' },
+        { text: 'Extraction of MEL Spectrograms from different audio files.', link: '/exps/4e' },
+        { text: 'Extracting Mel-Frequency Cepstral Coefficients from different audio files.', link: '/exps/4f' },
+        { text: 'Computation of Band Energy Ratio from different audio files.', link: '/exps/4g' },
+        { text: 'Extracting Spectral Centroid and Bandwidth from different audio files.', link: '/exps/4h' }
       ]
     }
   ];

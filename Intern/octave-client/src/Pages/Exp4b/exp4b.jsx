@@ -22,9 +22,8 @@ const LMSPrediction = () => {
   const [selectedFile, setSelectedFile] = useState(fileOptions[0].file);
   const [selectedFeature, setSelectedFeature] = useState('MAX');
   const [inputs, setInputs] = useState([
-    { id: 'sampling-rate', label: 'Sampling Rate (Hz)', min: 8000, max: 48000, step: 1000, value: 16000 },
-    { id: 'frame-length', label: 'Frame Length (samples)', min: 1, max: 10000, step: 1, value: 1024 },
-    { id: 'hop-length', label: 'Hop Length (samples)', min: 1, max: 10000, step: 1, value: 512 }
+    { id: 'frame-length', label: 'Frame Length (samples)', min: 1, max: 8192, step: 1, value: 1024 },
+    { id: 'hop-length', label: 'Hop Length (samples)', min: 1, max: 8192, step: 1, value: 512 }
   ]);
 
   const [code, setCode] = useState('');
@@ -42,49 +41,48 @@ const LMSPrediction = () => {
 
   const handleGenerateCode = () => {
     const generatedCode = `
-import Amplitude_Envelope_Features_Extract as AMPENV
-import AMPLITUDE_ENVELOPE_PLOT as AMPPLOT
+import RMSEZCRE_PLOT
 import librosa
-import sys
 import argparse
 import os
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Compute and plot RMSE and ZCR features from an audio file.')
+    parser.add_argument('--file', type=str, required=True, help='Audio file name (in audio1/ folder)')
+    parser.add_argument('--sr', type=int, required=True, help='Sampling rate')
+    parser.add_argument('--frame', type=int, required=True, help='Frame length')
+    parser.add_argument('--hop', type=int, required=True, help='Hop length')
+    parser.add_argument('--unique-id', type=str, required=True, help='Unique identifier for output files')
+
+    args = parser.parse_args()
+
     # Paths
-    input_file = os.path.join('inputs' \
-    '', args.file)
+    input_file = os.path.join('audio1', args.file)
     output_dir = 'outputs'
     os.makedirs(output_dir, exist_ok=True)
-    output_file = os.path.join(output_dir, f'amplitude_envelope_{args.unique_id}.png')
 
     print(f"\nAudio file selected is :: {args.file}")
 
-    # Load audio file
+    # Load audio
     input_audio, sr = librosa.load(input_file, sr=args.sr)
     sample_duration = 1 / sr
     tot_samples = len(input_audio)
 
     print(f"\nSampling Rate used for the audio file {args.file} :: {sr}")
-    print(f"\nFrame Length selected for the audio file {args.file} :: {args.frame}")
-    print(f"\nHop Length used for the audio file {args.file} :: {args.hop}")
-    print(f"\nOne sample lasts for {sample_duration:6f} seconds")
-    print(f"\nTotal number of samples in the audio file is::{tot_samples}")
-    print(f"\nFeature Selected in the audio file is::{args.feature}")
+    print(f"Frame Length selected for the audio file {args.file} :: {args.frame}")
+    print(f"Hop Length used for the audio file {args.file} :: {args.hop}")
+    print(f"One sample lasts for {sample_duration:6f} seconds")
+    print(f"Total number of samples in the audio file is::{tot_samples}")
+    print(f"Audio duration is::{tot_samples * sample_duration:4.2f} seconds")
 
-    # Compute amplitude envelope feature
-    amp_env_feat1 = AMPENV.amplitude_envelope(input_audio, args.frame, args.hop, args.feature)
+    # Compute RMSE
+    rmse = librosa.feature.rms(y=input_audio, frame_length=args.frame, hop_length=args.hop)[0]
+    RMSEZCRE_PLOT.ROOT_ZCR_PLOT(input_audio, rmse, args.hop, args.file, 'RMSE')
 
-    # Plot and save to the required output file
-    AMPPLOT.amplitude_envelope_plot(
-    input_signal=input_audio,
-    inpaudname=args.file,
-    output_signal=amp_env_feat1,
-    sampling_rate=args.sr,
-    HOP_LENGTH=args.hop,
-    feature_name=args.feature,
-    output_path='outputs',
-    uniqueIdentifier=args.unique_id
-    ) `.trim();
+    # Compute ZCR
+    zcr = librosa.feature.zero_crossing_rate(y=input_audio, frame_length=args.frame, hop_length=args.hop)[0]
+    RMSEZCRE_PLOT.ROOT_ZCR_PLOT(input_audio, zcr, args.hop, args.file, 'ZCRE')
+ `.trim();
     setCode(generatedCode);
     setCodeHtml(`<pre>${generatedCode}</pre>`);
   };
@@ -98,12 +96,10 @@ if __name__ == "__main__":
       audioPath: selectedFile,
       hop:inputs.find(input => input.id === 'hop-length').value,
       frame:inputs.find(input => input.id === 'frame-length').value,
-      sr:inputs.find(input => input.id === 'sampling-rate').value,
-      feature: selectedFeature.toUpperCase()
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/process_audio', data,{
+      const response = await axios.post('http://localhost:5000/rls', data,{
       headers: {
         // 'Content-Type': 'multipart/form-data'
       }
@@ -140,7 +136,7 @@ if __name__ == "__main__":
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
-            width="750"
+            width="780"
             height="300"
             className='outline border-4 p-2 rounded-sm border-blue-hover'
           ></iframe>
@@ -211,20 +207,6 @@ if __name__ == "__main__":
                 </div>
               ))}
 
-              <div className="mt-4 text-center">
-                <label htmlFor="feature" className="font-bold block mb-2">Select Feature</label>
-                <select
-                  id="feature"
-                  value={selectedFeature}
-                  onChange={(e) => setSelectedFeature(e.target.value)}
-                  className="bg-white border border-black rounded-lg px-3 py-1"
-                >
-                  <option value="MEAN">MEAN</option>
-                  <option value="MEDIAN">MEDIAN</option>
-                  <option value="MAX">MAX</option>
-                  <option value="MIN">MIN</option>
-                </select>
-              </div>
             </div>
           </div>
 
