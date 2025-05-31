@@ -19,9 +19,6 @@ if __name__ == "__main__":
     # Paths
     input_file = os.path.join('inputs' \
     '', args.file)
-    output_dir = 'outputs'
-    os.makedirs(output_dir, exist_ok=True)
-    output_file = os.path.join(output_dir, f'amplitude_envelope_{args.unique_id}.png')
 
     print(f"\nAudio file selected is :: {args.file}")
 

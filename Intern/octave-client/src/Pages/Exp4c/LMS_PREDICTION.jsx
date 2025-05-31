@@ -22,9 +22,9 @@ const LMSPrediction = () => {
   const [selectedFile, setSelectedFile] = useState(fileOptions[0].file);
   const [selectedFeature, setSelectedFeature] = useState('MAX');
   const [inputs, setInputs] = useState([
-    { id: 'sampling-rate', label: 'Sampling Rate (Hz)', min: 8000, max: 48000, step: 1000, value: 16000 },
-    { id: 'frame-length', label: 'Frame Length (samples)', min: 1, max: 10000, step: 1, value: 1024 },
-    { id: 'hop-length', label: 'Hop Length (samples)', min: 1, max: 10000, step: 1, value: 512 }
+    { id: 'sampling_rate', label: 'Sampling Rate (Hz)', min: 1000, max: 40000, step: 1000, value: 16000 },
+    { id: 'num_samples', label: 'No.of samples', min: 1, max: 20000, step: 1, value: 1024 },
+    { id: 'start_sample', label: 'Starting sample', min: 1, max: 20000, step: 1, value: 512 }
   ]);
 
   const [code, setCode] = useState('');
@@ -42,49 +42,69 @@ const LMSPrediction = () => {
 
   const handleGenerateCode = () => {
     const generatedCode = `
-import Amplitude_Envelope_Features_Extract as AMPENV
-import AMPLITUDE_ENVELOPE_PLOT as AMPPLOT
-import librosa
-import sys
 import argparse
+import librosa
+import numpy as np
+import scipy as sp
+import AMPPHASE_PLOT  # your plotting module
 import os
 
+
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description='Process audio file and plot amplitude & phase spectrum.')
+    parser.add_argument('--file', type=str, required=True, help='Audio file name (in input/ folder)')
+    parser.add_argument('--sampling-rate', type=int, required=True, help='Sampling rate to load the audio')
+    parser.add_argument('--start-sample', type=int, required=True, help='Starting sample number for display')
+    parser.add_argument('--num-samples', type=int, required=True, help='Number of samples to display (max 20000)')
+    parser.add_argument('--unique-id', type=str, required=True, help='Unique identifier for output file')
+
+    args = parser.parse_args()
+
     # Paths
     input_file = os.path.join('inputs' \
     '', args.file)
-    output_dir = 'outputs'
-    os.makedirs(output_dir, exist_ok=True)
-    output_file = os.path.join(output_dir, f'amplitude_envelope_{args.unique_id}.png')
 
     print(f"\nAudio file selected is :: {args.file}")
 
-    # Load audio file
-    input_audio, sr = librosa.load(input_file, sr=args.sr)
+    input_audio, sr = librosa.load(input_file, sr=args.sampling_rate)
+
     sample_duration = 1 / sr
     tot_samples = len(input_audio)
 
     print(f"\nSampling Rate used for the audio file {args.file} :: {sr}")
-    print(f"\nFrame Length selected for the audio file {args.file} :: {args.frame}")
-    print(f"\nHop Length used for the audio file {args.file} :: {args.hop}")
-    print(f"\nOne sample lasts for {sample_duration:6f} seconds")
-    print(f"\nTotal number of samples in the audio file is::{tot_samples}")
-    print(f"\nFeature Selected in the audio file is::{args.feature}")
+    print(f"One sample lasts for {sample_duration:6f} seconds")
+    print(f"Total number of samples in the audio file is::{tot_samples}")
+    print(f"Audio duration is::{tot_samples * sample_duration:4.2f} seconds")
 
-    # Compute amplitude envelope feature
-    amp_env_feat1 = AMPENV.amplitude_envelope(input_audio, args.frame, args.hop, args.feature)
+    st_idx = args.start_sample
+    N_Samples = args.num_samples
 
-    # Plot and save to the required output file
-    AMPPLOT.amplitude_envelope_plot(
-    input_signal=input_audio,
-    inpaudname=args.file,
-    output_signal=amp_env_feat1,
-    sampling_rate=args.sr,
-    HOP_LENGTH=args.hop,
-    feature_name=args.feature,
-    output_path='outputs',
-    uniqueIdentifier=args.unique_id
-    ) `.trim();
+    ft = sp.fft.fft(input_audio)
+
+    magnitude = np.absolute(ft)
+    frequency = np.linspace(0, sr, len(magnitude))
+
+    phase = np.angle(ft, deg=True)
+
+    STR_FIGNAME = ['AMP_SPECTRUM', 'PHASE_SPECTRUM']
+
+    AMPPHASE_PLOT.PLOTSPECTRUM(
+        input_audio=input_audio,
+        sampling_rate=sr,
+        frequency=frequency,
+        magnitude=magnitude,
+        phase=phase,
+        audfile_name=args.file,
+        FIG_NAME=STR_FIGNAME,
+        output_path='outputs',
+        uniqueIdentifier=args.unique_id,
+        sampidx=st_idx,
+        NSAMPLES=N_Samples
+    )
+
+    print('\nOperation completed')
+`.trim();
     setCode(generatedCode);
     setCodeHtml(`<pre>${generatedCode}</pre>`);
   };
@@ -96,14 +116,13 @@ if __name__ == "__main__":
     setShowImages(false);
     const data = {
       audioPath: selectedFile,
-      hop:inputs.find(input => input.id === 'hop-length').value,
-      frame:inputs.find(input => input.id === 'frame-length').value,
-      sr:inputs.find(input => input.id === 'sampling-rate').value,
-      feature: selectedFeature.toUpperCase()
+      start_sample:inputs.find(input => input.id === 'start_sample').value,
+      num_samples:inputs.find(input => input.id === 'num_samples').value,
+      sr:inputs.find(input => input.id === 'sampling_rate').value,
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/process_audio', data,{
+      const response = await axios.post('http://localhost:5000/exp3', data,{
       headers: {
         // 'Content-Type': 'multipart/form-data'
       }
@@ -123,7 +142,7 @@ if __name__ == "__main__":
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "audio_processor_sample.py";
+    a.download = "exp3.py";
     a.click();
   };
 
@@ -210,21 +229,6 @@ if __name__ == "__main__":
                   </div>
                 </div>
               ))}
-
-              <div className="mt-4 text-center">
-                <label htmlFor="feature" className="font-bold block mb-2">Select Feature</label>
-                <select
-                  id="feature"
-                  value={selectedFeature}
-                  onChange={(e) => setSelectedFeature(e.target.value)}
-                  className="bg-white border border-black rounded-lg px-3 py-1"
-                >
-                  <option value="MEAN">MEAN</option>
-                  <option value="MEDIAN">MEDIAN</option>
-                  <option value="MAX">MAX</option>
-                  <option value="MIN">MIN</option>
-                </select>
-              </div>
             </div>
           </div>
 
