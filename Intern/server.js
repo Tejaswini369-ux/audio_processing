@@ -370,6 +370,126 @@ res.status(200).json({ images: imageUrls });
 });
 app.use('/outputs', express.static(path.join(__dirname, 'outputs')));
 
+//exp7
+
+app.post('/exp7', async (req, res) => {
+  try {
+    console.log(req.body);
+    const { audioPath, sr,hop,frame,freq} = req.body;
+    const uniqueIdentifier = uuidv4();
+    
+    // Path configuration
+    const pythonScript = path.join(__dirname, 'exp7.py');
+    const inputFile = path.join(__dirname, 'Inputs', audioPath);
+
+    // Build the Python command
+    const args = [
+      '--file', inputFile.toString(),
+      '--sampling-rate', sr.toString(),
+      '--hop-length', hop.toString(),
+      '--frame-length', frame.toString(),
+      '--split-freq', freq.toString(),
+      '--unique-id', uniqueIdentifier
+    ];
+
+    // Execute Python script
+const pythonProcess = spawn('/mnt/c/Users/user/Downloads/Audio_signal/audio_processing/Intern/env/bin/python', [pythonScript, ...args], {
+  cwd: __dirname
+});
+
+    // Handle output
+    let stdoutData = '';
+    pythonProcess.stdout.on('data', (data) => {
+      stdoutData += data.toString();
+    });
+
+    // Handle errors
+    pythonProcess.stderr.on('data', (data) => {
+      console.error(`Python stderr: ${data}`);
+    });
+
+    // Handle process completion
+    pythonProcess.on('close', (code) => {
+      if (code !== 0) {
+        return res.status(500).json({
+          error: `Python script exited with code ${code}`,
+          details: stdoutData
+        });
+      }
+  const imageUrls = [
+  `/outputs/${uniqueIdentifier}_BER_LogSpectrogram.jpg`
+  ];
+res.status(200).json({ images: imageUrls });
+
+    });
+
+  } catch (err) {
+    console.error('Error handling the request:', err);
+    res.status(500).send(err);
+  }
+});
+app.use('/outputs', express.static(path.join(__dirname, 'outputs')));
+
+//exp8
+
+app.post('/exp8', async (req, res) => {
+  try {
+    console.log(req.body);
+    const { audioPath, sr,hop,frame} = req.body;
+    const uniqueIdentifier = uuidv4();
+    
+    // Path configuration
+    const pythonScript = path.join(__dirname, 'exp8.py');
+    const inputFile = path.join(__dirname, 'Inputs', audioPath);
+
+    // Build the Python command
+    const args = [
+      '--file', inputFile.toString(),
+      '--sampling-rate', sr.toString(),
+      '--hop-length', hop.toString(),
+      '--frame-length', frame.toString(),
+      '--unique-id', uniqueIdentifier
+    ];
+
+    // Execute Python script
+const pythonProcess = spawn('/mnt/c/Users/user/Downloads/Audio_signal/audio_processing/Intern/env/bin/python', [pythonScript, ...args], {
+  cwd: __dirname
+});
+
+    // Handle output
+    let stdoutData = '';
+    pythonProcess.stdout.on('data', (data) => {
+      stdoutData += data.toString();
+    });
+
+    // Handle errors
+    pythonProcess.stderr.on('data', (data) => {
+      console.error(`Python stderr: ${data}`);
+    });
+
+    // Handle process completion
+    pythonProcess.on('close', (code) => {
+      if (code !== 0) {
+        return res.status(500).json({
+          error: `Python script exited with code ${code}`,
+          details: stdoutData
+        });
+      }
+  const imageUrls = [
+  `/outputs/${uniqueIdentifier}_Spectral_Centroid_Bandwidth.jpg`
+  ];
+res.status(200).json({ images: imageUrls });
+
+    });
+
+  } catch (err) {
+    console.error('Error handling the request:', err);
+    res.status(500).send(err);
+  }
+});
+app.use('/outputs', express.static(path.join(__dirname, 'outputs')));
+
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

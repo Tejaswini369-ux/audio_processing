@@ -8,6 +8,8 @@ import Experiment4c from './Exp4c/Experiment';
 import Experiment4d from './Exp4d/Experiment';
 import Experiment4e from './Exp4e/Experiment';
 import Experiment4f from './Exp4f/Experiment';
+import Experiment4g from './Exp4g/Experiment';
+import Experiment4h from './Exp4h/Experiment';
 
 import { useMediaQuery } from 'react-responsive';
 
@@ -69,6 +71,14 @@ export default function Dashboard() {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(6);
+    }else if(section.startsWith('exps/4g')) {
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(7);
+    }else if(section.startsWith('exps/4h')) {
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(8);
     }else {
       setPage(0);
       setActiveTab(section);
@@ -151,6 +161,8 @@ export default function Dashboard() {
         {page ===4 && <Experiment4d activeTab={activeTab} />}
         {page ===5 && <Experiment4e activeTab={activeTab}/>}
         {page ===6 && <Experiment4f activeTab={activeTab}/>}
+        {page ===7 && <Experiment4g activeTab={activeTab}/>}
+        {page === 8 && <Experiment4h activeTab={activeTab}/>}
        </div>
     </div>
   );

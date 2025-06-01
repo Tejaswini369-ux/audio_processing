@@ -22,9 +22,10 @@ const LMSPrediction = () => {
   const [selectedFile, setSelectedFile] = useState(fileOptions[0].file);
   const [selectedFeature, setSelectedFeature] = useState('MAX');
   const [inputs, setInputs] = useState([
-    { id: 'sampling-rate', label: 'Sampling Rate (Hz)', min: 8000, max: 48000, step: 1000, value: 16000 },
-    { id: 'frame-length', label: 'Frame Length (samples)', min: 1, max: 10000, step: 1, value: 1024 },
-    { id: 'hop-length', label: 'Hop Length (samples)', min: 1, max: 10000, step: 1, value: 512 }
+    { id: 'sampling-rate', label: 'Sampling Rate (Hz)', min: 1000, max: 40000, step: 1000, value: 16000 },
+    { id: 'frame-length', label: 'Frame Length (samples)', min: 1, max: 8192, step: 1, value: 1024 },
+    { id: 'hop-length', label: 'Hop Length (samples)', min: 1, max: 8192, step: 1, value: 512 },
+    { id: 'frequency', label: 'Number of frequency bins', min: 1, max: 10000, step: 1, value: 512 }
   ]);
 
   const [code, setCode] = useState('');
@@ -42,49 +43,72 @@ const LMSPrediction = () => {
 
   const handleGenerateCode = () => {
     const generatedCode = `
-import Amplitude_Envelope_Features_Extract as AMPENV
-import AMPLITUDE_ENVELOPE_PLOT as AMPPLOT
 import librosa
-import sys
-import argparse
+import numpy as np
 import os
+import argparse
+import Spectrogram_Plots_6 as spectplots
+import SPLIT_BAND_ENERGY_RATIO as SPER  # Assuming SPER contains helper functions
 
-if __name__ == "__main__":
-    # Paths
-    input_file = os.path.join('inputs' \
-    '', args.file)
-    output_dir = 'outputs'
+def compute_and_plot_ber_features(input_file, sr_user, frame_length, hop_length, split_freq, unique_id, output_dir='outputs'):
     os.makedirs(output_dir, exist_ok=True)
-    output_file = os.path.join(output_dir, f'amplitude_envelope_{args.unique_id}.png')
+    audfile_name = os.path.basename(input_file)
 
-    print(f"\nAudio file selected is :: {args.file}")
-
-    # Load audio file
-    input_audio, sr = librosa.load(input_file, sr=args.sr)
+    # Load audio
+    input_audio, sr = librosa.load(input_file, sr=sr_user)
     sample_duration = 1 / sr
     tot_samples = len(input_audio)
 
-    print(f"\nSampling Rate used for the audio file {args.file} :: {sr}")
-    print(f"\nFrame Length selected for the audio file {args.file} :: {args.frame}")
-    print(f"\nHop Length used for the audio file {args.file} :: {args.hop}")
-    print(f"\nOne sample lasts for {sample_duration:6f} seconds")
-    print(f"\nTotal number of samples in the audio file is::{tot_samples}")
-    print(f"\nFeature Selected in the audio file is::{args.feature}")
+    print(f"\nAudio file selected is :: {audfile_name}")
+    print(f"Sampling Rate used :: {sr}")
+    print(f"Frame duration :: {sample_duration:6f} seconds")
+    print(f"Total samples :: {tot_samples}")
+    print(f"Total audio duration :: {tot_samples * sample_duration:4.2f} seconds")
 
-    # Compute amplitude envelope feature
-    amp_env_feat1 = AMPENV.amplitude_envelope(input_audio, args.frame, args.hop, args.feature)
+    # STFT computation
+    SPECT = librosa.stft(input_audio, n_fft=frame_length, hop_length=hop_length)
+    Y_SPECT = np.abs(SPECT) ** 2
+    Y_SPECT_log_scale = librosa.power_to_db(Y_SPECT)
 
-    # Plot and save to the required output file
-    AMPPLOT.amplitude_envelope_plot(
-    input_signal=input_audio,
-    inpaudname=args.file,
-    output_signal=amp_env_feat1,
-    sampling_rate=args.sr,
-    HOP_LENGTH=args.hop,
-    feature_name=args.feature,
-    output_path='outputs',
-    uniqueIdentifier=args.unique_id
-    ) `.trim();
+    print(f"\nNumber of frequency bins: {SPECT.shape[0]}")
+
+    # Compute Band Energy Ratio
+    Split_Frequency_Bin = SPER.calculate_split_frequency_bin(split_freq, sr_user, SPECT.shape[0])
+    BER = SPER.band_energy_ratio(SPECT, split_freq, sr_user)
+
+    # Plot
+    fig_names = ['LOG_FREQ_SPECTROGRAM', 'BAND_ENERGY_RATIO']
+    spectplots.plot_spectrogram(
+        Y_SPECT_log_scale,
+        sr_user,
+        hop_length,
+        BER,
+        audfile_name,
+        fig_name=fig_names,
+        output_path='outputs',
+        uniqueIdentifier=unique_id
+    )
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Extract and plot Log-Frequency Spectrogram and Band Energy Ratio from an audio file.')
+    parser.add_argument('--file', type=str, required=True, help='Path to audio file (inside audio1/ folder)')
+    parser.add_argument('--sampling-rate', type=int, required=True, help='Sampling rate for audio loading')
+    parser.add_argument('--frame-length', type=int, required=True, help='Frame length (n_fft), typically power of 2')
+    parser.add_argument('--hop-length', type=int, required=True, help='Hop length, typically power of 2')
+    parser.add_argument('--split-freq', type=int, required=True, help='Split frequency for Band Energy Ratio')
+    parser.add_argument('--unique-id', type=str, required=True, help='Unique identifier for output filenames')
+
+    args = parser.parse_args()
+
+    compute_and_plot_ber_features(
+        input_file=os.path.join('inputs', args.file),
+        sr_user=args.sampling_rate,
+        frame_length=args.frame_length,
+        hop_length=args.hop_length,
+        split_freq=args.split_freq,
+        unique_id=args.unique_id
+    )
+`.trim();
     setCode(generatedCode);
     setCodeHtml(`<pre>${generatedCode}</pre>`);
   };
@@ -99,11 +123,11 @@ if __name__ == "__main__":
       hop:inputs.find(input => input.id === 'hop-length').value,
       frame:inputs.find(input => input.id === 'frame-length').value,
       sr:inputs.find(input => input.id === 'sampling-rate').value,
-      feature: selectedFeature.toUpperCase()
+      freq:inputs.find(input => input.id === 'frequency').value,
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/process_audio', data,{
+      const response = await axios.post('http://localhost:5000/exp7', data,{
       headers: {
         // 'Content-Type': 'multipart/form-data'
       }
@@ -140,7 +164,7 @@ if __name__ == "__main__":
           <iframe
             srcDoc={codeHtml}
             title="Generated Code"
-            width="780"
+            width="720"
             height="300"
             className='outline border-4 p-2 rounded-sm border-blue-hover'
           ></iframe>
@@ -210,21 +234,6 @@ if __name__ == "__main__":
                   </div>
                 </div>
               ))}
-
-              <div className="mt-4 text-center">
-                <label htmlFor="feature" className="font-bold block mb-2">Select Feature</label>
-                <select
-                  id="feature"
-                  value={selectedFeature}
-                  onChange={(e) => setSelectedFeature(e.target.value)}
-                  className="bg-white border border-black rounded-lg px-3 py-1"
-                >
-                  <option value="MEAN">MEAN</option>
-                  <option value="MEDIAN">MEDIAN</option>
-                  <option value="MAX">MAX</option>
-                  <option value="MIN">MIN</option>
-                </select>
-              </div>
             </div>
           </div>
 
