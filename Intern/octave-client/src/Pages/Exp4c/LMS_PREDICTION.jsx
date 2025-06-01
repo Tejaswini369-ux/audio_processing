@@ -24,7 +24,7 @@ const LMSPrediction = () => {
   const [inputs, setInputs] = useState([
     { id: 'sampling_rate', label: 'Sampling Rate (Hz)', min: 1000, max: 40000, step: 1000, value: 16000 },
     { id: 'num_samples', label: 'No.of samples', min: 1, max: 20000, step: 1, value: 1024 },
-    { id: 'start_sample', label: 'Starting sample', min: 1, max: 20000, step: 1, value: 512 }
+    { id: 'start_sample', label: 'Starting sample', min: 1, max: 10000, step: 1, value: 512 }
   ]);
 
   const [code, setCode] = useState('');

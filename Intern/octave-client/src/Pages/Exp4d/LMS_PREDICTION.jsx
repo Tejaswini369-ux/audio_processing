@@ -22,9 +22,8 @@ const LMSPrediction = () => {
   const [selectedFile, setSelectedFile] = useState(fileOptions[0].file);
   const [selectedFeature, setSelectedFeature] = useState('MAX');
   const [inputs, setInputs] = useState([
-    { id: 'sampling-rate', label: 'Sampling Rate (Hz)', min: 8000, max: 48000, step: 1000, value: 16000 },
-    { id: 'frame-length', label: 'Frame Length (samples)', min: 1, max: 10000, step: 1, value: 1024 },
-    { id: 'hop-length', label: 'Hop Length (samples)', min: 1, max: 10000, step: 1, value: 512 }
+    { id: 'frame-length', label: 'Frame Length (samples)', min: 1, max: 8192, step: 1, value: 1024 },
+    { id: 'hop-length', label: 'Hop Length (samples)', min: 1, max: 8192, step: 1, value: 512 }
   ]);
 
   const [code, setCode] = useState('');
@@ -42,49 +41,77 @@ const LMSPrediction = () => {
 
   const handleGenerateCode = () => {
     const generatedCode = `
-import Amplitude_Envelope_Features_Extract as AMPENV
-import AMPLITUDE_ENVELOPE_PLOT as AMPPLOT
-import librosa
-import sys
 import argparse
+import librosa
+import numpy as np
 import os
+import Spectrogram_Plots  # Your plotting module
 
 if __name__ == "__main__":
-    # Paths
-    input_file = os.path.join('inputs' \
-    '', args.file)
+    parser = argparse.ArgumentParser(description='Generate Log-Amplitude and Log-Frequency Spectrograms from audio.')
+    parser.add_argument('--file', type=str, required=True, help='Audio file name (in audio1/ folder)')
+    parser.add_argument('--frame', type=int, required=True, help='Frame length (n_fft)')
+    parser.add_argument('--hop', type=int, required=True, help='Hop length')
+    parser.add_argument('--unique-id', type=str, required=True, help='Unique identifier for output files')
+
+    args = parser.parse_args()
+
+    # Set file paths
+    input_file = os.path.join("audio1", args.file)
     output_dir = 'outputs'
     os.makedirs(output_dir, exist_ok=True)
-    output_file = os.path.join(output_dir, f'amplitude_envelope_{args.unique_id}.png')
 
     print(f"\nAudio file selected is :: {args.file}")
 
-    # Load audio file
-    input_audio, sr = librosa.load(input_file, sr=args.sr)
+    # Load audio with original sampling rate
+    input_audio, sr = librosa.load(input_file, sr=None)
     sample_duration = 1 / sr
     tot_samples = len(input_audio)
 
     print(f"\nSampling Rate used for the audio file {args.file} :: {sr}")
-    print(f"\nFrame Length selected for the audio file {args.file} :: {args.frame}")
-    print(f"\nHop Length used for the audio file {args.file} :: {args.hop}")
-    print(f"\nOne sample lasts for {sample_duration:6f} seconds")
-    print(f"\nTotal number of samples in the audio file is::{tot_samples}")
-    print(f"\nFeature Selected in the audio file is::{args.feature}")
+    print(f"Frame Length selected for the audio file {args.file} :: {args.frame}")
+    print(f"Hop Length used for the audio file {args.file} :: {args.hop}")
+    print(f"One sample lasts for {sample_duration:.6f} seconds")
+    print(f"Total number of samples in the audio file is::{tot_samples}")
+    print(f"Audio duration is::{tot_samples * sample_duration:.2f} seconds")
 
-    # Compute amplitude envelope feature
-    amp_env_feat1 = AMPENV.amplitude_envelope(input_audio, args.frame, args.hop, args.feature)
+    # STFT computation
+    STFT = librosa.stft(input_audio, n_fft=args.frame, hop_length=args.hop)
 
-    # Plot and save to the required output file
-    AMPPLOT.amplitude_envelope_plot(
-    input_signal=input_audio,
-    inpaudname=args.file,
-    output_signal=amp_env_feat1,
-    sampling_rate=args.sr,
-    HOP_LENGTH=args.hop,
-    feature_name=args.feature,
-    output_path='outputs',
-    uniqueIdentifier=args.unique_id
-    ) `.trim();
+    print(f"Number of frequency bins obtained after STFT::{STFT.shape[0]}")
+    print(f"Number of frames obtained after STFT::{STFT.shape[1]}")
+
+    # Power Spectrogram
+    Y_STFT = np.abs(STFT) ** 2
+    Y_log_scale = librosa.power_to_db(Y_STFT)
+
+    STR_FIGNAME = ['Log_Amplitude_Spectrogram', 'Log-Frequency Spectrogram']
+
+    # Plot log-amplitude spectrogram
+    Spectrogram_Plots.plot_spectrogram(
+        Y_log_scale,
+        sr,
+        args.hop,
+        audfile_name=args.file,
+        fig_name=STR_FIGNAME[0],
+        output_path=output_dir,
+        uniqueIdentifier=args.unique_id
+    )
+
+    # Plot log-frequency spectrogram
+    Spectrogram_Plots.plot_spectrogram(
+        Y_log_scale,
+        sr,
+        args.hop,
+        audfile_name=args.file,
+        fig_name=STR_FIGNAME[1],
+        output_path=output_dir,
+        uniqueIdentifier=args.unique_id,
+        y_axis="log"
+    )
+
+    print("\nOperation completed successfully.")
+`.trim();
     setCode(generatedCode);
     setCodeHtml(`<pre>${generatedCode}</pre>`);
   };
@@ -98,12 +125,10 @@ if __name__ == "__main__":
       audioPath: selectedFile,
       hop:inputs.find(input => input.id === 'hop-length').value,
       frame:inputs.find(input => input.id === 'frame-length').value,
-      sr:inputs.find(input => input.id === 'sampling-rate').value,
-      feature: selectedFeature.toUpperCase()
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/process_audio', data,{
+      const response = await axios.post('http://localhost:5000/exp4', data,{
       headers: {
         // 'Content-Type': 'multipart/form-data'
       }
@@ -211,20 +236,6 @@ if __name__ == "__main__":
                 </div>
               ))}
 
-              <div className="mt-4 text-center">
-                <label htmlFor="feature" className="font-bold block mb-2">Select Feature</label>
-                <select
-                  id="feature"
-                  value={selectedFeature}
-                  onChange={(e) => setSelectedFeature(e.target.value)}
-                  className="bg-white border border-black rounded-lg px-3 py-1"
-                >
-                  <option value="MEAN">MEAN</option>
-                  <option value="MEDIAN">MEDIAN</option>
-                  <option value="MAX">MAX</option>
-                  <option value="MIN">MIN</option>
-                </select>
-              </div>
             </div>
           </div>
 

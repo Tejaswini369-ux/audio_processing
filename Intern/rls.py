@@ -13,7 +13,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Paths
-    input_file = os.path.join('audio1', args.file)
+    input_file = os.path.join('inputs', args.file)
     output_dir = 'outputs'
     os.makedirs(output_dir, exist_ok=True)
 

@@ -5,6 +5,7 @@ import Page1 from './Page1';
 import Experiment4a from './Exp4a/Experiment';
 import Experiment4b from './Exp4b/Experiment';
 import Experiment4c from './Exp4c/Experiment';
+import Experiment4d from './Exp4d/Experiment';
 
 import { useMediaQuery } from 'react-responsive';
 
@@ -54,6 +55,10 @@ export default function Dashboard() {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(3);
+    } else if(section.startsWith('exps/4d')) {
+      setExp(section.split('/')[1]);
+      setActiveTab(section.split('/')[2] || '');
+      setPage(4);
     } else {
       setPage(0);
       setActiveTab(section);
@@ -133,6 +138,7 @@ export default function Dashboard() {
         {page === 1 && <Experiment4a activeTab={activeTab} />}
         {page === 2 && <Experiment4b activeTab={activeTab} />}
         {page=== 3 && <Experiment4c activeTab={activeTab} />}
+        {page ===4 && <Experiment4d activeTab={activeTab} />}
        </div>
     </div>
   );
