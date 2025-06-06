@@ -1,34 +1,44 @@
 import React from 'react'
 import figure1 from './figure1.png'
 import figure2 from './figure2.png'
-import flowchart from './flowchart.png'
 
 const Theory = () => {
   return (
     <div className='leading-loose text-sm'>
-      <p className='font-bold text-xl text-green underline'>Amplitude Envelope</p>
+      <p className='font-bold text-xl text-green underline'>Extracting Spectral Centroid and Bandwidth from different audio files</p>
       <p>
-      Amplitude envelope refers to the changes in the amplitude of a sound over time, and is an influential property as it affects our perception of timbre. 
-      This is an important property of sound, because it is what allows us to effortlessly identify sounds, and uniquely distinguish them from other sounds. 
-      The amplitude envelope of a particular audio file is computed by the concept of framing. 
-      Once the number of frames is determined for an audio signal a particular amplitude value is computed for the entire frame based on the aggregation feature used. 
-      This process of computation is further repeated for all the frames in an audio file.<br /><br />
+      The experiment of extracting spectral centroid and bandwidth from different audio files relies on analyzing the frequency content of audio signals. 
+      The spectral centroid represents the "center of mass" of the spectrum, while bandwidth indicates the spread or width of the spectrum.<br />
+      Spectral features are widely used in <b>audio signal processing</b> to analyze the frequency characteristics of a sound. Two important spectral features are:
+      <ul style={{ display: "block", listStyleType: "decimal", paddingLeft: "20px" }}>
+        <li><b>Spectral Centroid:</b> Represents the center of mass of the frequency spectrum, giving an indication of the perceived brightness of a sound.</li>
+        <li><b>Spectral Bandwidth:</b> Measures the spread of the spectral energy around the centroid, indicating how wide or narrow the frequency distribution is.</li>
+      </ul>
+      These features are useful in speech recognition, music classification, and environmental sound analysis.<br />
+      The spectral centroid is a measure used in digital signal processing to characterize a spectrum, indicating the location of the center of mass of the spectrum. The Spectral Centroid is the weighted mean of the frequencies present in the signal, 
+      where the weights are the magnitudes of the corresponding frequencies. It is often associated with the brightness of a sound—a higher spectral centroid means the sound has more high-frequency components.<br />
+      The spectral centroid is calculated as:<br />
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <img src={figure1} alt="figure1" style={{ maxWidth: "100%" }} />
+      <img src={figure1} alt="figure1" style={{ maxWidth: "21%" }} />
       </div>
-      The amplitude envelope is a time-domain audio feature extracted from the raw audio waveform that refers to fluctuations in the amplitude of a sound over time and is an essential attribute since it influences our auditory perception of timbre. 
-      This is an important sound attribute because it allows us to swiftly detect and distinguish sounds. 
-      The maximum amplitude values among all samples in each frame make up the signal’s Amplitude Envelope which provides a rough estimation of loudness.
-      This feature has been extensively used for onset detection and music genre classification. It is, however, more sensitive to outliers than the RMS energy audio feature, hence it is often less preferable to the RMS audio feature.
-      <br /><br />
+      where:<br />
+      SC = Spectral Centroid<br />
+      X(f) = Magnitude of the frequency component f<br />
+      N = Maximum frequency component<br />
+      A low spectral centroid (e.g., below 500 Hz) is associated with bass-heavy or dull sounds.<br />
+      A high spectral centroid (e.g., above 2000 Hz) is associated with bright or sharp sounds.<br />
+      The Spectral Bandwidth represents the spread of frequencies around the spectral centroid. 
+      It measures how wide or narrow the frequency distribution is, providing insight into the timbre or texture of a sound.
+      Spectral bandwidth is typically measured as the standard deviation of the frequency distribution around the spectral centroid:<br />
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <img src={flowchart} alt="flowchart" style={{ maxWidth: "80%" }} />
+      <img src={figure2} alt="figure2" style={{ maxWidth: "26%" }} />
       </div>
-      There are two kinds of amplitude envelopes: percussive and flat. Percussive envelopes are characterized by an abrupt onset followed by an immediate exponential decay. 
-      This amplitude envelope is characteristic of various impact sounds: two wine glasses clinking together, hitting a drum, slamming a door, etc. Flat envelopes, on the other hand, are characterized by an abrupt onset, an indefinite sustain period and an abrupt offset
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <img src={figure2} alt="figure2" style={{ maxWidth: "65%" }} />
-      </div>
+      where:<br />
+      SBW = Spectral Bandwidth<br />
+      SC = Spectral Centroid<br />
+      X(f) = Magnitude of the frequency component f<br />
+      <b>Low spectral bandwidth:</b> The sound is dominated by a narrow frequency range, such as a pure tone or flute sound. <br />
+      <b>High spectral bandwidth:</b> The sound contains a wide range of frequencies, such as noise, cymbals, or distorted guitar.
       </p><br />
     </div>
   )

@@ -3,28 +3,46 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What is the valid frame size for an audio signal?",
-      options: ["1024", "1000", "400", "512"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., 1024 and 512"
+      question: "Which type of transform is most commonly used in the computation of spectrograms in the case of an audio signal?",
+      options: ["Fast Fourier Transform", "Continuous Time Fourier Transform", "Discrete Time Four Transform", "Short Time Fourier Transform"],
+      answer: [0,3],
+      explanation: "Correct answers are Option 1 and Option 4 i.e., Fast Fourier Transform and Short Time Fourier Transform"
     },
     {
-      question: "What does adjacent non overlapping frames with zero intermediate samples refer to for an audio signal?",
-      options: ["Frame Length equals double the Hop Length", "Frame Length equals half the Hop Length", "Frame Length equals Hop Length", "Frame Length equals four time the Hop Length"],
+      question: "What are the applications of Short Time Fourier Transform while referring to an audio signal? ",
+      options: ["Noise reduction","Pitch detection","Pitch shifting","All of the above"],
+      answer: [3],
+      explanation: "Correct answer is Option 4 i.e., All of the above"
+    },
+    {
+      question: "Which of the following statements are true while referring to an audio signal?",
+      options: ["Discrete Fourier Transform has temporal resolution", "Short Time Fourier Transform provides both temporal and frequency resolution", "Discrete Fourier Transform has no temporal resolution", "Short Time Fourier Transform does not provide both temporal and frequency resolution"],
+      answer: [1,2],
+      explanation: "Correct answers are Option 2 and Option 3 i.e., Short Time Fourier Transform provides both temporal and frequency resolution and Discrete Fourier Transform has no temporal resolution"
+    },
+    {
+      question: "Which of the following statements are true?",
+      options: ["STFT does not uses the concept of framing and windowing", "STFT uses the concept of framing but not windowing", "STFT uses the concept of both framing and windowing", "STFT uses the concept of windowing but not framing."],
       answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Frame Length equals Hop Length"
+      explanation: "Correct answer is Option 3 i.e., STFT uses the concept of both framing and windowing"
     },
     {
-      question: "If an audio signal is sampled at the rate 16khz, it means that",
-      options: ["There are 8000 samples in one second duration of the audio", "There are 16000 samples in one second duration of the audio", "There are 4000 samples in one second duration of the audio", "None of the above"],
-      answer: [1],
-      explanation: "Correct answer is Option 2 i.e., There are 16000 samples in one second duration of the audio"
+      question: "Select the correct statements in the case of Short Time Fourier Transform (STFT) while referring to an audio signal.",
+      options: ["During the computation of STFT frame size must always be equal to the window size.", "During the computation of STFT frame size must not be equal to the window size.", "During the computation of STFT the concepts of frame size and window size is not involved.", "During the computation of STFT frame size may or may not be equal to the window size."],
+      answer: [3],
+      explanation: "Correct answer is Option 4 i.e., During the computation of STFT frame size may or may not be equal to the window size."
     },
     {
-      question: "What does hop length refer to for an audio signal?",
-      options: ["Number of samples in the particular frame of the audio", "Total number of samples present in two successive frames of the audio", "Number of samples between the two consecutive frames of the audio", "Amplitude value of the samples in the frame of the audio"],
-      answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Number of samples between the two consecutive frames of the audio"
+      question: "What is the relationship of frequency bins to frame size in the case of an audio signal?",
+      options: ["Frequency bins is equal to one less than half the frame size.", "Frequency bins is equal to half the frame size.", "Frequency bins is equal to four times the frame size.", "Frequency bins is equal to one more than half the frame size."],
+      answer: [3],
+      explanation: "Correct answer is Option 4 i.e., Frequency bins is equal to one more than half the frame size."
+    },
+    {
+      question: "Which type of transform is most commonly used in the computation of spectrograms in the case of an audio signal?",
+      options: ["Complex Fourier Coefficients", "Spectral vector composing of the number of frequency bins.", "Spectral matrix of the size of number of frequency bins by the number of frames.", "None of the above"],
+      answer: [0,2],
+      explanation: "Correct answers are Option 1 and Option 3 i.e., Complex Fourier Coefficients and Spectral matrix of the size of number of frequency bins by the number of frames."
     }
   ];
 

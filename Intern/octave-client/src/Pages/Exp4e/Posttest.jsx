@@ -3,28 +3,34 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What is the valid frame size for an audio signal?",
-      options: ["1024", "1000", "400", "512"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., 1024 and 512"
-    },
-    {
-      question: "What does adjacent non overlapping frames with zero intermediate samples refer to for an audio signal?",
-      options: ["Frame Length equals double the Hop Length", "Frame Length equals half the Hop Length", "Frame Length equals Hop Length", "Frame Length equals four time the Hop Length"],
-      answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Frame Length equals Hop Length"
-    },
-    {
-      question: "If an audio signal is sampled at the rate 16khz, it means that",
-      options: ["There are 8000 samples in one second duration of the audio", "There are 16000 samples in one second duration of the audio", "There are 4000 samples in one second duration of the audio", "None of the above"],
+      question: "Which function in Librosa is used to compute MEL spectrograms?",
+      options: ["librosa.load()", "librosa.feature.melspectrogram()", "librosa.stft()", "librosa.mfcc()"],
       answer: [1],
-      explanation: "Correct answer is Option 2 i.e., There are 16000 samples in one second duration of the audio"
+      explanation: "Correct answer is Option 2 i.e., librosa.feature.melspectrogram()"
     },
     {
-      question: "What does hop length refer to for an audio signal?",
-      options: ["Number of samples in the particular frame of the audio", "Total number of samples present in two successive frames of the audio", "Number of samples between the two consecutive frames of the audio", "Amplitude value of the samples in the frame of the audio"],
+      question: "What effect does increasing the number of MEL bands have on the spectrogram?",
+      options: ["Decreases the frequency resolution", "Increases the clarity of lower frequencies", "Has no effect", "Reduces the spectrogram size"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., Increases the clarity of lower frequencies"
+    },
+    {
+      question: "What is the significance of using a logarithmic scale for MEL spectrograms?",
+      options: ["It makes high-frequency components more prominent", "It reduces the noise in the signal", "It aligns better with human auditory perception", "It speeds up computation"],
       answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Number of samples between the two consecutive frames of the audio"
+      explanation: "Correct answer is Option 3 i.e., It aligns better with human auditory perception "
+    },
+    {
+      question: "If an audio file has a higher sampling rate, how does it affect the MEL spectrogram?",
+      options: ["It increases the frequency resolution", "It decreases the time resolution", "It does not impact the spectrogram", "It changes the color of the spectrogram"],
+      answer: [0],
+      explanation: "Correct answer is Option 1 i.e., It increases the frequency resolution"
+    },
+    {
+      question: "What is a common application of MEL spectrograms?",
+      options: ["Image recognition", "Speech and music classification", "Video compression", "Text-to-speech conversion"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., Speech and music classification"
     }
   ];
 

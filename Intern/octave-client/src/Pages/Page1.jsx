@@ -8,7 +8,7 @@ const Page1 = ({ activeTab }) => {
       case '':
         return (
           <div className='font-serif text-lg'>
-            The interactive experiments in this lab will give the students an opportunity for better understanding and learning of the basic techniques used in Adaptive Signal Processing.
+            The interactive experiments in this lab will give the students an opportunity for better understanding and learning of the basic techniques used in Audio Signal Processing.
           </div>
         );
       case 'objective':

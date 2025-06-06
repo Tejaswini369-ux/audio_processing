@@ -3,28 +3,34 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What is the valid frame size for an audio signal?",
-      options: ["1024", "1000", "400", "512"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., 1024 and 512"
-    },
-    {
-      question: "What does adjacent non overlapping frames with zero intermediate samples refer to for an audio signal?",
-      options: ["Frame Length equals double the Hop Length", "Frame Length equals half the Hop Length", "Frame Length equals Hop Length", "Frame Length equals four time the Hop Length"],
-      answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Frame Length equals Hop Length"
-    },
-    {
-      question: "If an audio signal is sampled at the rate 16khz, it means that",
-      options: ["There are 8000 samples in one second duration of the audio", "There are 16000 samples in one second duration of the audio", "There are 4000 samples in one second duration of the audio", "None of the above"],
+      question: "Which function in Python is commonly used to compute the Short-Time Fourier Transform (STFT) for BER calculation?",
+      options: ["librosa. feature. melspectrogram()", "scipy. signal. stft()", "numpy.fft.fft()", "matplotlib.pyplot.specgram()"],
       answer: [1],
-      explanation: "Correct answer is Option 2 i.e., There are 16000 samples in one second duration of the audio"
+      explanation: "Correct answer is Option 2 i.e., scipy. signal. stft()"
     },
     {
-      question: "What does hop length refer to for an audio signal?",
-      options: ["Number of samples in the particular frame of the audio", "Total number of samples present in two successive frames of the audio", "Number of samples between the two consecutive frames of the audio", "Amplitude value of the samples in the frame of the audio"],
-      answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Number of samples between the two consecutive frames of the audio"
+      question: "What happens to the Band Energy Ratio if the low-frequency components of a signal have higher energy?",
+      options: ["The ratio increases in the lower bands", "The ratio remains constant", "The ratio increases in the higher bands", "The ratio becomes negative"],
+      answer: [0],
+      explanation: "Correct answer is Option 1 i.e., The ratio increases in the lower bands"
+    },
+    {
+      question: "Why is it useful to analyze Band Energy Ratio in speech signals?",
+      options: ["To detect emotional variations and speaker characteristics", "To enhance the amplitude of the signal", "To increase the sampling rate of the audio", "To filter out background noise"],
+      answer: [0],
+      explanation: "Correct answer is Option 1 i.e., To detect emotional variations and speaker characteristics"
+    },
+    {
+      question: "Which mathematical operation is used to obtain the energy in a specific frequency band?",
+      options: ["Squaring the amplitude values and summing them", "Taking the logarithm of the signal", "Applying the inverse Fourier transform", "Computing the phase spectrum"],
+      answer: [0],
+      explanation: "Correct answer is Option 1 i.e., Squaring the amplitude values and summing them"
+    },
+    {
+      question: "In which of the following fields is Band Energy Ratio analysis widely applied?",
+      options: ["Speech and audio classification", "Image processing", "Video rendering", "Text summarization"],
+      answer: [0],
+      explanation: "Correct answer is Option 1 i.e., Speech and audio classification"
     }
   ];
 

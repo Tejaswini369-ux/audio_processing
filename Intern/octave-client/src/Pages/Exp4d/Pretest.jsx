@@ -3,40 +3,34 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What are the valid audio formats?",
-      options: [".mp3", ".png", ".jpeg", ".wav"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., .mp3 and .wav"
+      question: "What do you mean by spectrogram in the case of an audio signal?",
+      options: ["A spectrogram is a visual representation of the spectrum of amplitudes of a signal as it varies with time.", "A spectrogram is a visual representation of the spectrum of frequencies of a signal as it varies with frequency.", "A spectrogram is a visual representation of the spectrum of frequencies of a signal as it varies with time.", "A spectrogram is a visual representation of the spectrum of amplitudes of a signal as it varies with frequency."],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., A spectrogram is a visual representation of the spectrum of frequencies of a signal as it varies with time."
     },
     {
-      question: "What does frame length refer to for an audio signal?",
-      options: ["Amplitude values of the samples in the frame", "Number of samples in the particular frame of the audio", "Half the duration of the audio signal", "None of the above"],
-      answer: [1],
-      explanation: "Correct answer is Option 2 i.e., Number of samples in the particular frame of the audio"
-    },
-    {
-      question: "Based on the visualization of the plots of amplitude envelope select the aggregation feature that approximately traces the positive portion of the amplitude in the audio signal",
-      options: ["MAX", "MEAN", "MIN", "MEDIAN"],
-      answer: [0],
-      explanation: "Correct answer is Option 1 i.e., MAX"
-    },
-    {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Duration of one sample refers to the sampling rate", "Duration of the first sample equals the reciprocal of the sampling rate", "Partially overlapping frames does not have zero hop length", "All of the above"],
-      answer: [1, 2],
-      explanation: "Correct answers are Option 2 and Option 3 i.e., Duration of the first sample equals the reciprocal of the sampling rate and Partially overlapping frames does not have zero hop length"
-    },
-    {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Frame duration is dependent on the number of samples in the frame", "Frame duration is dependent on the sampling rate", "Concept of framing plays a significant role in amplitude envelope extraction", "All of the above"],
+      question: "What is another name of spectrogram in the case of an audio signal?",
+      options: ["Sonographs", "Voiceprints", "Voicegrams", "All of the above"],
       answer: [3],
       explanation: "Correct answer is Option 4 i.e., All of the above"
     },
     {
-      question: "What is the default sampling rate for an audio signal?",
-      options: ["22050 Hz", "1000 Hz", "44100 Hz", "22000 Hz"],
-      answer: [0],
-      explanation: "Correct answer is Option 1 i.e., 22050 Hz"
+      question: "What is spectrogram in audio?",
+      options: ["A spectrogram is a graphic representation of audio signals, demonstrating the frequency of the audio of a signal over a specific time interval.", "A spectrogram is a graphic representation of audio signals, demonstrating the amplitude of the audio of a signal over a specific time interval.", "None of the Above", "Both (a) and (b)"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., A spectrogram is a graphic representation of audio signals, demonstrating the amplitude of the audio of a signal over a specific time interval."
+    },
+    {
+      question: "Which does spectrogram represent in the case of an audio in the single graph?",
+      options: ["Time", "Frequency", "Amplitude", "All of the above"],
+      answer: [3],
+      explanation: "Correct answer is Option 4 i.e., All of the above"
+    },
+    {
+      question: "Which of the following statements are true?",
+      options: ["Spectrograms are visual representations of audio – representing time, frequency, and amplitude all in different graphs.", "Spectrograms are visual representations of audio – representing time and frequency in one graph and amplitude in a different graph.", "Spectrograms are visual representations of audio – representing time and amplitude in one graph and frequency in a different graph.", "Spectrograms are visual representations of audio – representing time, frequency, and amplitude all on one graph."],
+      answer: [3],
+      explanation: "Correct answer is Option 4 i.e., Spectrograms are visual representations of audio – representing time, frequency, and amplitude all on one graph."
     }
   ];
 

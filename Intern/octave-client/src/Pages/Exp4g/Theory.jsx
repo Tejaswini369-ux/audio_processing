@@ -1,34 +1,68 @@
 import React from 'react'
 import figure1 from './figure1.png'
 import figure2 from './figure2.png'
-import flowchart from './flowchart.png'
+import figure3 from './figure3.png'
 
 const Theory = () => {
   return (
     <div className='leading-loose text-sm'>
-      <p className='font-bold text-xl text-green underline'>Amplitude Envelope</p>
+      <p className='font-bold text-xl text-green underline'>Computation of Band Energy Ratio from different audio files</p>
       <p>
-      Amplitude envelope refers to the changes in the amplitude of a sound over time, and is an influential property as it affects our perception of timbre. 
-      This is an important property of sound, because it is what allows us to effortlessly identify sounds, and uniquely distinguish them from other sounds. 
-      The amplitude envelope of a particular audio file is computed by the concept of framing. 
-      Once the number of frames is determined for an audio signal a particular amplitude value is computed for the entire frame based on the aggregation feature used. 
-      This process of computation is further repeated for all the frames in an audio file.<br /><br />
+      The Band Energy Ratio (BER) provides the relation between the lower and higher frequency bands. 
+      It can be thought of as the measure of how dominant low frequencies are. 
+      This feature has been extensively used in music/speech discrimination, music classification etc.<br />
+      The Band Energy Ratio (BER) is an important feature in audio signal processing that measures the distribution of energy across different frequency bands. It is widely used in speech analysis, music classification, and environmental sound recognition. 
+      By dividing an audio signal into multiple frequency bands and computing the ratio of energy in each band to the total energy, we can analyze the characteristics of the sound.<br />
+      An audio signal consists of multiple frequencies, and different sounds emphasize different frequency ranges. For example:
+      <ul style={{ display: "block", listStyleType: "disc", paddingLeft: "20px" }}>
+        <li>Speech signals have more energy in the lower frequency bands (below 4 kHz).</li>
+        <li>Music signals may have energy spread across a wider range of frequencies.</li>
+      </ul>
+      The Band Energy Ratio helps in understanding how energy is distributed among these frequency components. 
+      It is computed using the Short-Time Fourier Transform (STFT) or Wavelet Transform to analyze energy distribution over time.
+      <br />
+      <b>Compute the Band Energy Ratio (BER)</b><br />
+      The energy in a specific frequency band is divided by the total energy of the signal:
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <img src={figure1} alt="figure1" style={{ maxWidth: "100%" }} />
+      <img src={figure1} alt="figure1" style={{ maxWidth: "13%" }} />
       </div>
-      The amplitude envelope is a time-domain audio feature extracted from the raw audio waveform that refers to fluctuations in the amplitude of a sound over time and is an essential attribute since it influences our auditory perception of timbre. 
-      This is an important sound attribute because it allows us to swiftly detect and distinguish sounds. 
-      The maximum amplitude values among all samples in each frame make up the signal’s Amplitude Envelope which provides a rough estimation of loudness.
-      This feature has been extensively used for onset detection and music genre classification. It is, however, more sensitive to outliers than the RMS energy audio feature, hence it is often less preferable to the RMS audio feature.
-      <br /><br />
+      where E<sub>total</sub> is the sum of energy over all frequency bands.<br />
+      <b>Mathematical Representation of BER</b><br />
+      The total energy of the signal is computed as:
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <img src={flowchart} alt="flowchart" style={{ maxWidth: "80%" }} />
+      <img src={figure2} alt="figure2" style={{ maxWidth: "21%" }} />
       </div>
-      There are two kinds of amplitude envelopes: percussive and flat. Percussive envelopes are characterized by an abrupt onset followed by an immediate exponential decay. 
-      This amplitude envelope is characteristic of various impact sounds: two wine glasses clinking together, hitting a drum, slamming a door, etc. Flat envelopes, on the other hand, are characterized by an abrupt onset, an indefinite sustain period and an abrupt offset
+      Then, for each frequency band (e.g., low, mid, high), the Band Energy Ratio is given by:
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-      <img src={figure2} alt="figure2" style={{ maxWidth: "65%" }} />
+      <img src={figure3} alt="figure3" style={{ maxWidth: "23%" }} />
       </div>
+      where:<br />
+      f1, f2 are the frequency limits of the band.<br />
+      ∣X(f)∣<sup>2</sup> represents the power of the signal at frequency f.<br />
+      BER<sub>band</sub> represents the proportion of energy in the selected band.<br />
+      <b>Steps for Computing Band Energy Ratio</b><br />
+      <ul style={{ display: "block", listStyleType: "decimal", paddingLeft: "20px" }}>
+        <b><li>Pre-processing the Audio File</li></b>
+        <ul style={{ display: "block", listStyleType: "decimal", paddingLeft: "20px" }}>
+          <li>Load the audio signal and convert it to a uniform sampling rate if required.</li>
+          <li>Normalize the signal to maintain consistency in amplitude levels.</li>
+        </ul>
+        <b><li>Apply Short-Time Fourier Transform (STFT)</li></b>
+        <ul style={{ display: "block", listStyleType: "decimal", paddingLeft: "20px" }}>
+          <li>The signal is transformed from the time domain to the frequency domain using STFT.</li>
+          <li>STFT provides frequency information over short time intervals.</li>
+        </ul>
+        <b><li>Divide the Frequency Spectrum into Bands</li></b>
+        <ul style={{ display: "block", listStyleType: "decimal", paddingLeft: "20px" }}>
+          <li>The full frequency range is divided into multiple bands (e.g., <b>low, mid, high-frequency bands</b>).</li>
+          <li>The band division depends on the application (e.g., speech processing vs. music analysis).</li>
+        </ul>
+        <b><li>Compute the Energy in Each Band</li></b>
+        <ul style={{ display: "block", listStyleType: "decimal", paddingLeft: "20px" }}>
+          <li>The power spectrum of the signal is computed for each frequency band.</li>
+          <li>The energy in each band is calculated.</li>
+        </ul>
+      </ul>
       </p><br />
     </div>
   )

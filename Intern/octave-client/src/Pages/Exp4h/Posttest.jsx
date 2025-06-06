@@ -3,28 +3,34 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What is the valid frame size for an audio signal?",
-      options: ["1024", "1000", "400", "512"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., 1024 and 512"
-    },
-    {
-      question: "What does adjacent non overlapping frames with zero intermediate samples refer to for an audio signal?",
-      options: ["Frame Length equals double the Hop Length", "Frame Length equals half the Hop Length", "Frame Length equals Hop Length", "Frame Length equals four time the Hop Length"],
-      answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Frame Length equals Hop Length"
-    },
-    {
-      question: "If an audio signal is sampled at the rate 16khz, it means that",
-      options: ["There are 8000 samples in one second duration of the audio", "There are 16000 samples in one second duration of the audio", "There are 4000 samples in one second duration of the audio", "None of the above"],
+      question: "Which function in Librosa is used to compute spectral centroid?",
+      options: ["librosa.feature.mfcc()", "librosa.feature.spectral_centroid()", "librosa.feature.melspectrogram()", "librosa.stft()"],
       answer: [1],
-      explanation: "Correct answer is Option 2 i.e., There are 16000 samples in one second duration of the audio"
+      explanation: "Correct answer is Option 2 i.e., librosa.feature.spectral_centroid()"
     },
     {
-      question: "What does hop length refer to for an audio signal?",
-      options: ["Number of samples in the particular frame of the audio", "Total number of samples present in two successive frames of the audio", "Number of samples between the two consecutive frames of the audio", "Amplitude value of the samples in the frame of the audio"],
+      question: "What does a high spectral centroid indicate in an audio file?",
+      options: ["The presence of more low-frequency components", "A dull or bass-heavy sound", "A brighter or sharper sound", "A longer audio duration"],
       answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Number of samples between the two consecutive frames of the audio"
+      explanation: "Correct answer is Option 3 i.e., A brighter or sharper sound"
+    },
+    {
+      question: "What happens to the spectral bandwidth if an audio signal has a wide frequency range?",
+      options: ["It decreases", "It remains constant", "It increases", "It turns negative"],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., It increases"
+    },
+    {
+      question: "Which mathematical operation is applied to calculate spectral bandwidth?",
+      options: ["Standard deviation of frequency components", "Summation of amplitude values", "Logarithmic transformation", "Wavelet transform"],
+      answer: [0],
+      explanation: "Correct answer is Option 1 i.e., Standard deviation of frequency components"
+    },
+    {
+      question: "Why is spectral centroid an important feature in music classification?",
+      options: ["It helps distinguish between high-pitched and low-pitched sounds", "It measures the tempo of the audio", "It identifies the lyrics in a song", "It calculates the total duration of the track"],
+      answer: [0],
+      explanation: "Correct answer is Option 1 i.e., It helps distinguish between high-pitched and low-pitched sounds"
     }
   ];
 

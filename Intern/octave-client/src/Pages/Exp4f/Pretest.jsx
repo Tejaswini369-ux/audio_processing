@@ -3,40 +3,34 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What are the valid audio formats?",
-      options: [".mp3", ".png", ".jpeg", ".wav"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., .mp3 and .wav"
-    },
-    {
-      question: "What does frame length refer to for an audio signal?",
-      options: ["Amplitude values of the samples in the frame", "Number of samples in the particular frame of the audio", "Half the duration of the audio signal", "None of the above"],
+      question: "What does MFCC stand for?",
+      options: ["Mel-Frequency Cepstral Classification", "Mel-Frequency Cepstral Coefficients", "Modified Fourier Cepstral Coefficients","Multi-Frequency Cepstral Coefficients"],
       answer: [1],
-      explanation: "Correct answer is Option 2 i.e., Number of samples in the particular frame of the audio"
+      explanation: "Correct answer is Option 2 i.e., Mel-Frequency Cepstral Coefficients"
     },
     {
-      question: "Based on the visualization of the plots of amplitude envelope select the aggregation feature that approximately traces the positive portion of the amplitude in the audio signal",
-      options: ["MAX", "MEAN", "MIN", "MEDIAN"],
-      answer: [0],
-      explanation: "Correct answer is Option 1 i.e., MAX"
+      question: "Why is the Mel scale used in MFCC extraction?",
+      options: ["To enhance image resolution", "To compress the audio file", "To mimic human auditory perception ", "To remove background noise"],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., To mimic human auditory perception "
     },
     {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Duration of one sample refers to the sampling rate", "Duration of the first sample equals the reciprocal of the sampling rate", "Partially overlapping frames does not have zero hop length", "All of the above"],
-      answer: [1, 2],
-      explanation: "Correct answers are Option 2 and Option 3 i.e., Duration of the first sample equals the reciprocal of the sampling rate and Partially overlapping frames does not have zero hop length"
-    },
-    {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Frame duration is dependent on the number of samples in the frame", "Frame duration is dependent on the sampling rate", "Concept of framing plays a significant role in amplitude envelope extraction", "All of the above"],
+      question: "Which of the following is a key step in MFCC extraction?",
+      options: ["Converting frequency to log scale", "Applying Discrete Cosine Transform (DCT)", "Using a Mel filter bank", "All of the above"],
       answer: [3],
       explanation: "Correct answer is Option 4 i.e., All of the above"
     },
     {
-      question: "What is the default sampling rate for an audio signal?",
-      options: ["22050 Hz", "1000 Hz", "44100 Hz", "22000 Hz"],
-      answer: [0],
-      explanation: "Correct answer is Option 1 i.e., 22050 Hz"
+      question: "Which mathematical transform is used to extract MFCCs after applying the Mel filter bank?",
+      options: ["Fast Fourier Transform (FFT)", "Inverse Fourier Transform", "Discrete Cosine Transform (DCT)", "Wavelet Transform"],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., Discrete Cosine Transform (DCT)"
+    },
+    {
+      question: "Which feature of audio signals does MFCC primarily focus on?",
+      options: ["Time-domain characteristics", "Short-term frequency content", "Pitch and timbre", "Phase information"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., Short-term frequency content"
     }
   ];
 

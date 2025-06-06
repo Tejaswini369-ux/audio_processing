@@ -3,40 +3,34 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What are the valid audio formats?",
-      options: [".mp3", ".png", ".jpeg", ".wav"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., .mp3 and .wav"
+      question: "The Fourier Transform of a rectangle function is",
+      options: ["Delta function", "Unit Step Function", "Sinc Function", "Exponential Function"],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., Sinc Function"
     },
     {
-      question: "What does frame length refer to for an audio signal?",
-      options: ["Amplitude values of the samples in the frame", "Number of samples in the particular frame of the audio", "Half the duration of the audio signal", "None of the above"],
+      question: "Considering an audio signal which of the statements related to Fourier Transform are correct?",
+      options: ["Conversion from Time-domain representation of audio signal into an equivalent representation in the frequency domain takes place.", "Conversion from Frequency-domain representation of audio signal into an equivalent representation in the time domain takes place.", "None of above", "All of above"],
+      answer: [0],
+      explanation: "Correct answer is Option 1 i.e., Conversion from Time-domain representation of audio signal into an equivalent representation in the frequency domain takes place."
+    },
+    {
+      question: "What does frequency analysis of a speech signal involve?",
+      options: ["Frequency analysis involves combining different frequencies components of speech signals to obtain complex sound signals.", "Frequency analysis of a speech involves addition of multiple speech signals of different duration to get a single signal", "Frequency analysis involves decomposing complex speech signals into their fundamental frequencies.", "All of the above"],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., Frequency analysis involves decomposing complex speech signals into their fundamental frequencies."
+    },
+    {
+      question: "What does the frequency of a sinusoidal signal indicate?",
+      options: ["The number of times the sine wave goes through a complete cycle in the space of 0.5second.", "The number of times the sine wave goes through a complete cycle in the space of 1 second.", "The number of times the sine wave goes through a complete cycle in the space of 2 second.", "The number of times the sine wave goes through a complete cycle in the space of 1.5 second."],
       answer: [1],
-      explanation: "Correct answer is Option 2 i.e., Number of samples in the particular frame of the audio"
+      explanation: "Correct answer is Option 2 i.e., The number of times the sine wave goes through a complete cycle in the space of 1 second."
     },
     {
-      question: "Based on the visualization of the plots of amplitude envelope select the aggregation feature that approximately traces the positive portion of the amplitude in the audio signal",
-      options: ["MAX", "MEAN", "MIN", "MEDIAN"],
-      answer: [0],
-      explanation: "Correct answer is Option 1 i.e., MAX"
-    },
-    {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Duration of one sample refers to the sampling rate", "Duration of the first sample equals the reciprocal of the sampling rate", "Partially overlapping frames does not have zero hop length", "All of the above"],
-      answer: [1, 2],
-      explanation: "Correct answers are Option 2 and Option 3 i.e., Duration of the first sample equals the reciprocal of the sampling rate and Partially overlapping frames does not have zero hop length"
-    },
-    {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Frame duration is dependent on the number of samples in the frame", "Frame duration is dependent on the sampling rate", "Concept of framing plays a significant role in amplitude envelope extraction", "All of the above"],
-      answer: [3],
-      explanation: "Correct answer is Option 4 i.e., All of the above"
-    },
-    {
-      question: "What is the default sampling rate for an audio signal?",
-      options: ["22050 Hz", "1000 Hz", "44100 Hz", "22000 Hz"],
-      answer: [0],
-      explanation: "Correct answer is Option 1 i.e., 22050 Hz"
+      question: "What are the two important parameters associated with the frequency response in the case of speech signal?",
+      options: ["Duration", "Sampling Frequency", "Magnitude", "Phase"],
+      answer: [2,3],
+      explanation: "Correct answers are Option 3 and Option 4 i.e., Magnitude and Phase"
     }
   ];
 

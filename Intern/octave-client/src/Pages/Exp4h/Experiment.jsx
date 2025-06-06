@@ -12,7 +12,7 @@ const Experiment = ({activeTab}) => {
   const renderContent = () => {
     switch (activeTab) {
       case '':
-        return <div>To obtain the amplitude envelope based on different aggregation features in different frames of an audio file</div>;
+        return <div>Extracting Spectral Centroid and Bandwidth from different audio files.</div>;
       case 'theory':
         return <Theory/>;
       case 'pretest':
@@ -39,7 +39,7 @@ const Experiment = ({activeTab}) => {
             <div>
               <p className="font-bold text-lg text-center text-blue underline hover:text-green">
                 <a href="https://www.vlab.co.in/broad-area-biotechnology-and-biomedical-engineering">
-                  Audio Signal Processing
+                  Adaptive Signal Processing
                 </a>
               </p>
             </div>

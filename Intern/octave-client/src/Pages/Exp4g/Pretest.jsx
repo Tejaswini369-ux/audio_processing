@@ -3,40 +3,34 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What are the valid audio formats?",
-      options: [".mp3", ".png", ".jpeg", ".wav"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., .mp3 and .wav"
-    },
-    {
-      question: "What does frame length refer to for an audio signal?",
-      options: ["Amplitude values of the samples in the frame", "Number of samples in the particular frame of the audio", "Half the duration of the audio signal", "None of the above"],
+      question: "What does Band Energy Ratio (BER) measure in an audio signal?",
+      options: ["The total duration of the audio signal", "The distribution of energy across different frequency bands", "The pitch of the sound","The loudness of the audio"],
       answer: [1],
-      explanation: "Correct answer is Option 2 i.e., Number of samples in the particular frame of the audio"
+      explanation: "Correct answer is Option 2 i.e., The distribution of energy across different frequency bands "
     },
     {
-      question: "Based on the visualization of the plots of amplitude envelope select the aggregation feature that approximately traces the positive portion of the amplitude in the audio signal",
-      options: ["MAX", "MEAN", "MIN", "MEDIAN"],
+      question: "Which of the following is necessary to compute Band Energy Ratio?",
+      options: ["Short-Time Fourier Transform (STFT) ", "Auto-correlation", "Wavelet Transform", "Linear Regression"],
       answer: [0],
-      explanation: "Correct answer is Option 1 i.e., MAX"
+      explanation: "Correct answer is Option 1 i.e., Short-Time Fourier Transform (STFT) "
     },
     {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Duration of one sample refers to the sampling rate", "Duration of the first sample equals the reciprocal of the sampling rate", "Partially overlapping frames does not have zero hop length", "All of the above"],
-      answer: [1, 2],
-      explanation: "Correct answers are Option 2 and Option 3 i.e., Duration of the first sample equals the reciprocal of the sampling rate and Partially overlapping frames does not have zero hop length"
+      question: "How is the Band Energy Ratio (BER) calculated?",
+      options: ["By dividing the total energy by the number of samples", "By computing the ratio of energy in a specific frequency band to the total energy", "By applying an inverse Fourier Transform", "By using a moving average filter"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., By computing the ratio of energy in a specific frequency band to the total energy"
     },
     {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Frame duration is dependent on the number of samples in the frame", "Frame duration is dependent on the sampling rate", "Concept of framing plays a significant role in amplitude envelope extraction", "All of the above"],
-      answer: [3],
-      explanation: "Correct answer is Option 4 i.e., All of the above"
+      question: "Which of the following applications commonly use Band Energy Ratio analysis?",
+      options: ["Image segmentation", "Speech emotion recognition", "Text-to-speech conversion", "Video compression"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., Speech emotion recognition"
     },
     {
-      question: "What is the default sampling rate for an audio signal?",
-      options: ["22050 Hz", "1000 Hz", "44100 Hz", "22000 Hz"],
-      answer: [0],
-      explanation: "Correct answer is Option 1 i.e., 22050 Hz"
+      question: "What is the main advantage of using Band Energy Ratio in audio analysis?",
+      options: ["It reduces noise in the signal", "It provides frequency-specific energy distribution", "It enhances pitch detection", "It increases the speed of audio playback"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., It provides frequency-specific energy distribution"
     }
   ];
 

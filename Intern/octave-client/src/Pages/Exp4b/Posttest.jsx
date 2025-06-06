@@ -3,28 +3,40 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What is the valid frame size for an audio signal?",
-      options: ["1024", "1000", "400", "512"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., 1024 and 512"
+      question: "Which of the following has the highest Zero Crossing rate feature?",
+      options: ["Violin Sound", "Piano Sound", "Human Voice", "Noisy Signals"],
+      answer: [3],
+      explanation: "Correct answer is Option 4 i.e., Noisy Signals"
     },
     {
-      question: "What does adjacent non overlapping frames with zero intermediate samples refer to for an audio signal?",
-      options: ["Frame Length equals double the Hop Length", "Frame Length equals half the Hop Length", "Frame Length equals Hop Length", "Frame Length equals four time the Hop Length"],
+      question: "Which of the following statements are true?",
+      options: ["RMS Energy Feature for an audio frame takes the sample with the maximum amplitude in given frame", "RMS Energy Feature for an audio frame takes the sample with the minimum amplitude in given frame", "RMS Energy Feature for an audio frame takes all samples in given frame", "All of the above"],
       answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Frame Length equals Hop Length"
+      explanation: "Correct answer is Option 3 i.e., RMS Energy Feature for an audio frame takes all samples in given frame"
     },
     {
-      question: "If an audio signal is sampled at the rate 16khz, it means that",
-      options: ["There are 8000 samples in one second duration of the audio", "There are 16000 samples in one second duration of the audio", "There are 4000 samples in one second duration of the audio", "None of the above"],
-      answer: [1],
-      explanation: "Correct answer is Option 2 i.e., There are 16000 samples in one second duration of the audio"
-    },
-    {
-      question: "What does hop length refer to for an audio signal?",
-      options: ["Number of samples in the particular frame of the audio", "Total number of samples present in two successive frames of the audio", "Number of samples between the two consecutive frames of the audio", "Amplitude value of the samples in the frame of the audio"],
+      question: "In order to measure the smoothness of the audio signal which time domain audio feature is used.",
+      options: ["Amplitude Envelope", "Root Mean Square Energy", "Zero Crossing Rate", "All of the above"],
       answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Number of samples between the two consecutive frames of the audio"
+      explanation: "Correct answer is Option 3 i.e., Zero Crossing Rate"
+    },
+    {
+      question: "Which of the following statements related to Zero Crossing Rate feature are true for an audio signal?",
+      options: ["Calculation of the zero-crossing rate of an audio signal does not involve the comparison of the sign of amplitude values of each pair of consecutive samples.", "Calculation of the zero-crossing rate of an audio signal involves the comparison of the sign of amplitude values of each pair of consecutive odd samples.", "Calculation of the zero-crossing rate of an audio signal involves the comparison of the sign of amplitude values of each pair of consecutive samples.", "Calculation of the zero-crossing rate of an audio signal involves the comparison of the sign of amplitude values of each pair of consecutive even samples."],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., Calculation of the zero-crossing rate of an audio signal involves the comparison of the sign of amplitude values of each pair of consecutive samples."
+    },
+    {
+      question: "Which feature is useful for audio segmentation and music genre classification?",
+      options: ["Zero Crossing Rate", "Amplitude Envelope", "Root Mean Square Energy", "All of the above"],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., Root Mean Square Energy"
+    },
+    {
+      question: "Select the audio features that works on the concept of framing.",
+      options: ["Zero Crossing Rate", "Amplitude Envelope", "Root Mean Square Energy", "All of the above"],
+      answer: [3],
+      explanation: "Correct answer is Option 4 i.e., All of the above"
     }
   ];
 

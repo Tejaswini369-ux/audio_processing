@@ -3,28 +3,34 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What is the valid frame size for an audio signal?",
-      options: ["1024", "1000", "400", "512"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., 1024 and 512"
-    },
-    {
-      question: "What does adjacent non overlapping frames with zero intermediate samples refer to for an audio signal?",
-      options: ["Frame Length equals double the Hop Length", "Frame Length equals half the Hop Length", "Frame Length equals Hop Length", "Frame Length equals four time the Hop Length"],
+      question: "What does high magnitude indicate in the amplitude spectrum plot of audio?",
+      options: ["High Magnitude indicate low similarity between the audio signal and the sinusoid.", "High Magnitude indicate zero similarity between the audio signal and the sinusoid.", "High Magnitude indicate high similarity between the audio signal and the sinusoid.", "None of the above"],
       answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Frame Length equals Hop Length"
+      explanation: "Correct answer is Option 3 i.e., High Magnitude indicate high similarity between the audio signal and the sinusoid."
     },
     {
-      question: "If an audio signal is sampled at the rate 16khz, it means that",
-      options: ["There are 8000 samples in one second duration of the audio", "There are 16000 samples in one second duration of the audio", "There are 4000 samples in one second duration of the audio", "None of the above"],
+      question: "What does low magnitude indicate in the amplitude spectrum plot of audio?",
+      options: ["Low Magnitude indicate zero similarity between the audio signal and the sinusoid.", "Low Magnitude indicate low similarity between the audio signal and the sinusoid.", "Low Magnitude indicate high similarity between the audio signal and the sinusoid.", "None of the above"],
       answer: [1],
-      explanation: "Correct answer is Option 2 i.e., There are 16000 samples in one second duration of the audio"
+      explanation: "Correct answer is Option 2 i.e., Low Magnitude indicate low similarity between the audio signal and the sinusoid."
     },
     {
-      question: "What does hop length refer to for an audio signal?",
-      options: ["Number of samples in the particular frame of the audio", "Total number of samples present in two successive frames of the audio", "Number of samples between the two consecutive frames of the audio", "Amplitude value of the samples in the frame of the audio"],
-      answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Number of samples between the two consecutive frames of the audio"
+      question: "What of the following statements is correct related to phase spectrum of an audio signal?",
+      options: ["The phase spectrum of a signal is a measure of the relative phase difference between the same frequency components of the signal.", "The phase spectrum of a signal is a measure of the relative phase difference between the different frequency components of the signal.", "The phase spectrum is used to analyze and understand the amplitude relationships between different frequency components in a signal.", "The phase spectrum is used to analyze and understand the phase relationships between different frequency components in a signal."],
+      answer: [1,3],
+      explanation: "Correct answers are Option 2 and Option 4 i.e., The phase spectrum of a signal is a measure of the relative phase difference between the different frequency components of the signal. and The phase spectrum is used to analyze and understand the phase relationships between different frequency components in a signal."
+    },
+    {
+      question: "Which of the following statements are true?",
+      options: ["A complex speech signal can be broken down into its real and imaginary parts.", "A complex speech signal cannot be broken down into its real and imaginary parts.", "Phase spectrum is the angle of the real part with respect to the imaginary part.", "Phase spectrum is the angle of the imaginary part with respect to the real part."],
+      answer: [0,3],
+      explanation: "Correct answers are Option 1 and Option 4 i.e., A complex speech signal can be broken down into its real and imaginary parts. and Phase spectrum is the angle of the imaginary part with respect to the real part."
+    },
+    {
+      question: "Which of the following statements are true?",
+      options: ["The phase spectrum can be represented graphically as a plot of frequency vs the phase angle.", "The phase spectrum can be represented graphically as a plot of phase angle versus frequency.", "The phase spectrum can be represented graphically as a plot of frequency vs the time.", "The phase spectrum can be represented graphically as a plot of phase angle vs the time."],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., The phase spectrum can be represented graphically as a plot of phase angle versus frequency."
     }
   ];
 

@@ -3,40 +3,34 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What are the valid audio formats?",
-      options: [".mp3", ".png", ".jpeg", ".wav"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., .mp3 and .wav"
+      question: "What is a MEL spectrogram?",
+      options: ["A time-frequency representation of audio using the MEL scale", "A waveform representation of an audio signal", "A method for video compression", "A technique for noise cancellation"],
+      answer: [0],
+      explanation: "Correct answer is Option 1 i.e., A time-frequency representation of audio using the MEL scale"
     },
     {
-      question: "What does frame length refer to for an audio signal?",
-      options: ["Amplitude values of the samples in the frame", "Number of samples in the particular frame of the audio", "Half the duration of the audio signal", "None of the above"],
+      question: "Why is the MEL scale used in audio processing?",
+      options: ["To enhance image resolution", "To mimic human perception of sound frequencies", "To remove background noise", "To increase the sampling rate"],
       answer: [1],
-      explanation: "Correct answer is Option 2 i.e., Number of samples in the particular frame of the audio"
+      explanation: "Correct answer is Option 2 i.e., To mimic human perception of sound frequencies"
     },
     {
-      question: "Based on the visualization of the plots of amplitude envelope select the aggregation feature that approximately traces the positive portion of the amplitude in the audio signal",
-      options: ["MAX", "MEAN", "MIN", "MEDIAN"],
-      answer: [0],
-      explanation: "Correct answer is Option 1 i.e., MAX"
+      question: "Which library is commonly used in Python to extract MEL spectrograms?",
+      options: ["OpenCV", "Librosa", "Pandas", "NumPy"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., Librosa"
     },
     {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Duration of one sample refers to the sampling rate", "Duration of the first sample equals the reciprocal of the sampling rate", "Partially overlapping frames does not have zero hop length", "All of the above"],
-      answer: [1, 2],
-      explanation: "Correct answers are Option 2 and Option 3 i.e., Duration of the first sample equals the reciprocal of the sampling rate and Partially overlapping frames does not have zero hop length"
+      question: "What is the key difference between a spectrogram and a MEL spectrogram?",
+      options: ["MEL spectrograms use linear frequency scaling", "MEL spectrograms convert frequencies to a perceptual scale", "Spectrograms use deep learning models", "There is no difference"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., MEL spectrograms convert frequencies to a perceptual scale"
     },
     {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Frame duration is dependent on the number of samples in the frame", "Frame duration is dependent on the sampling rate", "Concept of framing plays a significant role in amplitude envelope extraction", "All of the above"],
-      answer: [3],
-      explanation: "Correct answer is Option 4 i.e., All of the above"
-    },
-    {
-      question: "What is the default sampling rate for an audio signal?",
-      options: ["22050 Hz", "1000 Hz", "44100 Hz", "22000 Hz"],
-      answer: [0],
-      explanation: "Correct answer is Option 1 i.e., 22050 Hz"
+      question: "Which parameter is NOT required when generating a MEL spectrogram?",
+      options: ["Sampling rate", "Window size", "Frame rate", "Number of MEL bands"],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., Frame rate"
     }
   ];
 

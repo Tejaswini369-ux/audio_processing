@@ -3,40 +3,34 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What are the valid audio formats?",
-      options: [".mp3", ".png", ".jpeg", ".wav"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., .mp3 and .wav"
-    },
-    {
-      question: "What does frame length refer to for an audio signal?",
-      options: ["Amplitude values of the samples in the frame", "Number of samples in the particular frame of the audio", "Half the duration of the audio signal", "None of the above"],
-      answer: [1],
-      explanation: "Correct answer is Option 2 i.e., Number of samples in the particular frame of the audio"
-    },
-    {
-      question: "Based on the visualization of the plots of amplitude envelope select the aggregation feature that approximately traces the positive portion of the amplitude in the audio signal",
-      options: ["MAX", "MEAN", "MIN", "MEDIAN"],
-      answer: [0],
-      explanation: "Correct answer is Option 1 i.e., MAX"
-    },
-    {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Duration of one sample refers to the sampling rate", "Duration of the first sample equals the reciprocal of the sampling rate", "Partially overlapping frames does not have zero hop length", "All of the above"],
+      question: "Which of the following statements related to RMS Energy extraction features from the audio signal are true?",
+      options: ["RMS Energy extraction is a frequency domain feature", "RMS Energy extraction is a time domain feature", "RMS Energy extraction feature involves the root mean square computation of the amplitude values of the audio samples", "RMS Energy extraction feature involves the reciprocal of the root mean square computation of the amplitude values of the audio samples"],
       answer: [1, 2],
-      explanation: "Correct answers are Option 2 and Option 3 i.e., Duration of the first sample equals the reciprocal of the sampling rate and Partially overlapping frames does not have zero hop length"
+      explanation: "Correct answers are Option 2 and Option 3 i.e., RMS Energy extraction is a time domain feature and RMS Energy extraction feature involves the root mean square computation of the amplitude values of the audio samples"
     },
     {
-      question: "Which of the following statements are correct for an audio signal?",
-      options: ["Frame duration is dependent on the number of samples in the frame", "Frame duration is dependent on the sampling rate", "Concept of framing plays a significant role in amplitude envelope extraction", "All of the above"],
-      answer: [3],
-      explanation: "Correct answer is Option 4 i.e., All of the above"
-    },
-    {
-      question: "What is the default sampling rate for an audio signal?",
-      options: ["22050 Hz", "1000 Hz", "44100 Hz", "22000 Hz"],
+      question: "What does Zero Crossing rate refer to in the case of an audio signal?",
+      options: ["Number of times the audio signal crosses the horizontal axis (time axis)", "Double the number of times the audio signal crosses the horizontal axis (time axis)", "Half the number of times the audio signal crosses the horizontal axis (time axis)", "None of the above"],
       answer: [0],
-      explanation: "Correct answer is Option 1 i.e., 22050 Hz"
+      explanation: "Correct answer is Option 1 i.e., Number of times the audio signal crosses the horizontal axis (time axis)"
+    },
+    {
+      question: "Which of the following statements are true?",
+      options: ["RMS Energy feature is an indicator of pitch", "RMS Energy feature is an indicator of timbre", "RMS Energy feature is an indicator of loudness", "RMS Energy feature is an indicator of frequency"],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., RMS Energy feature is an indicator of loudness"
+    },
+    {
+      question: "Which of the function is involved in the computation of Zero Crossing rate features of an audio?",
+      options: ["Absolute Function", "Exponential Function", "Signum Function", "Hyperbolic Function"],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., Signum Function"
+    },
+    {
+      question: "What is the unit of loudness level for pure tone?",
+      options: ["Decibel", "Velocity", "Phon", "Wavelength"],
+      answer: [2],
+      explanation: "Correct answer is Option 3 i.e., Phon"
     }
   ];
 

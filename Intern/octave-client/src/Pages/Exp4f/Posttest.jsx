@@ -3,28 +3,34 @@ import React, { useState } from 'react';
 const Quiz = () => {
   const questions = [
     {
-      question: "What is the valid frame size for an audio signal?",
-      options: ["1024", "1000", "400", "512"],
-      answer: [0, 3],
-      explanation: "Correct answers are Option 1 and Option 4 i.e., 1024 and 512"
-    },
-    {
-      question: "What does adjacent non overlapping frames with zero intermediate samples refer to for an audio signal?",
-      options: ["Frame Length equals double the Hop Length", "Frame Length equals half the Hop Length", "Frame Length equals Hop Length", "Frame Length equals four time the Hop Length"],
-      answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Frame Length equals Hop Length"
-    },
-    {
-      question: "If an audio signal is sampled at the rate 16khz, it means that",
-      options: ["There are 8000 samples in one second duration of the audio", "There are 16000 samples in one second duration of the audio", "There are 4000 samples in one second duration of the audio", "None of the above"],
+      question: "Which Python library is commonly used to extract MFCCs?",
+      options: ["OpenCV", "Librosa", "NumPy", "Pandas"],
       answer: [1],
-      explanation: "Correct answer is Option 2 i.e., There are 16000 samples in one second duration of the audio"
+      explanation: "Correct answer is Option 2 i.e., Librosa"
     },
     {
-      question: "What does hop length refer to for an audio signal?",
-      options: ["Number of samples in the particular frame of the audio", "Total number of samples present in two successive frames of the audio", "Number of samples between the two consecutive frames of the audio", "Amplitude value of the samples in the frame of the audio"],
-      answer: [2],
-      explanation: "Correct answer is Option 3 i.e., Number of samples between the two consecutive frames of the audio"
+      question: "What is the role of the Hamming window in MFCC extraction?",
+      options: ["It removes background noise","It reduces spectral leakage","It enhances the amplitude","It converts audio to text"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., It reduces spectral leakage"
+    },
+    {
+      question: "Why is the logarithm applied to the Mel spectrogram before DCT in MFCC extraction?",
+      options: ["To reduce computation time", "To mimic human perception of loudness", "To enhance high-frequency components", "To remove noise from the audio"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., To mimic human perception of loudness"
+    },
+    {
+      question: "What effect does increasing the number of MFCC coefficients have?",
+      options: ["Increases the accuracy of speech recognition", "Reduces the computational complexity", "Removes unwanted noise", "Does not affect the audio analysis"],
+      answer: [0],
+      explanation: "Correct answer is Option 1 i.e., Increases the accuracy of speech recognition"
+    },
+    {
+      question: "Which of the following is a common application of MFCCs?",
+      options: ["Object detection", "Speech recognition", "Image classification", "Video compression"],
+      answer: [1],
+      explanation: "Correct answer is Option 2 i.e., Speech recognition"
     }
   ];
 
