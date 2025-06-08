@@ -42,6 +42,74 @@ const LMSPrediction = () => {
 
   const handleGenerateCode = () => {
     const generatedCode = `
+import numpy as np
+# Some values as example FRAME_SIZE = 1024
+# Some values as exampleHOP_LENGTH = 512
+
+#Calculate the amplitude envelope of a signal with a given frame length and hop length.
+
+#Default feature selected is 'MAX' is no feature value is passed to the function
+def amplitude_envelope(signal, frame_length, hop_length, feature ='MAX'):
+    # amp_env_feat is a list to store amplitude envelope values of different features
+    amp_env_feat = []
+    
+    # calculate amplitude envelope for each frame based on aggregation feature
+    if feature.upper() == 'MAX':
+        for i in range(0, len(signal), hop_length): 
+             amp_env_feat.append(max(signal[i:i+frame_length])) 
+                   
+    elif feature.upper() == 'MIN':
+        for i in range(0, len(signal), hop_length): 
+            amp_env_feat.append(min(signal[i:i+frame_length])) 
+
+    elif feature.upper() == 'MEAN':
+        for i in range(0, len(signal), hop_length): 
+            amp_env_feat.append(np.mean(signal[i:i+frame_length])) 
+
+    elif feature.upper() == 'MEDIAN':
+        for i in range(0, len(signal), hop_length): 
+            amp_env_feat.append(np.median(signal[i:i+frame_length])) 
+    else:
+        for i in range(0, len(signal), hop_length):
+            amp_env_feat.append(0)
+    
+    amp_env_feat = np.array(amp_env_feat)
+    return amp_env_feat
+
+
+import matplotlib.pyplot as plt
+import librosa
+import librosa.display
+import os
+def amplitude_envelope_plot(input_signal,inpaudname,output_signal,sampling_rate,HOP_LENGTH,feature_name,output_path,uniqueIdentifier):
+
+     # Conversion from frames to time using inbulit function
+    frames = range(len(output_signal))
+    t_audio = librosa.frames_to_time(frames, hop_length=HOP_LENGTH,sr=sampling_rate)
+    plt.figure(figsize=(18,12))
+    base, ext = os.path.splitext(output_path)
+    # Visualising audio signal in the time domain
+    plt.subplot(2, 1, 1)
+    librosa.display.waveshow(input_signal,sr = sampling_rate, alpha=0.5 ,axis='s',color='m')
+    plt.ylim((-1, 1))
+    plt.title(f"Input Audio {inpaudname}")
+    plt.ylabel('Amplitude')
+    plt.savefig(os.path.join(output_path, f'{uniqueIdentifier}_Input.png'))
+    #plt.show()
+        
+    plt.subplot(2, 1,2)
+    librosa.display.waveshow(input_signal,sr = sampling_rate,alpha=0.5 ,color='aqua')
+    plt.plot(t_audio, output_signal, color="r")
+    plt.ylim((-1, 1))
+    plt.title(f"Input Audio {inpaudname} Feature Name {feature_name}")
+    plt.ylabel('Amplitude')
+
+    #plt.show()
+    plt.tight_layout()
+    plt.savefig(os.path.join(output_path, f'{uniqueIdentifier}_AmplitudeEnvelope.png'))
+    plt.close()
+
+    
 import Amplitude_Envelope_Features_Extract as AMPENV
 import AMPLITUDE_ENVELOPE_PLOT as AMPPLOT
 import librosa
