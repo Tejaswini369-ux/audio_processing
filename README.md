@@ -29,6 +29,7 @@ Follow the steps in this article: [How to Install WSL 2 Ubuntu 20.04 LTS on Wind
    cd path/to/intern
 ### 3. After that run the following commands:
 ## Backend ##
+ nvm install 20<br/>
  npm install <br/>
  npm install nodemon <br/>
  sudo apt update && sudo apt install octave<br/>
