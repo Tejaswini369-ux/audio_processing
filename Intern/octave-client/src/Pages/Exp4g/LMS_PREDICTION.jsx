@@ -15,8 +15,8 @@ const LMSPrediction = () => {
     { name: 'Piano Melody (Noisy Room)', file: 'piano.wav' },
     { name: 'Trumpet Blast (Mic Recording)', file: 'trumpet.wav' },
     { name: 'Voice Recording (Studio)', file: 'voice.wav' },
-    { name: 'Violin Solo (Noisy Room)', file: 'violin.wav' },
-    { name: 'Violin Jingle (Noisy Room)', file: 'violin jingle.wav' }
+    { name: 'Violin Solo (Noisy Room)', file: 'voilin.wav' },
+    { name: 'Violin Jingle (Noisy Room)', file: 'voilin jingle.wav' }
   ];
 
   const [selectedFile, setSelectedFile] = useState(fileOptions[0].file);

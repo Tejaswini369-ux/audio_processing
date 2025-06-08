@@ -47,35 +47,35 @@ export default function Dashboard() {
   }, [toggleClick]);
 
   useEffect(() => {
-    if (section.startsWith('exps/4a')) {
+    if (section.startsWith('exps/a')) {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(1);
-    } else if(section.startsWith('exps/4b')) {
+    } else if(section.startsWith('exps/b')) {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(2);
-    } else if(section.startsWith('exps/4c')) {
+    } else if(section.startsWith('exps/c')) {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(3);
-    } else if(section.startsWith('exps/4d')) {
+    } else if(section.startsWith('exps/d')) {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(4);
-    }else if(section.startsWith('exps/4e')) {
+    }else if(section.startsWith('exps/e')) {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(5);
-    }else if(section.startsWith('exps/4f')) {
+    }else if(section.startsWith('exps/f')) {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(6);
-    }else if(section.startsWith('exps/4g')) {
+    }else if(section.startsWith('exps/g')) {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(7);
-    }else if(section.startsWith('exps/4h')) {
+    }else if(section.startsWith('exps/h')) {
       setExp(section.split('/')[1]);
       setActiveTab(section.split('/')[2] || '');
       setPage(8);
