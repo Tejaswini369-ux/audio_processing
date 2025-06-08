@@ -52,7 +52,7 @@ const Experiment = ({activeTab}) => {
             <div>
               <p className="font-bold text-lg text-center text-blue underline hover:text-green">
                 <a href="https://www.vlab.co.in/broad-area-biotechnology-and-biomedical-engineering">
-                  Adaptive Signal Processing
+                  Audio Signal Processing
                 </a>
               </p>
             </div>
