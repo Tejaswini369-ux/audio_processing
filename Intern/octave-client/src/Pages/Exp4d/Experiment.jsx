@@ -12,7 +12,7 @@ const Experiment = ({activeTab}) => {
   const renderContent = () => {
     switch (activeTab) {
       case '':
-        return <div>To carry out the process of extraction of various spectograms through the concept of Short Time Fourier Transform</div>;
+        return <div>To carry out the process of extraction of various spectrograms through the concept of Short Time Fourier Transform</div>;
       case 'theory':
         return <Theory/>;
       case 'pretest':
